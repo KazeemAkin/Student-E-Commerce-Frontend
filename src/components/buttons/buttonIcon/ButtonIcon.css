@@ -1,0 +1,22 @@
+.Button {
+  border-radius: 25px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.Button:hover {
+  opacity: 0.95;
+}
+
+.Button:active {
+  opacity: 0.95;
+}
+
+.Button > span {
+  margin-left: 8px;
+}

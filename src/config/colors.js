@@ -1,0 +1,23 @@
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  red: "#d23b3b",
+  white: "#ffffff",
+  secondary: "#1f1346",
+  lightRed: "#f33c3c",
+  success: "#22C55E",
+  danger: "#e65061",
+  primary: "#fbae3e",
+  black: "#000000",
+  tomato: "tomato",
+  lightgray: "#f1f1f1",
+  darkgray: "#888",
+  gray: "#777",
+  gold: "#FDCC0D",
+  light: "#fefefe",
+  orange: "#f97316",
+  transRed: "#f9010d26",
+  charcoal: "#36454F",
+  lightPrimary: "#633ccd0d",
+  mainSecondary: "#2f1c6a",
+  darkSecondary: "#1f1346",
+};
