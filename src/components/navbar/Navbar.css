@@ -139,6 +139,8 @@
   .navbar {
     padding: 5px 3%;
     width: 100%;
+    position: fixed;
+    margin-top: 0;
 
     .logo-image {
       width: 120px;

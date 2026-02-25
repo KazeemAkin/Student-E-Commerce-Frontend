@@ -14,6 +14,7 @@ import {
   ROUTE_CONTACT,
   ROUTE_HOME,
   ROUTE_LOGIN,
+  ROUTE_ONBOARDING,
   ROUTE_SERVICES,
 } from "../../config/constants";
 
@@ -88,7 +89,7 @@ const Navbar = ({ active_screen = "home" }) => {
                 <a href={ROUTE_LOGIN}>Login</a>
               </li>
               <li>
-                <a href={ROUTE_LOGIN} className="sign-up-btn">
+                <a href={ROUTE_ONBOARDING} className="sign-up-btn">
                   Sign up
                 </a>
               </li>

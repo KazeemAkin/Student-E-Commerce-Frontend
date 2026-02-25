@@ -1,4 +1,4 @@
-export const Numbers = [
+export const numbers = [
   {
     _id: 0,
     value: 0,

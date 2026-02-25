@@ -17,7 +17,5 @@ export default {
   orange: "#f97316",
   transRed: "#f9010d26",
   charcoal: "#36454F",
-  lightPrimary: "#633ccd0d",
-  mainSecondary: "#2f1c6a",
-  darkSecondary: "#1f1346",
+  muteText: "#615757",
 };

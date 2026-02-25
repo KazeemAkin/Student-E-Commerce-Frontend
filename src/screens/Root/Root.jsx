@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import ErrorBoundary from "../../components/error/AppErrorBoundary";
 import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
+import OnboardingScreen from "../authentication/OnboardingScreen";
+import { ROUTE_HOME, ROUTE_ONBOARDING } from "../../config/constants";
 
 const Root = () => {
   return (
@@ -11,10 +13,11 @@ const Root = () => {
       <Routes>
         {/* authentication. Non protected */}
         <Route
-          path="/"
+          path={ROUTE_HOME}
           element={<IndexScreen />}
           errorElement={<ErrorBoundary />}
         />
+        <Route element={<OnboardingScreen />} path={ROUTE_ONBOARDING} />
 
         {/* protected route */}
         <Route

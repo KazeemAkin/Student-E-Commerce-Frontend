@@ -1,4 +1,4 @@
-export const DaysOfTheWeek = [
+export const daysOfTheWeek = [
   {
     _id: 0,
     value: "Monday",

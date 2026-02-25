@@ -26,6 +26,8 @@ function ButtonIcon({
   iconMarginRight = 0,
   marginLeft = 0,
   iconRight,
+  minWidth = 0,
+  padding = 0,
 }) {
   return (
     <Button
@@ -43,6 +45,8 @@ function ButtonIcon({
         marginBottom,
         textMarginLeft,
         textTransform: "none",
+        minWidth,
+        padding,
         "&:hover": {
           backgroundColor,
           opacity: 0.8,

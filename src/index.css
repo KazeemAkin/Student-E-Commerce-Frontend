@@ -307,7 +307,7 @@
 }
 
 .flex-end {
-  justify-content: flex-end;
+  justify-content: flex-end !important;
 }
 
 .flex-start {
@@ -464,6 +464,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .text-primary-p {
