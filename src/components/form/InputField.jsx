@@ -20,7 +20,11 @@ export default function InputField({
   required = false,
   isHidden = false,
   addClassName,
-  containerWidth, 
+  containerWidth,
+  backgroundColor = colors.white,
+  padding = "10px",
+  paddingLeft,
+  paddingRight,
   ...others
 }) {
   const [focused, setFocused] = useState(false);
@@ -64,10 +68,12 @@ export default function InputField({
               outline: focused
                 ? "1px solid" + colors.primary
                 : "1px solid #f1f1f1",
-              padding: "10px",
+              padding,
+              paddingLeft,
+              paddingRight,
               height,
               fontSize,
-              backgroundColor: colors.white,
+              backgroundColor,
               cursor: isDisabled ? "not-allowed" : "text",
             }}
             className={addClassName}

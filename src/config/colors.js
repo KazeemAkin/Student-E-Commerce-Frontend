@@ -10,6 +10,7 @@ export default {
   black: "#000000",
   tomato: "tomato",
   lightgray: "#f1f1f1",
+  ash: "#F2F2F2",
   darkgray: "#888",
   gray: "#777",
   gold: "#FDCC0D",

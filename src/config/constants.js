@@ -8,4 +8,6 @@ export const ROUTE_PRODUCT_LISTINGS = "/listings";
 
 // create account
 export const ROUTE_SIGN_UP = "/sign-up";
+export const ROUTE_VERIFY_ACCESS_CODE = "/verify-access-code";
 export const ROUTE_ONBOARDING = "/onboarding";
+export const ROUTE_REGISTRATION_SUCCESSFUL = "/registration-successful";

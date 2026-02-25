@@ -18,7 +18,7 @@ import {
   ROUTE_SERVICES,
 } from "../../config/constants";
 
-const Navbar = ({ active_screen = "home" }) => {
+const Navbar = ({ active_screen = "home", include_search = true }) => {
   // const { user } = useContext(AuthContext);
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   // const name = !empty(user) && !empty(user.name) ? user.name : "NA";
@@ -38,10 +38,12 @@ const Navbar = ({ active_screen = "home" }) => {
       <div className="navbar_left">
         <img className="logo-image" src={appLogo} alt="" />
 
-        <div className="search-box">
-          <FaSearch size={18} />
-          <span>Search Products</span>
-        </div>
+        {include_search && (
+          <div className="search-box">
+            <FaSearch size={18} />
+            <span>Search Products</span>
+          </div>
+        )}
       </div>
 
       <div className="navbar_right">
