@@ -6,13 +6,17 @@ import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
+  ROUTE_AUTHENTICATION,
   ROUTE_HOME,
   ROUTE_ONBOARDING,
+  ROUTE_PERSONAL_INFORMATION,
   ROUTE_SIGN_UP,
   ROUTE_VERIFY_ACCESS_CODE,
 } from "../../config/constants";
 import SignUpScreen from "../authentication/SignUpScreen";
 import VerifyAccessCodeScreen from "../authentication/VerifyAccessCodeScreen";
+import PersonalInformationScreen from "../authentication/PersonalInformationScreen";
+import AuthenticationScreen from "../authentication/Authentication";
 
 const Root = () => {
   return (
@@ -30,6 +34,11 @@ const Root = () => {
           element={<VerifyAccessCodeScreen />}
           path={ROUTE_VERIFY_ACCESS_CODE}
         />
+        <Route
+          element={<PersonalInformationScreen />}
+          path={ROUTE_PERSONAL_INFORMATION}
+        />
+        <Route element={<AuthenticationScreen />} path={ROUTE_AUTHENTICATION} />
 
         {/* protected route */}
         <Route
