@@ -12,4 +12,4 @@ export const ROUTE_VERIFY_ACCESS_CODE = "/verify-access-code";
 export const ROUTE_ONBOARDING = "/onboarding";
 export const ROUTE_REGISTRATION_SUCCESSFUL = "/registration-successful";
 export const ROUTE_PERSONAL_INFORMATION = "/registration/personal-information";
-export const ROUTE_AUTHENTICATION = "/registration/authentication";
+export const ROUTE_USER_TYPE = "/registration/user-type";

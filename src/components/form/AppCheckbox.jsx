@@ -7,7 +7,7 @@ export default function AppCheckbox({
   checked,
   value,
   style,
-  width = '',
+  width = "",
   ...others
 }) {
   return (

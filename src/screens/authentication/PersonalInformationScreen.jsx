@@ -221,8 +221,8 @@ function PersonalInformationScreen() {
                     >
                       <div className="field-container">
                         <InputField
-                          name="first_name"
-                          placeholder="Enter first name"
+                          name="username"
+                          placeholder="Enter username"
                           fontSize={14}
                           height={30}
                           width="100%"
@@ -230,13 +230,13 @@ function PersonalInformationScreen() {
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
-                          labelTitle="First Name"
+                          labelTitle="Username"
                         />
                       </div>
                       <div className="field-container">
                         <InputField
-                          name="last_name"
-                          placeholder="Enter last name"
+                          name="password"
+                          placeholder="Enter password"
                           fontSize={14}
                           height={30}
                           width="100%"
@@ -244,13 +244,14 @@ function PersonalInformationScreen() {
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
-                          labelTitle="Last Name"
+                          type="password"
+                          labelTitle="Password"
                         />
                       </div>
                       <div className="field-container">
                         <InputField
-                          name="phone_number"
-                          placeholder="Enter phone number"
+                          name="confirm_password"
+                          placeholder="Confirm password"
                           fontSize={14}
                           height={30}
                           width="100%"
@@ -258,7 +259,7 @@ function PersonalInformationScreen() {
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
-                          labelTitle="Phone Number"
+                          labelTitle="Confirm Password"
                         />
                       </div>
 
