@@ -137,7 +137,7 @@ function SignUpScreen() {
 
                   <div className="flex justify-center">
                     <ButtonIcon
-                      buttonText="Submit"
+                      buttonText="Verify"
                       backgroundColor={colors.primary}
                       borderColor={colors.primary}
                       color={colors.white}
@@ -145,6 +145,7 @@ function SignUpScreen() {
                       height={51}
                       marginTop={2}
                       borderRadius={0}
+                      fontSize={16}
                       onClick={() => handleSubmit(values)}
                     />
                   </div>

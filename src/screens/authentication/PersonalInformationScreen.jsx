@@ -16,6 +16,7 @@ import authApi from "../../api/Authentication";
 
 // image
 import informationImage from "../../assets/elements/information_tab.svg";
+import authenticationImage from "../../assets/elements/authenticate.svg";
 
 // components
 import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
@@ -44,6 +45,7 @@ function PersonalInformationScreen() {
   const params = location.state || {};
   const email = params.email || "";
   const [isLoading, setIsLoading] = useState(false);
+  const [visibleScreen, setVisisbleScreen] = useState("personal_information");
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -53,6 +55,21 @@ function PersonalInformationScreen() {
       detail,
       life: 8000,
     });
+  };
+
+  // handle personal information data
+  const handlePersonalInformation = async (values) => {
+    try {
+      setVisisbleScreen("authentication");
+    } catch (error) {
+      return responseDailog(
+        "error",
+        "Something went wrong!",
+        !empty(error?.message) && isString(error?.message)
+          ? error.message
+          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+      );
+    }
   };
 
   /**
@@ -94,84 +111,193 @@ function PersonalInformationScreen() {
         <Navbar active_screen="" include_search={false} />
         <div className="login-container">
           <div className="element-wrapper">
-            <img src={informationImage} alt="sign up" />
+            <img
+              src={
+                visibleScreen === "personal_information"
+                  ? informationImage
+                  : authenticationImage
+              }
+              alt="sign up"
+            />
           </div>
           <div className="form-wrapper">
-            <h3>Personal Information</h3>
-
-            <Formik
-              enableReinitialize
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-            >
-              {({ values }) => (
-                <Form
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                  }}
+            {visibleScreen === "personal_information" ? (
+              <>
+                <h3>Personal Information</h3>
+                <Formik
+                  enableReinitialize
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
                 >
-                  <div className="field-container">
-                    <InputField
-                      name="first_name"
-                      placeholder="Enter first name"
-                      fontSize={14}
-                      height={30}
-                      width="100%"
-                      borderRadius={7}
-                      backgroundColor={colors.ash}
-                      paddingLeft={25}
-                      paddingRight={25}
-                      labelTitle="First Name"
-                    />
-                  </div>
-                  <div className="field-container">
-                    <InputField
-                      name="last_name"
-                      placeholder="Enter last name"
-                      fontSize={14}
-                      height={30}
-                      width="100%"
-                      borderRadius={7}
-                      backgroundColor={colors.ash}
-                      paddingLeft={25}
-                      paddingRight={25}
-                      labelTitle="Last Name"
-                    />
-                  </div>
-                  <div className="field-container">
-                    <InputField
-                      name="phone_number"
-                      placeholder="Enter phone number"
-                      fontSize={14}
-                      height={30}
-                      width="100%"
-                      borderRadius={7}
-                      backgroundColor={colors.ash}
-                      paddingLeft={25}
-                      paddingRight={25}
-                      labelTitle="Phone Number"
-                    />
-                  </div>
+                  {({ values }) => (
+                    <Form
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div className="field-container">
+                        <InputField
+                          name="first_name"
+                          placeholder="Enter first name"
+                          fontSize={14}
+                          height={30}
+                          width="100%"
+                          borderRadius={7}
+                          backgroundColor={colors.ash}
+                          paddingLeft={25}
+                          paddingRight={25}
+                          labelTitle="First Name"
+                        />
+                      </div>
+                      <div className="field-container">
+                        <InputField
+                          name="last_name"
+                          placeholder="Enter last name"
+                          fontSize={14}
+                          height={30}
+                          width="100%"
+                          borderRadius={7}
+                          backgroundColor={colors.ash}
+                          paddingLeft={25}
+                          paddingRight={25}
+                          labelTitle="Last Name"
+                        />
+                      </div>
+                      <div className="field-container">
+                        <InputField
+                          name="phone_number"
+                          placeholder="Enter phone number"
+                          fontSize={14}
+                          height={30}
+                          width="100%"
+                          borderRadius={7}
+                          backgroundColor={colors.ash}
+                          paddingLeft={25}
+                          paddingRight={25}
+                          labelTitle="Phone Number"
+                        />
+                      </div>
 
-                  <div className="flex flex-end" style={{ width: "70%" }}>
-                    <ButtonIcon
-                      buttonText="Next"
-                      backgroundColor={colors.primary}
-                      borderColor={colors.primary}
-                      color={colors.white}
-                      width={198}
-                      height={51}
-                      marginTop={2}
-                      borderRadius={0}
-                      onClick={() => handleSubmit(values)}
-                    />
-                  </div>
-                </Form>
-              )}
-            </Formik>
+                      <div
+                        className="flex flex-end mt-30"
+                        style={{ width: "70%" }}
+                      >
+                        <ButtonIcon
+                          buttonText="Next"
+                          backgroundColor={colors.primary}
+                          borderColor={colors.primary}
+                          color={colors.white}
+                          width={198}
+                          height={51}
+                          marginTop={2}
+                          fontSize={16}
+                          borderRadius={0}
+                          onClick={() => handlePersonalInformation(values)}
+                        />
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </>
+            ) : (
+              <>
+                <h3>Authentication</h3>
+                <Formik
+                  enableReinitialize
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                >
+                  {({ values }) => (
+                    <Form
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div className="field-container">
+                        <InputField
+                          name="first_name"
+                          placeholder="Enter first name"
+                          fontSize={14}
+                          height={30}
+                          width="100%"
+                          borderRadius={7}
+                          backgroundColor={colors.ash}
+                          paddingLeft={25}
+                          paddingRight={25}
+                          labelTitle="First Name"
+                        />
+                      </div>
+                      <div className="field-container">
+                        <InputField
+                          name="last_name"
+                          placeholder="Enter last name"
+                          fontSize={14}
+                          height={30}
+                          width="100%"
+                          borderRadius={7}
+                          backgroundColor={colors.ash}
+                          paddingLeft={25}
+                          paddingRight={25}
+                          labelTitle="Last Name"
+                        />
+                      </div>
+                      <div className="field-container">
+                        <InputField
+                          name="phone_number"
+                          placeholder="Enter phone number"
+                          fontSize={14}
+                          height={30}
+                          width="100%"
+                          borderRadius={7}
+                          backgroundColor={colors.ash}
+                          paddingLeft={25}
+                          paddingRight={25}
+                          labelTitle="Phone Number"
+                        />
+                      </div>
+
+                      <div
+                        className="flex space-between mt-30"
+                        style={{ width: "70%" }}
+                      >
+                        <ButtonIcon
+                          buttonText="Previous"
+                          backgroundColor={colors.primary}
+                          borderColor={colors.primary}
+                          color={colors.white}
+                          width={198}
+                          height={51}
+                          marginTop={2}
+                          fontSize={16}
+                          borderRadius={0}
+                          onClick={() =>
+                            setVisisbleScreen("personal_information")
+                          }
+                        />
+                        <ButtonIcon
+                          buttonText="Submit"
+                          backgroundColor={colors.primary}
+                          borderColor={colors.primary}
+                          color={colors.white}
+                          width={198}
+                          height={51}
+                          marginTop={2}
+                          fontSize={16}
+                          borderRadius={0}
+                          onClick={() => handleSubmit(values)}
+                        />
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </>
+            )}
           </div>
         </div>
       </section>

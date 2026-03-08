@@ -244,6 +244,7 @@
   .bottom-nav {
     width: 100%;
     background-color: var(--dark-gray);
+    margin-top: 60px;
 
     ul {
       list-style: none;

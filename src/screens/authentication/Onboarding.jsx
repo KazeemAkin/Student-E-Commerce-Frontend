@@ -125,9 +125,9 @@ function Onboarding() {
               <a
                 href={ROUTE_SIGN_UP}
                 style={{
-                  height: 40,
-                  width: 130,
-                  borderRadius: 35,
+                  height: 45,
+                  width: 150,
+                  borderRadius: 0,
                   fontSize: 16,
                   backgroundColor: colors.primary,
                   color: colors.white,

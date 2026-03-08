@@ -124,7 +124,7 @@ function VerifyAccessCodeScreen() {
                     />
                   </div>
 
-                  <div className="flex justify-center">
+                  <div className="flex justify-center mt-30">
                     <ButtonIcon
                       buttonText="Verify"
                       backgroundColor={colors.primary}
@@ -133,6 +133,7 @@ function VerifyAccessCodeScreen() {
                       width={198}
                       height={51}
                       marginTop={2}
+                      fontSize={16}
                       borderRadius={0}
                       onClick={() => handleSubmit(values)}
                     />
