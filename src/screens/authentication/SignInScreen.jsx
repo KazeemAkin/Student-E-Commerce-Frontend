@@ -4,7 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import {
   ROUTE_REGISTRATION_SUCCESSFUL,
-  ROUTE_SIGN_IN,
+  ROUTE_SEND_ACCESS_CODE,
 } from "../../config/constants";
 import { Form, Formik } from "formik";
 
@@ -18,7 +18,7 @@ import "./Signin.css";
 import authApi from "../../api/Authentication";
 
 // image
-import signupImage from "../../assets/elements/email.svg";
+import loginImage from "../../assets/elements/login.svg";
 
 // components
 import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
@@ -36,7 +36,7 @@ const initialValues = {
   email: "",
 };
 
-function SendAccessCodeScreen() {
+function SignInScreen() {
   const navigation = useNavigate();
   const toastTR = useRef(null);
   const location = useLocation();
@@ -93,10 +93,10 @@ function SendAccessCodeScreen() {
         <Navbar active_screen="" include_search={false} />
         <div className="login-container">
           <div className="element-wrapper">
-            <img src={signupImage} alt="sign up" />
+            <img src={loginImage} alt="sign up" />
           </div>
           <div className="form-wrapper">
-            <h3>Send Access Code</h3>
+            <h3>Login</h3>
 
             <Formik
               enableReinitialize
@@ -127,20 +127,35 @@ function SendAccessCodeScreen() {
                       labelTitle="Email"
                     />
                   </div>
+                  <div className="field-container">
+                    <InputField
+                      name="password"
+                      placeholder="Enter password"
+                      fontSize={14}
+                      height={30}
+                      width="100%"
+                      type="password"
+                      borderRadius={7}
+                      backgroundColor={colors.ash}
+                      paddingLeft={25}
+                      paddingRight={25}
+                      labelTitle="Password"
+                    />
+                  </div>
 
                   <div className="sign-up">
-                    <span>Already have an account?&nbsp;&nbsp;</span>
+                    <span>Not registered? &nbsp;&nbsp;</span>
                     <NavLink
-                      to={ROUTE_SIGN_IN}
+                      to={ROUTE_SEND_ACCESS_CODE}
                       style={{ color: colors.primary }}
                     >
-                      Login
+                      Signup
                     </NavLink>
                   </div>
 
-                  <div className="flex justify-center">
+                  <div className="flex justify-center mt-30">
                     <ButtonIcon
-                      buttonText="Submit"
+                      buttonText="Login"
                       backgroundColor={colors.primary}
                       borderColor={colors.primary}
                       color={colors.white}
@@ -166,4 +181,4 @@ function SendAccessCodeScreen() {
   );
 }
 
-export default SendAccessCodeScreen;
+export default SignInScreen;

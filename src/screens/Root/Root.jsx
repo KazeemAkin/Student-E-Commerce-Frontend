@@ -11,6 +11,7 @@ import {
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
   ROUTE_SEND_ACCESS_CODE,
+  ROUTE_SIGN_IN,
   ROUTE_USER_TYPE,
   ROUTE_VERIFY_ACCESS_CODE,
   ROUTE_WELCOME,
@@ -21,6 +22,7 @@ import UserTypeScreen from "../authentication/UserTypeScreen";
 import ItemsOfInterestsScreen from "../authentication/ItemsOfInterestsScreen";
 import WelcomeScreen from "../authentication/WelcomeScreen";
 import SendAccessCodeScreen from "../authentication/SendAccessCodeScreen";
+import SignInScreen from "../authentication/SignInScreen";
 
 const Root = () => {
   return (
@@ -51,6 +53,7 @@ const Root = () => {
           path={ROUTE_ITEMS_OF_INTEREST}
         />
         <Route element={<WelcomeScreen />} path={ROUTE_WELCOME} />
+        <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
 
         {/* protected route */}
         <Route
