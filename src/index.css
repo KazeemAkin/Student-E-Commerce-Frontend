@@ -19,6 +19,7 @@
   --light-primary: #633ccd33;
   --main-secondary: #2f1c6a;
   --dark-secondary: #1f1346;
+  --light-ash: #d9d9d9;
 }
 
 .ff-sansita {
@@ -493,16 +494,6 @@ main {
   flex-direction: row;
 }
 
-.dashboard_card_button {
-  width: 100px;
-  height: 30px;
-  font-size: 16px;
-}
-
-.report-subject {
-  width: 70%;
-}
-
 /* modal */
 .error_modal {
   position: absolute;
@@ -537,49 +528,6 @@ main {
   overflow-y: scroll;
 }
 
-.icon_toolbox_input_container .body {
-  height: 220px;
-}
-
-.inner-unauthorized {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 100px;
-  flex-direction: column;
-}
-
-.inner-unauthorized p {
-  font-size: 18px;
-  margin-top: 10px;
-}
-
-.assessment_not_paid {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.credit-nav-box {
-  min-width: 100px;
-  height: 30px;
-  padding: 0 8px;
-  font-size: 14px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f1f1f1;
-  color: #633ccd;
-}
-
-.app-skeleton-container {
-  min-width: 100%;
-}
-
 .app_input_group {
   display: flex;
   flex-direction: column;
@@ -599,113 +547,10 @@ main {
   justify-content: center;
 }
 
-.profile-avatar-container {
-  padding-top: 30px;
-}
-
-.grade-setting-block {
-  border: dotted 1px #633ccd;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  column-gap: 12px;
-  padding: 20px 15px;
-  height: auto;
-}
-
-.grade-setting-block-content {
-  flex-direction: column;
-  display: flex;
-  width: 100%;
-}
-
-/* avatar */
-.avatar-preview-box {
-  width: 200px;
-  height: 200px;
-  background-color: #f1f1f1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.avatar-preview-box img {
-  width: 180px;
-  height: 180px;
-}
-
-.asseessment_box {
-  display: inherit;
-  flex-wrap: wrap;
-}
-
-/* avatar */
-.avatar-container {
-  display: flex;
-  background-color: #633ccd47;
-  padding: 20px;
-  border-radius: 12px;
-  justify-content: space-between;
-  column-gap: 30px;
-  flex-direction: column;
-}
-
-.staff-avatar-container {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-}
-
-.personal-info-block {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  margin-top: 10px;
-}
-
-.profile-title {
-  color: var(--primary);
-  font-weight: bold;
-  display: flex;
-  flex: 1;
-}
-
-.personal-info-list {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  margin-bottom: 15px;
-  row-gap: 5px;
-}
-
-.profile-value {
-  justify-content: flex-start;
-  display: flex;
-  flex: 1;
-}
-
 /* custom */
 .sm-reverse-direction-vertical {
   display: flex;
   flex-direction: column;
-}
-
-.other-staff-info {
-  padding: 20px;
-  margin-top: -50px;
-}
-
-.other-staff-info-header {
-  padding: 20px;
-}
-
-/* general components */
-.floating-button-box {
-  box-shadow: 0px 2px 5px 0px rgba(145, 134, 134, 0.75);
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(145, 134, 134, 0.75);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(178, 97, 97, 0.75);
 }
 
 .simple-label {
@@ -719,155 +564,9 @@ main {
   width: auto;
 }
 
-/* photo card  */
-.students-photo-card {
-  width: 49%;
-  background-color: #ffffff;
-  border: 2px solid #000000;
-  height: 340px;
-  padding: 20px 25px;
-}
-
-/* danger zone */
-.danger-zone-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #bebbbb;
-  padding: 20px 0;
-}
-
-.name-container {
-  display: flex;
-  height: 100px;
-  padding: 25px 20px;
-  background-color: var(--light-primary);
-  border-radius: 8px;
-}
-
-.action-name-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: auto;
-  min-width: 160px;
-  height: 40px;
-  background-color: var(--light-gray);
-  border-radius: 25px;
-}
-
-.action-name-box .name-container-box {
-  width: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.icon-tool-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  font-size: 20px;
-  background-color: var(--white);
-  color: var(--dark-secondary);
-}
-
-.icon-tool-box:hover {
-  background-color: var(--primary);
-  color: var(--white);
-  cursor: pointer;
-}
-
-/* editor */
-.ql-container {
-  width: 100% !important;
-}
-
 /* table */
 .table-search {
   width: 100%;
-}
-
-.subject-assessment-box {
-  display: block;
-  text-align: center;
-  padding: 5px 12px;
-  border: 1px solid var(--primary);
-  border-radius: 24px;
-  cursor: pointer;
-}
-
-.subject-assessment-box:hover {
-  color: var(--white);
-  background-color: var(--primary);
-}
-
-/* Adjust font size of the calendar input */
-.p-calendar .p-inputtext {
-  font-size: 10px !important;
-}
-
-/* Adjust font size of the calendar panel (date picker) */
-.p-datepicker {
-  font-size: 10px !important;
-}
-
-/* Adjust padding for table, tr, th, and td in the calendar panel */
-.p-datepicker table {
-  padding: 0 !important;
-}
-
-.p-datepicker table tr {
-  padding: 2px !important;
-}
-
-.p-datepicker table th {
-  padding: 0 !important;
-}
-
-.p-datepicker table td {
-  padding: 0 !important; /* Padding for table cells (e.g., date numbers) */
-}
-
-/* Optional: Adjust font size specifically for table headers and cells */
-.p-datepicker table th,
-.p-datepicker table td {
-  font-size: 10px !important;
-}
-
-/* Adjust font size of the calendar header (month and year) */
-.p-datepicker .p-datepicker-header {
-  font-size: 10px !important;
-}
-
-/* Optional: Adjust font size of month/year dropdowns if using navigable month/year */
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-  font-size: 14px !important;
-}
-
-/* Reduce cell size and padding for td (date cells) */
-.p-datepicker table td {
-  padding: 2px !important;
-  width: 30px !important;
-  height: 30px !important;
-  font-size: 13px !important;
-}
-
-/* Ensure text in cells is centered */
-.p-datepicker table td > span {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 100% !important;
-  height: 100% !important;
 }
 
 @media only screen and (min-width: 769px) {
@@ -887,11 +586,6 @@ main {
     display: none;
   }
 
-  .promotion-modal {
-    width: 70%;
-    z-index: 1000000;
-  }
-
   .form-container {
     padding: 20px 25px;
   }
@@ -903,10 +597,6 @@ main {
 
   .md-w-50pc {
     width: 50% !important;
-  }
-
-  .grade-setting-block {
-    flex-direction: row;
   }
 
   /* custom */
@@ -937,37 +627,6 @@ main {
   .sm-block {
     display: flex;
   }
-
-  .avatar-container {
-    flex-direction: row;
-    padding: 20px 40px;
-    flex-wrap: wrap;
-  }
-
-  .personal-info-block {
-    flex-direction: column;
-    margin-top: 30px;
-  }
-
-  .personal-info-list {
-    flex-direction: column;
-    column-gap: 80px;
-    margin-bottom: 20px;
-  }
-
-  .staff-avatar-container {
-    align-items: flex-start;
-  }
-
-  .other-staff-info {
-    padding: 20px 40px;
-    margin-top: -90px;
-  }
-
-  .other-staff-info-header {
-    margin-top: 30px;
-    padding-left: 40px;
-  }
 }
 
 @media only screen and (max-width: 900px) {
@@ -979,79 +638,5 @@ main {
 @media print {
   body * {
     visibility: hidden;
-  }
-  /* Show only the specific section */
-  .report-sheet-display *,
-  .transcript-container-script *,
-  .students-bio-data *,
-  .invoice-sheet-display * {
-    visibility: visible;
-  }
-  /* Ensure the print section is at the top of the page */
-  .report-sheet-display {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    page-break-inside: avoid;
-    background-color: white;
-  }
-
-  .invoice-sheet-display {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    width: 100% !important;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    page-break-inside: avoid;
-    background-color: white;
-  }
-
-  .transcript-container-script {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    border: 2px solid #000000;
-    width: 100% !important;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    page-break-inside: avoid;
-    background-color: white;
-    margin-top: 150px;
-  }
-
-  .students-bio-data {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .students-photo-card {
-    width: 100%;
-  }
-
-  .exclude-print * {
-    visibility: hidden;
-  }
-
-  .total-box,
-  .invoice-description .p-datatable-thead tr th {
-    color: var(--white) !important;
-    background-color: var(--dark-secondary) !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 }

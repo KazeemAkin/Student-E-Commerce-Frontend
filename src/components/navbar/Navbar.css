@@ -9,10 +9,11 @@
   width: 100%;
   z-index: 99;
   box-sizing: border-box;
-}
 
-.navbar_left {
-  display: none;
+  .logo-image {
+    width: 110px;
+    height: auto;
+  }
 }
 
 .nav_icon {
@@ -135,6 +136,11 @@
   height: 30px;
 }
 
+.menu-list-items,
+.not-logged-in-right-nav {
+  display: none;
+}
+
 @media only screen and (min-width: 769px) {
   .navbar {
     padding: 5px 3%;
@@ -165,6 +171,7 @@
   }
 
   .not-logged-in-right-nav {
+    display: flex;
     ul {
       list-style: none;
       display: flex;

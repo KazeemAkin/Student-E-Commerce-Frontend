@@ -1,26 +1,91 @@
+footer {
+  background-color: var(--black);
+  height: 640px;
+
+  .upper-items {
+    display: flex;
+    padding: 20px 10%;
+    flex-direction: column;
+    gap: 3%;
+    color: var(--white);
+
+    .upper-item {
+      width: 100%;
+      margin-top: 20px;
+
+      ul {
+        list-style: none;
+        padding: 0 10px;
+
+        li {
+          margin-top: 15px;
+          cursor: pointer;
+        }
+
+        li span:hover {
+          color: var(--primary);
+        }
+      }
+
+      .title {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      img {
+        width: 120px;
+        height: auto;
+      }
+
+      .socials {
+        display: flex;
+        flex-direction: row;
+        column-gap: 15px;
+        margin-top: 15px;
+
+        .social-item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: var(--white);
+          color: var(--black);
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .lower-items {
+    text-align: center;
+    color: var(--white);
+    margin-top: 40px;
+    font-size: 14px;
+  }
+}
+
 @media only screen and (min-width: 900px) {
   footer {
-    background-color: var(--black);
     height: 430px;
 
     .upper-items {
-      display: flex;
-      padding: 60px 10%;
       flex-direction: row;
       gap: 3%;
-      color: var(--white);
-      background-color: var(--black);
 
       .upper-item {
         width: 25%;
+        margin-top: 0;
 
         ul {
-          list-style: none;
-          padding: 0 10px;
-
           li {
             margin-top: 15px;
             cursor: pointer;
+          }
+
+          li span {
+            font-size: 14px;
           }
 
           li span:hover {
@@ -29,13 +94,11 @@
         }
 
         .title {
-          font-weight: 600;
           font-size: 18px;
         }
 
         img {
           width: 220px;
-          height: auto;
         }
 
         .socials {

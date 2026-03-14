@@ -19,4 +19,5 @@ export default {
   transRed: "#f9010d26",
   charcoal: "#36454F",
   muteText: "#615757",
+  lightAsh: "#d9d9d9",
 };

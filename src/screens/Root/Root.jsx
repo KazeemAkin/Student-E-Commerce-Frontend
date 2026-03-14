@@ -7,16 +7,20 @@ import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_HOME,
+  ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
-  ROUTE_SIGN_UP,
+  ROUTE_SEND_ACCESS_CODE,
   ROUTE_USER_TYPE,
   ROUTE_VERIFY_ACCESS_CODE,
+  ROUTE_WELCOME,
 } from "../../config/constants";
-import SignUpScreen from "../authentication/SignUpScreen";
 import VerifyAccessCodeScreen from "../authentication/VerifyAccessCodeScreen";
 import PersonalInformationScreen from "../authentication/PersonalInformationScreen";
 import UserTypeScreen from "../authentication/UserTypeScreen";
+import ItemsOfInterestsScreen from "../authentication/ItemsOfInterestsScreen";
+import WelcomeScreen from "../authentication/WelcomeScreen";
+import SendAccessCodeScreen from "../authentication/SendAccessCodeScreen";
 
 const Root = () => {
   return (
@@ -29,7 +33,10 @@ const Root = () => {
           errorElement={<ErrorBoundary />}
         />
         <Route element={<OnboardingScreen />} path={ROUTE_ONBOARDING} />
-        <Route element={<SignUpScreen />} path={ROUTE_SIGN_UP} />
+        <Route
+          element={<SendAccessCodeScreen />}
+          path={ROUTE_SEND_ACCESS_CODE}
+        />
         <Route
           element={<VerifyAccessCodeScreen />}
           path={ROUTE_VERIFY_ACCESS_CODE}
@@ -39,6 +46,11 @@ const Root = () => {
           path={ROUTE_PERSONAL_INFORMATION}
         />
         <Route element={<UserTypeScreen />} path={ROUTE_USER_TYPE} />
+        <Route
+          element={<ItemsOfInterestsScreen />}
+          path={ROUTE_ITEMS_OF_INTEREST}
+        />
+        <Route element={<WelcomeScreen />} path={ROUTE_WELCOME} />
 
         {/* protected route */}
         <Route

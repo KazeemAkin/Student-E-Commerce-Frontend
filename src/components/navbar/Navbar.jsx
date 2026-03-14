@@ -33,7 +33,7 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
   return (
     <nav className="navbar">
       <div className="nav_icon">
-        <FaBars className="menu_bar" />
+        <FaBars color={colors.white} className="menu_bar" />
       </div>
       <div className="navbar_left">
         <img className="logo-image" src={appLogo} alt="" />

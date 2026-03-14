@@ -11,7 +11,7 @@ import onboarding_image_1 from "../../assets/elements/onboarding1.svg";
 import onboarding_image_2 from "../../assets/elements/onboarding2.svg";
 import onboarding_image_3 from "../../assets/elements/onboarding1.svg";
 import onboarding_image_4 from "../../assets/elements/get_started.svg";
-import { ROUTE_SIGN_UP } from "../../config/constants";
+import { ROUTE_SEND_ACCESS_CODE } from "../../config/constants";
 
 // Slides data
 const slides = [
@@ -123,7 +123,7 @@ function Onboarding() {
           {currentSlideIndex === slides.length - 1 ? (
             <div className="footer-buttons flex-end">
               <a
-                href={ROUTE_SIGN_UP}
+                href={ROUTE_SEND_ACCESS_CODE}
                 style={{
                   height: 45,
                   width: 150,

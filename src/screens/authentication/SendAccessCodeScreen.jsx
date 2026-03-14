@@ -36,7 +36,7 @@ const initialValues = {
   email: "",
 };
 
-function SignUpScreen() {
+function SendAccessCodeScreen() {
   const navigation = useNavigate();
   const toastTR = useRef(null);
   const location = useLocation();
@@ -137,7 +137,7 @@ function SignUpScreen() {
 
                   <div className="flex justify-center">
                     <ButtonIcon
-                      buttonText="Verify"
+                      buttonText="Submit"
                       backgroundColor={colors.primary}
                       borderColor={colors.primary}
                       color={colors.white}
@@ -163,4 +163,4 @@ function SignUpScreen() {
   );
 }
 
-export default SignUpScreen;
+export default SendAccessCodeScreen;

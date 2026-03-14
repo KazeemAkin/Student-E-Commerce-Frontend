@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
 });
 
-function Signin() {
+function SigninScreen() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   //ref
@@ -82,7 +82,11 @@ function Signin() {
   return (
     <div className="signInBox">
       <div className="signInLogo">
-        <img style={{ width: 80, height: "auto" }} src={appLogo1} alt='school logo' />
+        <img
+          style={{ width: 80, height: "auto" }}
+          src={appLogo1}
+          alt="school logo"
+        />
         <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
           Anciemdemia
         </span>
@@ -148,7 +152,11 @@ function Signin() {
         </div>
       </aside>
       <aside className="rightSide">
-        <img style={{ width: "10rem", height: "auto" }} src={appLogo} alt='School logo' />
+        <img
+          style={{ width: "10rem", height: "auto" }}
+          src={appLogo}
+          alt="School logo"
+        />
         <span style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
           Anciemdemia
         </span>
@@ -159,4 +167,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default SigninScreen;
