@@ -8,7 +8,7 @@ import Onboarding from "./Onboarding";
 function OnboardingScreen() {
   return (
     <section className="main-wrapper">
-      <Navbar active_screen="" />
+      <Navbar active_screen="" include_search={false} />
 
       <Onboarding />
 

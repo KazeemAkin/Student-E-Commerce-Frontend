@@ -26,6 +26,12 @@
   cursor: pointer;
 }
 
+.logo-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .navbar_left > a {
   margin-right: 20px;
   text-decoration: none;

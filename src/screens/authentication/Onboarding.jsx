@@ -121,7 +121,17 @@ function Onboarding() {
         </div>
         <div className="button-container">
           {currentSlideIndex === slides.length - 1 ? (
-            <div className="footer-buttons flex-end">
+            <div className="footer-buttons">
+              <ButtonIcon
+                icon={<FaChevronLeft />}
+                borderColor={colors.primary}
+                height={40}
+                width={40}
+                backgroundColor={colors.primary}
+                borderRadius={35}
+                color={colors.white}
+                onClick={goToPreviousSlide}
+              />
               <a
                 href={ROUTE_SEND_ACCESS_CODE}
                 style={{
