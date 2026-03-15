@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useContext, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
-import { ROUTE_REGISTRATION_SUCCESSFUL } from "../../config/constants";
+import { ROUTE_ITEMS_OF_INTEREST } from "../../config/constants";
 import colors from "../../config/colors";
 
 // css
@@ -22,16 +22,15 @@ import Footer from "../../components/footer/Footer";
 import { FaCheck } from "react-icons/fa";
 import CustomCheckbox from "../../components/form/CustomCheckbox";
 import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
+import { AuthContext } from "../Root/ProtectedRoute";
 
 function UserTypeScreen() {
   const navigation = useNavigate();
   const toastTR = useRef(null);
-  const location = useLocation();
-  const params = location.state || {};
-  const email = params.email || "";
   const [isLoading, setIsLoading] = useState(false);
   const [isSeller, setIsSeller] = useState("");
   const [isBuyer, setIsBuyer] = useState("");
+  const { user, setUser } = useContext(AuthContext);
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -44,15 +43,31 @@ function UserTypeScreen() {
   };
 
   /**
-   * Submit signup form
-   * @param {*} values
+   * Submit setUserType form
    */
-  const handleSubmit = async (values) => {
+  const handleSubmit = async () => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.signUp({ ...values, email });
+      if (empty(isSeller) && empty(isBuyer)) {
+        return responseDailog(
+          "error",
+          "User type not selected!",
+          "Please select at least one user type to continue with the registration process.",
+        );
+      }
+
+      let payload = [];
+      if (!empty(isSeller)) {
+        payload.push("Seller");
+      }
+
+      if (!empty(isBuyer)) {
+        payload.push("Buyer");
+      }
+
+      const response = await authApi.setUserType({ userType: payload });
       const response_data = prepareResponseData(response);
-      if (!response_data.success) {
+      if (!response_data?.success) {
         return responseDailog(
           "error",
           "Sign up failed!",
@@ -62,7 +77,10 @@ function UserTypeScreen() {
         );
       }
 
-      navigation(ROUTE_REGISTRATION_SUCCESSFUL);
+      if (response_data?.response) {
+        setUser({ ...user, ...response_data.response });
+      }
+      navigation(`${ROUTE_ITEMS_OF_INTEREST}`);
     } catch (error) {
       return responseDailog(
         "error",

@@ -1,49 +1,36 @@
 import { isObject } from "lodash";
 import client from "./Client";
+import { token } from "./ReturnToken";
+import { empty } from "../Utilities/utils";
 // import { SECRET_PASS_KEY, BASE_URL } from "@env";
 
-const signIn = (email, password) =>
-  client.post(
-    "/super-admin/signin",
-    {
-      email,
-      password,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  );
+const signIn = (payload) =>
+  client.post("/super-admin/signin", {
+    ...payload,
+  });
 
-const forgotPassword = (email) =>
-  client.post(
-    "/forgot-password",
-    { email },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  );
+const forgotPassword = (email) => client.post("/forgot-password", { email });
 
-const resetPassword = (email, password, confirmPassword, resetHash) =>
-  client.post(
-    "/reset-password",
-    {
-      email,
-      password,
-      confirm_password: confirmPassword,
-      password_reset_hash: resetHash,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  );
+const resetPassword = (payload) =>
+  client.post("/reset-password", {
+    ...payload,
+  });
 
-const signup = (payload) => {
+const setUserType = async (payload) => {
+  if (!isObject(payload)) {
+    return;
+  }
+
+  const { decodedToken } = await token();
+  if (empty(decodedToken)) {
+    return;
+  }
+  return client.patch(`/set-user-type`, {
+    ...payload,
+  });
+};
+
+const signup = async (payload) => {
   if (!isObject(payload)) {
     return;
   }
@@ -52,7 +39,7 @@ const signup = (payload) => {
   });
 };
 
-const sendAccessCode = (payload) => {
+const sendAccessCode = async (payload) => {
   if (!isObject(payload)) {
     return;
   }
@@ -78,4 +65,5 @@ export default {
   resetPassword,
   signup,
   sendAccessCode,
+  setUserType,
 };

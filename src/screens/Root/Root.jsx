@@ -43,26 +43,21 @@ const Root = () => {
           element={<VerifyAccessCodeScreen />}
           path={`${ROUTE_VERIFY_ACCESS_CODE}/:email`}
         />
-        <Route
-          element={<PersonalInformationScreen />}
-          path={`${ROUTE_PERSONAL_INFORMATION}/:email`}
-        />
-        <Route
-          element={<UserTypeScreen />}
-          path={`${ROUTE_USER_TYPE}/:email`}
-        />
-        <Route
-          element={<ItemsOfInterestsScreen />}
-          path={ROUTE_ITEMS_OF_INTEREST}
-        />
         <Route element={<WelcomeScreen />} path={ROUTE_WELCOME} />
         <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
 
         {/* protected route */}
-        {/* <Route
-          element={<ProtectedRoute />}
-          errorElement={<ErrorBoundary />}
-        ></Route> */}
+        <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
+          <Route
+            element={<PersonalInformationScreen />}
+            path={`${ROUTE_PERSONAL_INFORMATION}/:email`}
+          />
+          <Route element={<UserTypeScreen />} path={`${ROUTE_USER_TYPE}`} />
+          <Route
+            element={<ItemsOfInterestsScreen />}
+            path={ROUTE_ITEMS_OF_INTEREST}
+          />
+        </Route>
       </Routes>
     </div>
   );

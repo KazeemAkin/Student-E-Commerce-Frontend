@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { Outlet, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { getSchoolDetails } from "../../api/GetSchoolDetails";
+import { Outlet, useLocation } from "react-router-dom";
 import { empty } from "../../Utilities/utils";
 import { ProgressSpinner } from "primereact/progressspinner";
 
@@ -11,49 +10,23 @@ export const AuthContext = createContext();
 export const ProtectedRoute = () => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [sessionActive, setSessionActive] = useState(false);
-  const [termActive, setTermActive] = useState(false);
-  const [sessionEmpty, setSessionEmpty] = useState(false);
-  const [studentData, setStudentData] = useState({});
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const getUser = async () => {
-      const schoolDetails = await getSchoolDetails();
-      if (
-        !empty(schoolDetails) &&
-        schoolDetails.success &&
-        !empty(schoolDetails.response)
-      ) {
-        const data = !empty(schoolDetails.response)
-          ? schoolDetails.response
-          : {};
-        const _sessionActive =
-          typeof data.sessionActive === "boolean" &&
-          data.sessionActive === true;
-        const _termActive =
-          typeof data.termActive === "boolean" && data.termActive === true;
-        const _sessionEmpty =
-          typeof data.sessionEmpty === "boolean" && data.sessionEmpty === true;
-
-        setTermActive(_termActive);
-        setSessionActive(_sessionActive);
-        setSessionEmpty(_sessionEmpty);
-        setUser(data);
-        setIsLoggedIn(true);
-      } else {
+    const authenticateUser = async () => {
+      const storedToken = localStorage.getItem("studentAccessToken");
+      if (!empty(storedToken)) {
         setUser({});
         setIsLoggedIn(false);
-        navigate("/");
       }
+      setIsLoggedIn(true);
     };
-    getUser();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    authenticateUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  if (user === null) {
+  if (!isLoggedIn) {
     return (
       <div
         style={{
@@ -74,27 +47,17 @@ export const ProtectedRoute = () => {
     );
   }
 
-  return user && !empty(user.userType) && user.userType === "SCHOOL" ? (
+  return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
         isLoggedIn,
         setIsLoggedIn,
-        termActive,
-        setTermActive,
-        sessionActive,
-        setSessionActive,
-        sessionEmpty,
-        setSessionEmpty,
-        studentData,
-        setStudentData
       }}
     >
       <Outlet />
     </AuthContext.Provider>
-  ) : (
-    <Navigate to="/" />
   );
 };
 

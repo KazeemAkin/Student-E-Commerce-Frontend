@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import {
-  ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_SEND_ACCESS_CODE,
   ROUTE_USER_TYPE,
 } from "../../config/constants";
@@ -29,6 +28,7 @@ import { empty, isString, prepareResponseData } from "../../Utilities/utils";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
+import { AuthContext } from "../Root/ProtectedRoute";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
@@ -55,6 +55,7 @@ function PersonalInformationScreen() {
   const { email } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
   const [visibleScreen, setVisisbleScreen] = useState("personal_information");
+  const { setUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (empty(email)) {
@@ -108,7 +109,12 @@ function PersonalInformationScreen() {
           response_data.response.jwt.accessToken,
         );
       }
-      return navigate(`${ROUTE_USER_TYPE}/${encodeURIComponent(email)}`);
+
+      if (response_data?.response?.user) {
+        setUser(response_data.response.user);
+      }
+
+      return navigate(ROUTE_USER_TYPE);
     } catch (error) {
       return responseDailog(
         "error",
