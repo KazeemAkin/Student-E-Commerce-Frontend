@@ -45,7 +45,6 @@ const Root = () => {
           path={`${ROUTE_VERIFY_ACCESS_CODE}/:email`}
         />
         <Route element={<WelcomeScreen />} path={ROUTE_WELCOME} />
-        <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
 
         {/* protected route */}
         <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
@@ -62,6 +61,7 @@ const Root = () => {
             element={<WelcomeScreen />}
             path={ROUTE_REGISTRATION_SUCCESSFUL}
           />
+          <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
         </Route>
       </Routes>
     </div>

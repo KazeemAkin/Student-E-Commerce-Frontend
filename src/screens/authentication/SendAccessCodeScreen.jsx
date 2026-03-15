@@ -63,7 +63,7 @@ function SendAccessCodeScreen() {
       if (!response_data.success) {
         return responseDailog(
           "error",
-          "Sign up failed!",
+          "Access code request failed!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
             : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
@@ -76,7 +76,7 @@ function SendAccessCodeScreen() {
     } catch (error) {
       return responseDailog(
         "error",
-        "Sign up failed!",
+        "Access code request failed!",
         !empty(error?.message) && isString(error?.message)
           ? error.message
           : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",

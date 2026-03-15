@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import * as Yup from "yup";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import {
-  ROUTE_REGISTRATION_SUCCESSFUL,
+  ROUTE_FORGOT_PASSWORD,
+  ROUTE_HOME,
   ROUTE_SEND_ACCESS_CODE,
 } from "../../config/constants";
 import { Form, Formik } from "formik";
@@ -26,23 +27,24 @@ import { empty, isString, prepareResponseData } from "../../Utilities/utils";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
+import { AuthContext } from "../Root/ProtectedRoute";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email format.").required(required),
+  password: Yup.string().required(required),
 });
 
 const initialValues = {
   email: "",
+  password: "",
 };
 
 function SignInScreen() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const toastTR = useRef(null);
-  const location = useLocation();
-  const params = location.state || {};
-  const email = params.email || "";
   const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(AuthContext);
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -61,23 +63,35 @@ function SignInScreen() {
   const handleSubmit = async (values) => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.signUp({ ...values, email });
+      const response = await authApi.signIn({ ...values });
       const response_data = prepareResponseData(response);
+
       if (!response_data.success) {
         return responseDailog(
           "error",
-          "Sign up failed!",
+          "Failed to sign in!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
             : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
-      navigation(ROUTE_REGISTRATION_SUCCESSFUL);
+      if (response_data?.response?.jwt?.accessToken) {
+        localStorage.setItem(
+          "studentAccessToken",
+          response_data.response.jwt.accessToken,
+        );
+      }
+
+      if (response_data?.response?.user) {
+        setUser(response_data.response.user);
+      }
+
+      return navigate(ROUTE_HOME);
     } catch (error) {
       return responseDailog(
         "error",
-        "Sign up failed!",
+        "Failed to sign in!",
         !empty(error?.message) && isString(error?.message)
           ? error.message
           : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
@@ -120,7 +134,6 @@ function SignInScreen() {
                       height={30}
                       width="100%"
                       type="email"
-                      borderRadius={7}
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}
@@ -135,7 +148,6 @@ function SignInScreen() {
                       height={30}
                       width="100%"
                       type="password"
-                      borderRadius={7}
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}
@@ -166,6 +178,16 @@ function SignInScreen() {
                       fontSize={16}
                       onClick={() => handleSubmit(values)}
                     />
+                  </div>
+
+                  <div className="sign-up mt-30">
+                    <span>Can't remember your password? &nbsp;&nbsp;</span>
+                    <NavLink
+                      to={ROUTE_FORGOT_PASSWORD}
+                      style={{ color: colors.primary }}
+                    >
+                      Forgot Password
+                    </NavLink>
                   </div>
                 </Form>
               )}

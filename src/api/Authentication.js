@@ -5,7 +5,7 @@ import { empty } from "../Utilities/utils";
 // import { SECRET_PASS_KEY, BASE_URL } from "@env";
 
 const signIn = (payload) =>
-  client.post("/super-admin/signin", {
+  client.post("/sign-in", {
     ...payload,
   });
 
