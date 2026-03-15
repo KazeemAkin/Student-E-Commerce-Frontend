@@ -16,6 +16,21 @@ const resetPassword = (payload) =>
     ...payload,
   });
 
+const setItemsOfInterest = async (payload) => {
+  if (!isObject(payload)) {
+    return;
+  }
+
+  const { decodedToken } = await token();
+  if (empty(decodedToken)) {
+    return;
+  }
+
+  return client.patch(`/set-items-of-interest`, {
+    ...payload,
+  });
+};
+
 const setUserType = async (payload) => {
   if (!isObject(payload)) {
     return;
@@ -25,6 +40,7 @@ const setUserType = async (payload) => {
   if (empty(decodedToken)) {
     return;
   }
+
   return client.patch(`/set-user-type`, {
     ...payload,
   });
@@ -66,4 +82,5 @@ export default {
   signup,
   sendAccessCode,
   setUserType,
+  setItemsOfInterest,
 };

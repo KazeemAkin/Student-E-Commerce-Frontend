@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useContext, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import { ROUTE_REGISTRATION_SUCCESSFUL } from "../../config/constants";
 import colors from "../../config/colors";
@@ -22,15 +22,14 @@ import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
 import { ItemsOfInterests } from "../../data/itemsOfInterests";
+import { AuthContext } from "../Root/ProtectedRoute";
 
 function ItemsOfInterestsScreen() {
   const navigation = useNavigate();
   const toastTR = useRef(null);
-  const location = useLocation();
-  const params = location.state || {};
-  const email = params.email || "";
   const [isLoading, setIsLoading] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const { user, setUser } = useContext(AuthContext);
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -49,9 +48,16 @@ function ItemsOfInterestsScreen() {
   const handleSubmit = async (values) => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.signUp({ ...values, email });
+      if (empty(selectedItems)) {
+        return responseDailog(
+          "error",
+          "Sign up failed!",
+          "Please select at least one category of interest!",
+        );
+      }
+      const response = await authApi.setItemsOfInterest({ selectedItems });
       const response_data = prepareResponseData(response);
-      if (!response_data.success) {
+      if (!response_data?.success) {
         return responseDailog(
           "error",
           "Sign up failed!",
@@ -61,6 +67,9 @@ function ItemsOfInterestsScreen() {
         );
       }
 
+      if (response_data?.response) {
+        setUser({ ...user, ...response_data.response });
+      }
       navigation(ROUTE_REGISTRATION_SUCCESSFUL);
     } catch (error) {
       return responseDailog(
@@ -121,10 +130,7 @@ function ItemsOfInterestsScreen() {
           </div>
         </div>
 
-        <div
-          className="flex flex-end"
-          style={{ width: "85%", paddingTop: 60, paddingBottom: 100 }}
-        >
+        <div className="item-of-interest-btn">
           <ButtonIcon
             buttonText="Continue"
             backgroundColor={colors.primary}
