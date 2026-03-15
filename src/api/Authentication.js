@@ -9,7 +9,8 @@ const signIn = (payload) =>
     ...payload,
   });
 
-const forgotPassword = (email) => client.post("/forgot-password", { email });
+const forgotPassword = (payload) =>
+  client.patch("/forgot-password", { ...payload });
 
 const resetPassword = (payload) =>
   client.post("/reset-password", {

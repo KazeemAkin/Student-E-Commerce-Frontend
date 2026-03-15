@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
+  ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
@@ -24,6 +25,7 @@ import ItemsOfInterestsScreen from "../authentication/ItemsOfInterestsScreen";
 import WelcomeScreen from "../authentication/WelcomeScreen";
 import SendAccessCodeScreen from "../authentication/SendAccessCodeScreen";
 import SignInScreen from "../authentication/SignInScreen";
+import ForgotPasswordScreen from "../authentication/ForgotPasswordScreen";
 
 const Root = () => {
   return (
@@ -45,6 +47,10 @@ const Root = () => {
           path={`${ROUTE_VERIFY_ACCESS_CODE}/:email`}
         />
         <Route element={<WelcomeScreen />} path={ROUTE_WELCOME} />
+        <Route
+          element={<ForgotPasswordScreen />}
+          path={ROUTE_FORGOT_PASSWORD}
+        />
 
         {/* protected route */}
         <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
