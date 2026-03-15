@@ -10,6 +10,7 @@ import {
   ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
+  ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_SEND_ACCESS_CODE,
   ROUTE_SIGN_IN,
   ROUTE_USER_TYPE,
@@ -56,6 +57,10 @@ const Root = () => {
           <Route
             element={<ItemsOfInterestsScreen />}
             path={ROUTE_ITEMS_OF_INTEREST}
+          />
+          <Route
+            element={<WelcomeScreen />}
+            path={ROUTE_REGISTRATION_SUCCESSFUL}
           />
         </Route>
       </Routes>
