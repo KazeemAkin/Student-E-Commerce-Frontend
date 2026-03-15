@@ -28,6 +28,29 @@
       height: auto;
     }
 
+    .next-btn-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .prev-btn-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .next-btn {
+      width: 100px;
+      height: 40px;
+    }
+
+    .prev-btn,
+    .submit-btn {
+      width: 120px;
+      height: 40px;
+    }
+
     .form-wrapper {
       width: 100%;
       margin-top: 10px;
@@ -196,6 +219,21 @@
           margin-top: 30px;
           margin-bottom: 40px;
         }
+      }
+
+      .next-btn-container {
+        width: 70%;
+      }
+
+      .prev-btn-container {
+        width: 70%;
+      }
+
+      .next-btn,
+      .prev-btn,
+      .submit-btn {
+        width: 198px;
+        height: 51px;
       }
 
       .auth-btn-container {

@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import * as Yup from "yup";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import {
-  ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_SIGN_IN,
+  ROUTE_VERIFY_ACCESS_CODE,
 } from "../../config/constants";
 import { Form, Formik } from "formik";
 
@@ -37,11 +37,8 @@ const initialValues = {
 };
 
 function SendAccessCodeScreen() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const toastTR = useRef(null);
-  const location = useLocation();
-  const params = location.state || {};
-  const email = params.email || "";
   const [isLoading, setIsLoading] = useState(false);
 
   // alert functions
@@ -61,7 +58,7 @@ function SendAccessCodeScreen() {
   const handleSubmit = async (values) => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.signUp({ ...values, email });
+      const response = await authApi.sendAccessCode({ ...values });
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
         return responseDailog(
@@ -73,7 +70,9 @@ function SendAccessCodeScreen() {
         );
       }
 
-      navigation(ROUTE_REGISTRATION_SUCCESSFUL);
+      navigate(
+        `${ROUTE_VERIFY_ACCESS_CODE}/${encodeURIComponent(values.email || "")}`,
+      );
     } catch (error) {
       return responseDailog(
         "error",
@@ -120,7 +119,6 @@ function SendAccessCodeScreen() {
                       height={30}
                       width="100%"
                       type="email"
-                      borderRadius={7}
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}

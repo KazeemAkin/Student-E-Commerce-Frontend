@@ -1,8 +1,13 @@
-import { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Toast } from "primereact/toast";
-import { ROUTE_REGISTRATION_SUCCESSFUL } from "../../config/constants";
+import {
+  ROUTE_REGISTRATION_SUCCESSFUL,
+  ROUTE_SEND_ACCESS_CODE,
+  ROUTE_USER_TYPE,
+} from "../../config/constants";
 import { Form, Formik } from "formik";
 
 import InputField from "../../components/form/InputField";
@@ -30,22 +35,32 @@ const validationSchema = Yup.object().shape({
   first_name: Yup.string().required(required),
   last_name: Yup.string().required(required),
   phone_number: Yup.string().required(required),
+  username: Yup.string().required(required),
+  password: Yup.string().required(required),
+  confirm_password: Yup.string().required(required),
 });
 
 const initialValues = {
   first_name: "",
   last_name: "",
   phone_number: "",
+  username: "",
+  password: "",
+  confirm_password: "",
 };
 
 function PersonalInformationScreen() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const toastTR = useRef(null);
-  const location = useLocation();
-  const params = location.state || {};
-  const email = params.email || "";
+  const { email } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
   const [visibleScreen, setVisisbleScreen] = useState("personal_information");
+
+  useEffect(() => {
+    if (empty(email)) {
+      navigate(ROUTE_SEND_ACCESS_CODE);
+    }
+  }, []);
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -57,31 +72,27 @@ function PersonalInformationScreen() {
     });
   };
 
-  // handle personal information data
-  const handlePersonalInformation = async (values) => {
-    try {
-      setVisisbleScreen("authentication");
-    } catch (error) {
-      return responseDailog(
-        "error",
-        "Something went wrong!",
-        !empty(error?.message) && isString(error?.message)
-          ? error.message
-          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
-      );
-    }
-  };
-
   /**
-   * Submit signup form
+   * Submit form
    * @param {*} values
+   * @returns
    */
   const handleSubmit = async (values) => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.signUp({ ...values, email });
+      if (values?.password !== values?.confirm_password) {
+        return responseDailog(
+          "error",
+          "Password mismatch!",
+          "Password and confirm password fields must match. Please correct the error and try again.",
+        );
+      }
+      const response = await authApi.signup({
+        ...values,
+        email,
+      });
       const response_data = prepareResponseData(response);
-      if (!response_data.success) {
+      if (!response_data?.success) {
         return responseDailog(
           "error",
           "Sign up failed!",
@@ -91,7 +102,13 @@ function PersonalInformationScreen() {
         );
       }
 
-      navigation(ROUTE_REGISTRATION_SUCCESSFUL);
+      if (response_data?.response?.jwt?.accessToken) {
+        localStorage.setItem(
+          "studentAccessToken",
+          response_data.response.jwt.accessToken,
+        );
+      }
+      return navigate(`${ROUTE_USER_TYPE}/${encodeURIComponent(email)}`);
     } catch (error) {
       return responseDailog(
         "error",
@@ -121,23 +138,27 @@ function PersonalInformationScreen() {
             />
           </div>
           <div className="form-wrapper">
-            {visibleScreen === "personal_information" ? (
-              <>
-                <h3>Personal Information</h3>
-                <Formik
-                  enableReinitialize
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
+            <h3>
+              {visibleScreen === "personal_information"
+                ? "Personal Information"
+                : "Authentication"}
+            </h3>
+            <Formik
+              enableReinitialize
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+            >
+              {({ values }) => (
+                <Form
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
                 >
-                  {({ values }) => (
-                    <Form
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        flexDirection: "column",
-                      }}
-                    >
+                  {visibleScreen === "personal_information" && (
+                    <>
                       <div className="field-container">
                         <InputField
                           name="first_name"
@@ -145,7 +166,6 @@ function PersonalInformationScreen() {
                           fontSize={14}
                           height={30}
                           width="100%"
-                          borderRadius={7}
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
@@ -159,7 +179,6 @@ function PersonalInformationScreen() {
                           fontSize={14}
                           height={30}
                           width="100%"
-                          borderRadius={7}
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
@@ -173,52 +192,17 @@ function PersonalInformationScreen() {
                           fontSize={14}
                           height={30}
                           width="100%"
-                          borderRadius={7}
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
                           labelTitle="Phone Number"
                         />
                       </div>
-
-                      <div
-                        className="flex flex-end mt-30"
-                        style={{ width: "70%" }}
-                      >
-                        <ButtonIcon
-                          buttonText="Next"
-                          backgroundColor={colors.primary}
-                          borderColor={colors.primary}
-                          color={colors.white}
-                          width={198}
-                          height={51}
-                          marginTop={2}
-                          fontSize={16}
-                          borderRadius={0}
-                          onClick={() => handlePersonalInformation(values)}
-                        />
-                      </div>
-                    </Form>
+                    </>
                   )}
-                </Formik>
-              </>
-            ) : (
-              <>
-                <h3>Authentication</h3>
-                <Formik
-                  enableReinitialize
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                >
-                  {({ values }) => (
-                    <Form
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        flexDirection: "column",
-                      }}
-                    >
+
+                  {visibleScreen === "authentication" && (
+                    <>
                       <div className="field-container">
                         <InputField
                           name="username"
@@ -226,7 +210,6 @@ function PersonalInformationScreen() {
                           fontSize={14}
                           height={30}
                           width="100%"
-                          borderRadius={7}
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
@@ -240,7 +223,6 @@ function PersonalInformationScreen() {
                           fontSize={14}
                           height={30}
                           width="100%"
-                          borderRadius={7}
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
@@ -255,50 +237,60 @@ function PersonalInformationScreen() {
                           fontSize={14}
                           height={30}
                           width="100%"
-                          borderRadius={7}
                           backgroundColor={colors.ash}
                           paddingLeft={25}
                           paddingRight={25}
+                          type="password"
                           labelTitle="Confirm Password"
                         />
                       </div>
-
-                      <div
-                        className="flex space-between mt-30"
-                        style={{ width: "70%" }}
-                      >
-                        <ButtonIcon
-                          buttonText="Previous"
-                          backgroundColor={colors.primary}
-                          borderColor={colors.primary}
-                          color={colors.white}
-                          width={198}
-                          height={51}
-                          marginTop={2}
-                          fontSize={16}
-                          borderRadius={0}
-                          onClick={() =>
-                            setVisisbleScreen("personal_information")
-                          }
-                        />
-                        <ButtonIcon
-                          buttonText="Submit"
-                          backgroundColor={colors.primary}
-                          borderColor={colors.primary}
-                          color={colors.white}
-                          width={198}
-                          height={51}
-                          marginTop={2}
-                          fontSize={16}
-                          borderRadius={0}
-                          onClick={() => handleSubmit(values)}
-                        />
-                      </div>
-                    </Form>
+                    </>
                   )}
-                </Formik>
-              </>
-            )}
+                  {visibleScreen === "personal_information" ? (
+                    <div className="next-btn-container mt-30">
+                      <ButtonIcon
+                        buttonText="Next"
+                        backgroundColor={colors.primary}
+                        borderColor={colors.primary}
+                        color={colors.white}
+                        marginTop={2}
+                        fontSize={16}
+                        borderRadius={0}
+                        onClick={() => setVisisbleScreen("authentication")}
+                        className="next-btn"
+                      />
+                    </div>
+                  ) : (
+                    <div className="prev-btn-container">
+                      <ButtonIcon
+                        buttonText="Previous"
+                        backgroundColor={colors.primary}
+                        borderColor={colors.primary}
+                        color={colors.white}
+                        marginTop={2}
+                        fontSize={16}
+                        borderRadius={0}
+                        onClick={() =>
+                          setVisisbleScreen("personal_information")
+                        }
+                        className="prev-btn"
+                      />
+                      <ButtonIcon
+                        buttonText="Submit"
+                        backgroundColor={colors.primary}
+                        borderColor={colors.primary}
+                        color={colors.white}
+                        marginTop={2}
+                        fontSize={16}
+                        borderRadius={0}
+                        onClick={() => handleSubmit(values)}
+                        className="submit-btn"
+                      />
+                    </div>
+                  )}
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </section>

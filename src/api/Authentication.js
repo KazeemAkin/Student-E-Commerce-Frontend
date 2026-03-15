@@ -1,3 +1,4 @@
+import { isObject } from "lodash";
 import client from "./Client";
 // import { SECRET_PASS_KEY, BASE_URL } from "@env";
 
@@ -12,21 +13,7 @@ const signIn = (email, password) =>
       headers: {
         "Content-Type": "application/json",
       },
-    }
-  );
-
-const twoFactorAuthentication = (email, access_code) =>
-  client.post(
-    "/super-admin/authentication/two-factor",
-    {
-      email,
-      access_code,
     },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
   );
 
 const forgotPassword = (email) =>
@@ -37,7 +24,7 @@ const forgotPassword = (email) =>
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
 const resetPassword = (email, password, confirmPassword, resetHash) =>
@@ -53,23 +40,42 @@ const resetPassword = (email, password, confirmPassword, resetHash) =>
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
-const logUserOut = (
-  user_id,
-  user_type
-) =>
-  client.post(`/log-user-out`, {
-    user_id,
-    user_type
+const signup = (payload) => {
+  if (!isObject(payload)) {
+    return;
+  }
+  return client.patch(`/register-user`, {
+    ...payload,
   });
+};
+
+const sendAccessCode = (payload) => {
+  if (!isObject(payload)) {
+    return;
+  }
+  return client.post("/send-access-code", {
+    ...payload,
+  });
+};
+
+const verifyAccessCode = (payload) => {
+  if (!isObject(payload)) {
+    return;
+  }
+  return client.patch("/verify-access-code", {
+    ...payload,
+  });
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   signIn,
-  twoFactorAuthentication,
+  verifyAccessCode,
   forgotPassword,
   resetPassword,
-  logUserOut
+  signup,
+  sendAccessCode,
 };

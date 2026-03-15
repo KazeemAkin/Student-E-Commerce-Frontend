@@ -1,20 +1,68 @@
+.user-type-page-wrapper {
+  position: relative;
+
+  .page-title {
+    position: absolute;
+    top: 80px;
+    left: 5%;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary);
+  }
+
+  .user-type-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 65px;
+    flex-direction: column;
+    min-height: 550px;
+    padding: 30px 15%;
+    width: 100%;
+    box-sizing: border-box;
+
+    .buyer-box,
+    .seller-box {
+      width: 100%;
+      height: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: row;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      .image-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        img {
+          width: 197px;
+          height: auto;
+        }
+
+        .title {
+          margin-top: 10px;
+          font-weight: 600;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .user-type-page-wrapper {
     position: relative;
 
     .page-title {
-      position: absolute;
       top: 100px;
-      left: 5%;
       font-size: 24px;
-      font-weight: bold;
-      color: var(--primary);
     }
 
     .user-type-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-top: 65px;
       flex-direction: row;
       min-height: 600px;
@@ -24,19 +72,8 @@
       .seller-box {
         width: 400px;
         height: 200px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-direction: row;
-        cursor: pointer;
-        transition: all 0.3s ease;
 
         .image-box {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-
           img {
             width: 297px;
             height: 249px;
@@ -44,7 +81,6 @@
 
           .title {
             margin-top: 40px;
-            font-weight: 600;
             font-size: 25px;
           }
         }

@@ -16,3 +16,6 @@ export const ROUTE_PERSONAL_INFORMATION = "/registration/personal-information";
 export const ROUTE_USER_TYPE = "/registration/user-type";
 export const ROUTE_ITEMS_OF_INTEREST = "/registration/items-of-interest";
 export const ROUTE_WELCOME = "/registration/welcome";
+export const ROUTE_FORGOT_PASSWORD = "/forgot-password";
+export const ROUTE_RESET_PASSWORD = "/reset-password";
+export const ROUTE_LOGOUT = "/logout";

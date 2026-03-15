@@ -3,11 +3,7 @@ import _ from "lodash";
 const prepareResponseData = (response) => {
   const accessToken = response.headers.get("AccessToken");
   if (!empty(accessToken)) {
-    localStorage.setItem("schoolAccessToken", accessToken);
-  }
-
-  if (!isString(accessToken) && window.location.pathname !== "/") {
-    window.location = "/";
+    localStorage.setItem("studentAccessToken", accessToken);
   }
 
   if (
@@ -17,55 +13,47 @@ const prepareResponseData = (response) => {
     empty(response.statusText) ||
     response.statusText !== "OK"
   ) {
-    return !empty(response.data) && !empty(response.data.message)
+    return !empty(response?.data?.message)
       ? {
           ...(isObject(response.data.message)
             ? response.data.message
             : { response: response.data.message }),
           success: false,
-          logOut:
-            !empty(response.data) && !empty(response.data.message.logOut)
-              ? response.data.message.logOut
-              : false,
-          statusCodeType:
-            !empty(response.data) && !empty(response.data.statusCodeType)
-              ? response.data.statusCodeType
-              : false,
-          others: isObject(response.data.message)
+          logOut: !empty(response?.data?.message?.logOut)
+            ? response.data.message.logOut
+            : false,
+          statusCodeType: !empty(response?.data?.statusCodeType)
+            ? response.data.statusCodeType
+            : false,
+          others: isObject(response?.data?.message)
             ? (({ logOut, statusCodeType, message, ...rest }) => rest)(
-                response.data.message
+                response.data.message,
               )
             : {},
         }
       : {
           response: "",
           success: true,
-          statusCodeType:
-            !empty(response.data) && !empty(response.data.statusCodeType)
-              ? response.data.statusCodeType
-              : false,
+          statusCodeType: !empty(response?.data?.statusCodeType)
+            ? response.data.statusCodeType
+            : false,
         };
   }
   const response_data =
-    !empty(response) &&
-    !empty(response.data) &&
-    !empty(response.data.message) &&
-    !empty(response.data.success)
+    !empty(response?.data?.data) && !empty(response?.data?.success)
       ? {
-          response: response.data.message,
+          response: response.data.data,
           success: response.data.success,
-          count: !empty(response.data.count) ? response.data.count : 0,
+          count: !empty(response?.data?.count) ? response.data.count : 0,
         }
-      : {success: response?.data?.success || false };
+      : { success: response?.data?.success || false };
   return response_data;
 };
 
 const isNumber = (value = null) => {
   try {
     return (
-      typeof value === "number" &&
-      value !== Infinity &&
-      value !== -Infinity
+      typeof value === "number" && value !== Infinity && value !== -Infinity
     );
   } catch (error) {
     return false;
@@ -250,19 +238,19 @@ function convertTo24HourFormat(time) {
 }
 
 function convertTimeTo12HourFormat(time) {
-  if (!time || typeof time !== 'string' || !/^\d{1,2}:\d{2}$/.test(time)) {
+  if (!time || typeof time !== "string" || !/^\d{1,2}:\d{2}$/.test(time)) {
     return time;
   }
 
-  let [hours, minutes] = time.split(':').map(Number);
+  let [hours, minutes] = time.split(":").map(Number);
 
-  const modifier = hours >= 12 ? 'PM' : 'AM';
+  const modifier = hours >= 12 ? "PM" : "AM";
   if (hours === 0) {
     hours = 12;
   } else if (hours > 12) {
     hours -= 12;
   }
-  return `${hours}:${String(minutes).padStart(2, '0')} ${modifier}`;
+  return `${hours}:${String(minutes).padStart(2, "0")} ${modifier}`;
 }
 
 // Helper function to convert time to a 12-hour format
@@ -271,7 +259,7 @@ const convertTo12HourFormat = (date) => {
   const minutes = date.getMinutes();
   const period = hours >= 12 ? "PM" : "AM";
   const adjustedHours = hours % 12 || 12;
-  return `${adjustedHours}:${minutes?.toString()?.padStart(2, "0") || ''} ${period}`;
+  return `${adjustedHours}:${minutes?.toString()?.padStart(2, "0") || ""} ${period}`;
 };
 
 function timeStringToDate(timeString) {
@@ -283,7 +271,7 @@ function generateValidStartTimes(
   classStartTime,
   schoolEndTime,
   classDuration,
-  breakTimes
+  breakTimes,
 ) {
   let classIntervals = [];
   let count = 0;
@@ -307,7 +295,8 @@ function generateValidStartTimes(
 
       // Format time to 12-hour format with AM/PM
       const hours = currentTime.getHours();
-      const minutes = currentTime?.getMinutes()?.toString()?.padStart(2, "0") || '';
+      const minutes =
+        currentTime?.getMinutes()?.toString()?.padStart(2, "0") || "";
       const ampm = hours >= 12 ? "PM" : "AM";
       const formattedHours = hours % 12 || 12;
 
@@ -337,7 +326,8 @@ function generateValidStartTimes(
 
     // Format time to 12-hour format with AM/PM
     const hours = currentTime.getHours();
-    const minutes = currentTime?.getMinutes()?.toString()?.padStart(2, "0") || '';
+    const minutes =
+      currentTime?.getMinutes()?.toString()?.padStart(2, "0") || "";
     const ampm = hours >= 12 ? "PM" : "AM";
     const formattedHours = hours % 12 || 12;
 
@@ -364,7 +354,7 @@ function generateValidStartTimes(
 function generateValidLessonStartTime(
   lessonStartTime,
   schoolEndTime,
-  classDuration
+  classDuration,
 ) {
   let classIntervals = [];
   let count = 0;
@@ -405,14 +395,13 @@ function formatTime(date) {
       const minutes = date.getMinutes()?.toString()?.padStart(2, "0");
       const ampm = hours >= 12 ? "PM" : "AM";
       const formattedHours = hours % 12 || 12;
-    
+
       return `${formattedHours}:${minutes} ${ampm}`;
     }
-    
   } catch (error) {
     console.log(error);
   }
-  return '';
+  return "";
 }
 
 function calculateEndTime(startTime, classInterval, numberOfPeriods) {
@@ -460,10 +449,10 @@ function checkTimeOverlap(start_time, end_time, arrayOfDateObjects) {
   // Loop through the break arrayOfDateObjects and check for overlap
   for (let dateObject of arrayOfDateObjects) {
     let objectStartTime = new Date(
-      `1970-01-01T${convertTo24HourFormat(dateObject.start_time)}`
+      `1970-01-01T${convertTo24HourFormat(dateObject.start_time)}`,
     );
     let objectEndTime = new Date(
-      `1970-01-01T${convertTo24HourFormat(dateObject.end_time)}`
+      `1970-01-01T${convertTo24HourFormat(dateObject.end_time)}`,
     );
 
     // Check if the times overlap, with the new condition to ignore exact match cases
@@ -495,7 +484,7 @@ const getScheduleItem = (day, timeSlot, classId, scheduleData) => {
     (item) =>
       item.day === day &&
       timeStringToDate(item.startTime).getTime() === timeSlot.getTime() &&
-      item.classId === classId
+      item.classId === classId,
   );
 };
 
@@ -512,7 +501,7 @@ const generateTimeSlots = (
   classStartTime,
   classEndTime,
   lessonStartTime,
-  breakDetails
+  breakDetails,
 ) => {
   let timeSlots = [];
 
@@ -529,7 +518,7 @@ const generateTimeSlots = (
   // Convert break times to Date objects for comparison
   const breaks = breakDetails.map((breakItem) => ({
     start: new Date(
-      `1970-01-01T${convertTo24HourFormat(breakItem.start_time)}:00`
+      `1970-01-01T${convertTo24HourFormat(breakItem.start_time)}:00`,
     ),
     end: new Date(`1970-01-01T${convertTo24HourFormat(breakItem.end_time)}:00`),
     label: `Break ${breakItem.break_number}`,
@@ -539,7 +528,7 @@ const generateTimeSlots = (
     // Check if the current time overlaps with any break period
     const breakPeriod = breaks.find(
       // eslint-disable-next-line no-loop-func
-      ({ start, end }) => currentTime >= start && currentTime < end
+      ({ start, end }) => currentTime >= start && currentTime < end,
     );
 
     if (breakPeriod) {
@@ -582,7 +571,7 @@ const calculateColSpan = (
   scheduleEndTime,
   normalClassInterval,
   lessonInterval,
-  lessonStartTime
+  lessonStartTime,
 ) => {
   const timeDifference = (scheduleEndTime - scheduleStartTime) / (1000 * 60); // difference in minutes
 
@@ -659,8 +648,8 @@ const getInputDateFormat = (now) => {
 
     return formattedDate;
   } catch (error) {
-    console.log({error});
-    return ''
+    console.log({ error });
+    return "";
   }
 };
 
@@ -675,38 +664,37 @@ const debounce = (func, wait) => {
 const snakeToCamelCase = (value) => {
   const str = String(value);
   return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-}
+};
 
 const camelToSnakeCase = (value) => {
-  if (value == null || typeof value !== 'string') {
+  if (value == null || typeof value !== "string") {
     return String(value);
   }
   return value
-    .replace(/([A-Z])/g, '_$1')
+    .replace(/([A-Z])/g, "_$1")
     .toLowerCase()
-    .replace(/^_/, '');
+    .replace(/^_/, "");
 };
 
 const convertKeysToCamelCase = (obj) => {
   if (isObject(obj)) {
     return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [snakeToCamelCase(key), value])
+      Object.entries(obj).map(([key, value]) => [snakeToCamelCase(key), value]),
     );
   }
 
   return false;
-}
+};
 
 const convertKeysToSnakeCase = (obj) => {
   if (isObject(obj)) {
     return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [camelToSnakeCase(key), value])
+      Object.entries(obj).map(([key, value]) => [camelToSnakeCase(key), value]),
     );
   }
-  
-  return false;
-}
 
+  return false;
+};
 
 /**
  * convert js date to this format MM/DD/YYYY HH:MM AM/PM
@@ -717,32 +705,32 @@ const formatDateToCustom = (dateInput, includeTime = true) => {
     if (isNaN(date.getTime())) {
       return dateInput;
     }
-  
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     const year = date.getFullYear();
     let hours = date.getHours();
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'pm' : 'am';
-    
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const ampm = hours >= 12 ? "pm" : "am";
+
     hours = hours % 12 || 12;
-    hours = String(hours).padStart(2, '0');
-  
+    hours = String(hours).padStart(2, "0");
+
     if (includeTime) {
       return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
     }
     return `${month}/${day}/${year}`;
   } catch (error) {}
-}
+};
 
 /**
  * Check if amount (currency) provided is a valid and can be made a float number
- * @param {*} amount 
+ * @param {*} amount
  * @returns true for valid and false for invalid
  */
 function isValidAmount(amount) {
   try {
-    if (parseFloat(amount) && parseFloat(amount) !== 'NaN' && !isNaN(amount)) {
+    if (parseFloat(amount) && parseFloat(amount) !== "NaN" && !isNaN(amount)) {
       return true;
     }
     return false;
@@ -753,8 +741,8 @@ function isValidAmount(amount) {
 
 /**
  * Convert number to currency format e.g 20000 -> 20,000.00
- * @param {*} amount 
- * @returns 
+ * @param {*} amount
+ * @returns
  */
 const toAmountFormat = (amount) => {
   try {
@@ -764,15 +752,14 @@ const toAmountFormat = (amount) => {
     if (!isValidAmount(amount)) {
       return "0.00";
     }
-   return  Number(amount).toLocaleString('en-US', {
+    return Number(amount).toLocaleString("en-US", {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     });
   } catch (error) {
     return amount;
   }
-
-}
+};
 
 export {
   isValidAmount,
@@ -819,5 +806,5 @@ export {
   compareArrays,
   getInputDateFormat,
   debounce,
-  convertTo12HourFormat
+  convertTo12HourFormat,
 };

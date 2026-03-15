@@ -1,8 +1,12 @@
-import { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Toast } from "primereact/toast";
-import { ROUTE_REGISTRATION_SUCCESSFUL } from "../../config/constants";
+import {
+  ROUTE_PERSONAL_INFORMATION,
+  ROUTE_SEND_ACCESS_CODE,
+} from "../../config/constants";
 import { Form, Formik } from "formik";
 
 import InputField from "../../components/form/InputField";
@@ -34,12 +38,16 @@ const initialValues = {
 };
 
 function VerifyAccessCodeScreen() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const toastTR = useRef(null);
-  const location = useLocation();
-  const params = location.state || {};
-  const email = params.email || "";
+  const { email } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (empty(email)) {
+      navigate(ROUTE_SEND_ACCESS_CODE);
+    }
+  }, []);
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -52,29 +60,29 @@ function VerifyAccessCodeScreen() {
   };
 
   /**
-   * Submit signup form
+   * Verify access code
    * @param {*} values
    */
   const handleSubmit = async (values) => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.signUp({ ...values, email });
+      const response = await authApi.verifyAccessCode({ ...values, email });
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
         return responseDailog(
           "error",
-          "Sign up failed!",
+          "Access code verification failed!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
             : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
-      navigation(ROUTE_REGISTRATION_SUCCESSFUL);
+      navigate(`${ROUTE_PERSONAL_INFORMATION}/${encodeURIComponent(email)}`);
     } catch (error) {
       return responseDailog(
         "error",
-        "Sign up failed!",
+        "Access code verification failed!",
         !empty(error?.message) && isString(error?.message)
           ? error.message
           : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
@@ -116,7 +124,6 @@ function VerifyAccessCodeScreen() {
                       fontSize={14}
                       height={30}
                       width="100%"
-                      borderRadius={7}
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}
