@@ -13,9 +13,9 @@ import {
   ROUTE_ABOUT_US,
   ROUTE_CONTACT,
   ROUTE_HOME,
-  ROUTE_LOGIN,
   ROUTE_ONBOARDING,
   ROUTE_SERVICES,
+  ROUTE_SIGN_IN,
 } from "../../config/constants";
 
 const Navbar = ({ active_screen = "home", include_search = true }) => {
@@ -88,7 +88,7 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
           <div className="not-logged-in-right-nav">
             <ul>
               <li>
-                <a href={ROUTE_LOGIN}>Login</a>
+                <a href={ROUTE_SIGN_IN}>Login</a>
               </li>
               <li>
                 <a href={ROUTE_ONBOARDING} className="sign-up-btn">

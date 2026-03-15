@@ -1,7 +1,9 @@
-import { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useRef, useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Toast } from "primereact/toast";
 import { Form, Formik } from "formik";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import InputField from "../../components/form/InputField";
 import colors from "../../config/colors";
@@ -21,19 +23,31 @@ import { empty, isString, prepareResponseData } from "../../Utilities/utils";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
+import { ROUTE_SIGN_IN } from "../../config/constants";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email format.").required(required),
+  password: Yup.string().required(required),
+  confirm_password: Yup.string().required(required),
 });
 
 const initialValues = {
-  email: "",
+  password: "",
+  confirm_password: "",
 };
 
-function ForgotPasswordScreen() {
+function ResetPasswordScreen() {
   const toastTR = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const reset_hash = searchParams.get("reset_hash");
+
+  useEffect(() => {
+    if (!isString(reset_hash) || reset_hash.length !== 36) {
+      navigate(ROUTE_SIGN_IN);
+    }
+  }, []);
 
   // alert functions
   const responseDailog = (severity = null, summary = null, detail = null) => {
@@ -46,34 +60,37 @@ function ForgotPasswordScreen() {
   };
 
   /**
-   * Forgot password
+   * Reset password
    * @param {*} values
    */
   const handleSubmit = async (values) => {
     try {
       if (!isLoading) setIsLoading(true);
-      const response = await authApi.forgotPassword({ ...values });
-      const response_data = prepareResponseData(response);
-
-      if (!response_data.success) {
+      if (values?.password !== values?.confirm_password) {
         return responseDailog(
           "error",
-          "Failed to to send email!",
+          "Password mismatch!",
+          "Password and confirm password fields must match. Please correct the error and try again.",
+        );
+      }
+      const response = await authApi.resetPassword({ ...values, reset_hash });
+      const response_data = prepareResponseData(response);
+
+      if (!response_data?.success) {
+        return responseDailog(
+          "error",
+          "Failed to Reset Password!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
             : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
-      return responseDailog(
-        "success",
-        "Access code sent!",
-        "An access code has been sent to your email address. Please check your inbox and follow the instructions to reset your password.",
-      );
+      return navigate(ROUTE_SIGN_IN);
     } catch (error) {
       return responseDailog(
         "error",
-        "Failed to to send email!",
+        "Failed to Reset Password!",
         !empty(error?.message) && isString(error?.message)
           ? error.message
           : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
@@ -89,10 +106,10 @@ function ForgotPasswordScreen() {
         <Navbar active_screen="" include_search={false} />
         <div className="login-container">
           <div className="element-wrapper">
-            <img src={forgotPasswordImage} alt="forgot password" />
+            <img src={forgotPasswordImage} alt="reset password" />
           </div>
           <div className="form-wrapper">
-            <h3>Forgot Password</h3>
+            <h3>Reset Password</h3>
 
             <Formik
               enableReinitialize
@@ -110,16 +127,30 @@ function ForgotPasswordScreen() {
                 >
                   <div className="field-container">
                     <InputField
-                      name="email"
-                      placeholder="Enter school email"
+                      name="password"
+                      placeholder="Enter password"
                       fontSize={14}
                       height={30}
                       width="100%"
-                      type="email"
+                      type="password"
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}
-                      labelTitle="Email"
+                      labelTitle="Password"
+                    />
+                  </div>
+                  <div className="field-container">
+                    <InputField
+                      name="confirm_password"
+                      placeholder="Confirm password"
+                      fontSize={14}
+                      height={30}
+                      width="100%"
+                      type="password"
+                      backgroundColor={colors.ash}
+                      paddingLeft={25}
+                      paddingRight={25}
+                      labelTitle="Confirm Password"
                     />
                   </div>
 
@@ -151,4 +182,4 @@ function ForgotPasswordScreen() {
   );
 }
 
-export default ForgotPasswordScreen;
+export default ResetPasswordScreen;

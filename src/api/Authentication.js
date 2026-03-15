@@ -13,7 +13,7 @@ const forgotPassword = (payload) =>
   client.patch("/forgot-password", { ...payload });
 
 const resetPassword = (payload) =>
-  client.post("/reset-password", {
+  client.patch("/reset-password", {
     ...payload,
   });
 

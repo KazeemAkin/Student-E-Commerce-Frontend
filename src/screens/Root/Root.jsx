@@ -12,6 +12,7 @@ import {
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
   ROUTE_REGISTRATION_SUCCESSFUL,
+  ROUTE_RESET_PASSWORD,
   ROUTE_SEND_ACCESS_CODE,
   ROUTE_SIGN_IN,
   ROUTE_USER_TYPE,
@@ -26,6 +27,9 @@ import WelcomeScreen from "../authentication/WelcomeScreen";
 import SendAccessCodeScreen from "../authentication/SendAccessCodeScreen";
 import SignInScreen from "../authentication/SignInScreen";
 import ForgotPasswordScreen from "../authentication/ForgotPasswordScreen";
+import ResetPasswordScreen from "../authentication/ResetPasswordScreen";
+import NotFound from "../error_pages/NotFound";
+import UnauthorizedPage from "../error_pages/UnauthorizedPage";
 
 const Root = () => {
   return (
@@ -51,6 +55,7 @@ const Root = () => {
           element={<ForgotPasswordScreen />}
           path={ROUTE_FORGOT_PASSWORD}
         />
+        <Route element={<ResetPasswordScreen />} path={ROUTE_RESET_PASSWORD} />
 
         {/* protected route */}
         <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
@@ -69,6 +74,11 @@ const Root = () => {
           />
           <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
         </Route>
+
+        {/* authentication. Non protected */}
+        <Route path="*" element={<NotFound />} />
+        <Route path="/not-found" element={<NotFound />} />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
       </Routes>
     </div>
   );
