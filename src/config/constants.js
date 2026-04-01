@@ -1,0 +1,20 @@
+export const ROUTE_HOME = "/";
+export const ROUTE_ABOUT_US = "/about-us";
+export const ROUTE_SERVICES = "/services";
+export const ROUTE_CONTACT = "/contact";
+export const ROUTE_PRODUCT_CATEGORIES = "/categories";
+export const ROUTE_PRODUCT_LISTINGS = "/listings";
+
+// create account
+export const ROUTE_SEND_ACCESS_CODE = "/send-access-code";
+export const ROUTE_SIGN_IN = "/sign-in";
+export const ROUTE_VERIFY_ACCESS_CODE = "/verify-access-code";
+export const ROUTE_ONBOARDING = "/onboarding";
+export const ROUTE_REGISTRATION_SUCCESSFUL = "/registration-successful";
+export const ROUTE_PERSONAL_INFORMATION = "/registration/personal-information";
+export const ROUTE_USER_TYPE = "/registration/user-type";
+export const ROUTE_ITEMS_OF_INTEREST = "/registration/items-of-interest";
+export const ROUTE_WELCOME = "/registration/welcome";
+export const ROUTE_FORGOT_PASSWORD = "/forgot-password";
+export const ROUTE_RESET_PASSWORD = "/reset-password";
+export const ROUTE_LOGOUT = "/logout";

@@ -1,0 +1,104 @@
+.items-of-interest-page-wrapper {
+  .items-of-interest-container {
+    padding: 10px 15%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .page-title-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: 40px;
+      margin-top: 30px;
+
+      .page-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--primary);
+      }
+
+      .page-subtitle {
+        font-size: 14px;
+        color: var(--mute-text);
+      }
+    }
+
+    .items-of-interests {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 5%;
+
+      .item-of-interest {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 20px;
+        flex: 1 1 80px;
+        background-color: var(--light-ash);
+        padding: 10px;
+        margin-bottom: 40px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+    }
+  }
+  .item-of-interest-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 80px;
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .items-of-interest-page-wrapper {
+    .items-of-interest-container {
+      margin-top: 70px;
+
+      .page-title-box {
+        margin-top: 70px;
+        margin-bottom: 100px;
+
+        .page-title {
+          font-size: 30px;
+        }
+
+        .page-subtitle {
+          font-size: 16px;
+        }
+      }
+
+      .items-of-interests {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 26%;
+
+        .item-of-interest {
+          flex: 1 1 120px;
+          background-color: var(--light-ash);
+          font-size: 16px;
+        }
+      }
+    }
+
+    .item-of-interest-btn {
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+  }
+}
