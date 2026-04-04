@@ -36,11 +36,6 @@ const Root = () => {
     <div className="container">
       <Routes>
         {/* authentication. Non protected */}
-        <Route
-          path={ROUTE_HOME}
-          element={<IndexScreen />}
-          errorElement={<ErrorBoundary />}
-        />
         <Route element={<OnboardingScreen />} path={ROUTE_ONBOARDING} />
         <Route
           element={<SendAccessCodeScreen />}
@@ -59,6 +54,11 @@ const Root = () => {
 
         {/* protected route */}
         <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
+          <Route
+            path={ROUTE_HOME}
+            element={<IndexScreen />}
+            errorElement={<ErrorBoundary />}
+          />
           <Route
             element={<PersonalInformationScreen />}
             path={`${ROUTE_PERSONAL_INFORMATION}/:email`}

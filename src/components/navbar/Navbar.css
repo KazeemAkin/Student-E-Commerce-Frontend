@@ -88,10 +88,11 @@
   flex-direction: row;
   font-size: 12px;
   border-radius: 5px;
-  margin-left: 10px;
+  margin-left: 20px;
   padding: 5px;
+  gap: 15px;
+  padding-bottom: 12px;
   color: var(--white);
-  display: none;
 }
 
 .navbar_avatar_container {
@@ -258,6 +259,9 @@
     width: 100%;
     background-color: var(--dark-gray);
     margin-top: 60px;
+    height: 70px;
+    display: flex;
+    align-items: center;
 
     ul {
       list-style: none;

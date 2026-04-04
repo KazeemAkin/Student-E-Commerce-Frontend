@@ -27,7 +27,7 @@ function BottomNavbar() {
             to={ROUTE_HOME}
             style={{ textDecoration: "none", color: colors.white }}
           >
-            <span>Techwares</span>
+            <span>Tech-wares</span>
           </NavLink>
         </li>
         <li>
@@ -35,7 +35,7 @@ function BottomNavbar() {
             to={ROUTE_HOME}
             style={{ textDecoration: "none", color: colors.white }}
           >
-            <span>Kitchenwares</span>
+            <span>Kitchenware</span>
           </NavLink>
         </li>
         <li>
@@ -43,7 +43,23 @@ function BottomNavbar() {
             to={ROUTE_HOME}
             style={{ textDecoration: "none", color: colors.white }}
           >
-            <span>Miscelenous</span>
+            <span>Sportwear</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={ROUTE_HOME}
+            style={{ textDecoration: "none", color: colors.white }}
+          >
+            <span>Dinnerwares</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={ROUTE_HOME}
+            style={{ textDecoration: "none", color: colors.white }}
+          >
+            <span>Miscellaneuos</span>
           </NavLink>
         </li>
       </ul>

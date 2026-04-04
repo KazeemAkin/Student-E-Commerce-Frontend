@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { FaBars, FaSignOutAlt, FaCogs, FaUser, FaSearch } from "react-icons/fa";
+import {
+  FaBars,
+  FaSignOutAlt,
+  FaCogs,
+  FaUser,
+  FaSearch,
+  FaUserAlt,
+  FaCartPlus,
+} from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 // css
@@ -17,15 +25,14 @@ import {
   ROUTE_SERVICES,
   ROUTE_SIGN_IN,
 } from "../../config/constants";
+import { useContext } from "react";
+import { AuthContext } from "../../screens/Root/ProtectedRoute";
+import { empty } from "../../Utilities/utils";
 
 const Navbar = ({ active_screen = "home", include_search = true }) => {
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext) || {};
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
-  // const name = !empty(user) && !empty(user.name) ? user.name : "NA";
 
-  // useEffect(() => {
-  //   setCreditBalance(user?.credits || "0");
-  // }, [user]);
   const openProfileMenu = () => {
     setShowAvatarMenu(!showAvatarMenu);
   };
@@ -85,22 +92,28 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
           </ul>
 
           {/* not logged in section of the nav bar */}
-          <div className="not-logged-in-right-nav">
-            <ul>
-              <li>
-                <a href={ROUTE_SIGN_IN}>Login</a>
-              </li>
-              <li>
-                <a href={ROUTE_ONBOARDING} className="sign-up-btn">
-                  Sign up
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="navbar_avatar_box" onClick={() => openProfileMenu()}>
-            <FaUser size={20} />
-          </div>
+          {!user || empty(user) ? (
+            <div className="not-logged-in-right-nav">
+              <ul>
+                <li>
+                  <a href={ROUTE_SIGN_IN}>Login</a>
+                </li>
+                <li>
+                  <a href={ROUTE_ONBOARDING} className="sign-up-btn">
+                    Sign up
+                  </a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div
+              className="navbar_avatar_box"
+              onClick={() => openProfileMenu()}
+            >
+              <FaCartPlus size={20} style={{ cursor: "pointer" }} />
+              <FaUserAlt size={20} style={{ cursor: "pointer" }} />
+            </div>
+          )}
 
           <Card
             addStyle={`avatar_dropdown_menu ${

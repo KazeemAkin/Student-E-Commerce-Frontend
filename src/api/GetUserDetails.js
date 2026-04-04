@@ -4,15 +4,15 @@ import { empty, prepareResponseData } from "../Utilities/utils";
 //api
 import generalApi from "./General";
 
-export const getSchoolDetails = async () => {
+export const getUserDetails = async () => {
   try {
     const { decodedToken } = await token();
     if (!empty(decodedToken)) {
-      const schoolId =
+      const userId =
         !empty(decodedToken) && !empty(decodedToken.sub)
           ? decodedToken.sub
           : "";
-      const response = await generalApi.getSchoolData(schoolId);
+      const response = await generalApi.getUserData(userId);
       const response_data = prepareResponseData(response);
       if (empty(response_data) || empty(response_data.success)) {
         const statusCodeType = !empty(response_data.statusCodeType)
@@ -28,7 +28,7 @@ export const getSchoolDetails = async () => {
 
       return {
         success: true,
-        response: userDetails,
+        userDetails,
       };
     }
 

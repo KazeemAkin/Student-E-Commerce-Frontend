@@ -69,6 +69,7 @@ footer {
 @media only screen and (min-width: 900px) {
   footer {
     height: 430px;
+    padding-top: 70px;
 
     .upper-items {
       flex-direction: row;
