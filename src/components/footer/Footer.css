@@ -1,6 +1,7 @@
 footer {
   background-color: var(--black);
   height: 640px;
+  margin-top: 50px;
 
   .upper-items {
     display: flex;
@@ -70,6 +71,7 @@ footer {
   footer {
     height: 430px;
     padding-top: 70px;
+    margin-top: 0;
 
     .upper-items {
       flex-direction: row;

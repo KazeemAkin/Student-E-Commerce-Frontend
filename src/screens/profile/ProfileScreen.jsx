@@ -5,6 +5,7 @@ import ProfileHeader from "./ProfileHeader";
 import "./Profile.css";
 import Listings from "../Index/Listings";
 import Ratings from "./Ratings";
+import Footer from "../../components/footer/Footer";
 
 function ProfileScreen() {
   return (
@@ -19,6 +20,9 @@ function ProfileScreen() {
 
       {/* Ratings */}
       <Ratings />
+
+      {/* footer */}
+      <Footer />
     </section>
   );
 }
