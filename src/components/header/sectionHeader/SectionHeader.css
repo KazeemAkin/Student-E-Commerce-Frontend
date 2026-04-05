@@ -2,10 +2,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 3px;
+  margin-bottom: 20px;
   width: 100%;
   padding: 12px 0;
-  border-radius: 7px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--light-ash);
 }
 
 .list_item > div {

@@ -1,13 +1,4 @@
-import { useState } from "react";
-import {
-  FaBars,
-  FaSignOutAlt,
-  FaCogs,
-  FaUser,
-  FaSearch,
-  FaUserAlt,
-  FaCartPlus,
-} from "react-icons/fa";
+import { FaBars, FaSearch, FaUserAlt, FaCartPlus } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 // css
@@ -16,12 +7,12 @@ import "./Navbar.css";
 // images
 import appLogo from "../../assets/logo/studentmart-logo-white.png";
 import colors from "../../config/colors";
-import Card from "../card/Card";
 import {
   ROUTE_ABOUT_US,
   ROUTE_CONTACT,
   ROUTE_HOME,
   ROUTE_ONBOARDING,
+  ROUTE_PROFILE,
   ROUTE_SERVICES,
   ROUTE_SIGN_IN,
 } from "../../config/constants";
@@ -31,11 +22,6 @@ import { empty } from "../../Utilities/utils";
 
 const Navbar = ({ active_screen = "home", include_search = true }) => {
   const { user } = useContext(AuthContext) || {};
-  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
-
-  const openProfileMenu = () => {
-    setShowAvatarMenu(!showAvatarMenu);
-  };
 
   return (
     <nav className="navbar">
@@ -106,67 +92,21 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
               </ul>
             </div>
           ) : (
-            <div
-              className="navbar_avatar_box"
-              onClick={() => openProfileMenu()}
-            >
-              <FaCartPlus size={20} style={{ cursor: "pointer" }} />
-              <FaUserAlt size={20} style={{ cursor: "pointer" }} />
+            <div className="navbar_avatar_box">
+              <NavLink
+                to={ROUTE_PROFILE}
+                style={{ textDecoration: "none", color: colors.white }}
+              >
+                <FaCartPlus size={23} style={{ cursor: "pointer" }} />
+              </NavLink>
+              <NavLink
+                to={ROUTE_PROFILE}
+                style={{ textDecoration: "none", color: colors.white }}
+              >
+                <FaUserAlt size={23} style={{ cursor: "pointer" }} />
+              </NavLink>
             </div>
           )}
-
-          <Card
-            addStyle={`avatar_dropdown_menu ${
-              showAvatarMenu ? "flex" : "hide"
-            }`}
-          >
-            <ul className="avatar_main_menu">
-              <li>
-                <NavLink
-                  to="/profile"
-                  style={{ textDecoration: "none", color: colors.primary }}
-                >
-                  <FaUser
-                    style={{ marginRight: 13, color: colors.darkgray }}
-                    size={14}
-                  />{" "}
-                  Profile
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/settings"
-                  style={{ textDecoration: "none", color: colors.primary }}
-                >
-                  <FaCogs
-                    style={{ marginRight: 13, color: colors.darkgray }}
-                    size={14}
-                  />{" "}
-                  Settings
-                </NavLink>
-              </li>
-              <hr />
-              <li
-                style={{
-                  marginTop: 10,
-                }}
-              >
-                <NavLink
-                  to="/logout"
-                  style={{
-                    textDecoration: "none",
-                    color: colors.danger,
-                  }}
-                >
-                  <FaSignOutAlt
-                    style={{ marginRight: 13, color: colors.darkgray }}
-                    size={14}
-                  />{" "}
-                  Log Out
-                </NavLink>
-              </li>
-            </ul>
-          </Card>
         </div>
       </div>
     </nav>

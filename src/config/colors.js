@@ -20,4 +20,5 @@ export default {
   charcoal: "#36454F",
   muteText: "#615757",
   lightAsh: "#d9d9d9",
+  green: "#0A7832",
 };

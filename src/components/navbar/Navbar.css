@@ -32,6 +32,10 @@
   align-items: center;
 }
 
+.navbar_left .search-box {
+  display: none;
+}
+
 .navbar_left > a {
   margin-right: 20px;
   text-decoration: none;
@@ -88,10 +92,9 @@
   flex-direction: row;
   font-size: 12px;
   border-radius: 5px;
-  margin-left: 20px;
+  margin-left: 30px;
   padding: 5px;
-  gap: 15px;
-  padding-bottom: 12px;
+  gap: 20px;
   color: var(--white);
 }
 
@@ -161,7 +164,8 @@
     }
   }
 
-  .navbar_left {
+  .navbar_left,
+  .navbar_left .search-box {
     display: block;
   }
 

@@ -18,3 +18,18 @@ export const ROUTE_WELCOME = "/registration/welcome";
 export const ROUTE_FORGOT_PASSWORD = "/forgot-password";
 export const ROUTE_RESET_PASSWORD = "/reset-password";
 export const ROUTE_LOGOUT = "/logout";
+
+// products
+export const ROUTE_PRODUCTS = "/products";
+export const ROUTE_PRODUCT_DETAILS = "/products/:productId";
+export const ROUTE_CART = "/cart";
+export const ROUTE_CHECKOUT = "/checkout";
+export const ROUTE_ORDERS = "/orders";
+
+// user profile
+export const ROUTE_PROFILE = "/profile";
+export const ROUTE_EDIT_PROFILE = "/profile/edit";
+export const ROUTE_MY_LISTINGS = "/profile/my-listings";
+export const ROUTE_FAVORITES = "/profile/favorites";
+export const ROUTE_SETTINGS = "/profile/settings";
+export const ROUTE_CHAT = "/profile/chat";
