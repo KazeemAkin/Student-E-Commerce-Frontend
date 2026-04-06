@@ -8,8 +8,48 @@
   }
 
   .home-header-wrapper {
+    padding: 0;
     display: flex;
-    box-sizing: border-box;
+    flex-direction: column-reverse;
+
+    .text-area {
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+
+      h1 {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 28px;
+        color: var(--primary);
+      }
+
+      .sub-text {
+        padding: 0 12%;
+
+        h6 {
+          font-size: 14px;
+          color: var(--mute-text);
+          font-weight: 400;
+          margin-top: -5px;
+        }
+      }
+
+      .learn-more {
+        margin-bottom: 40px;
+      }
+    }
+
+    .image-box {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
   }
 
   /* listings */
@@ -102,45 +142,52 @@
 }
 
 @media only screen and (min-width: 900px) {
-  .home-header-wrapper {
-    padding: 100px 10%;
-
-    .text-area {
-      width: 50%;
-
-      h1 {
-        font-size: 52px;
-        font-weight: 900;
-        line-height: 70px;
-        color: var(--primary);
-      }
-
-      h6 {
-        font-size: 16px;
-        color: var(--mute-text);
-        font-weight: 400;
-        margin-top: -12px;
-      }
-
-      .learn-more {
-        margin-top: 60px;
-      }
-    }
-
-    .image-box {
-      padding-top: 50px;
-      width: 50%;
-      display: flex;
-      justify-content: flex-end;
-
-      img {
-        width: 90%;
-        height: auto;
-      }
-    }
-  }
-
   .main-wrapper {
+    .home-header-wrapper {
+      padding: 40px 8%;
+      display: flex;
+      flex-direction: row !important;
+
+      .text-area {
+        width: 50%;
+        text-align: left;
+        margin-top: 0;
+
+        h1 {
+          font-size: 52px;
+          font-weight: 900;
+          line-height: 70px;
+          color: var(--primary);
+        }
+
+        .sub-text {
+          padding: 0;
+
+          h6 {
+            font-size: 16px;
+            color: var(--mute-text);
+            font-weight: 400;
+            margin-top: -12px;
+          }
+        }
+
+        .learn-more {
+          margin-top: 60px;
+        }
+      }
+
+      .image-box {
+        padding-top: 50px;
+        width: 50%;
+        display: flex;
+        justify-content: flex-end;
+
+        img {
+          width: 90%;
+          height: auto;
+        }
+      }
+    }
     .listings-wrapper {
       padding: 0 8%;
     }
