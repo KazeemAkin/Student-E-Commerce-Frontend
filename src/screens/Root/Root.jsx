@@ -7,6 +7,7 @@ import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_ABOUT_US,
+  ROUTE_CONTACT,
   ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ITEMS_OF_INTEREST,
@@ -36,6 +37,7 @@ import UnauthorizedPage from "../error_pages/UnauthorizedPage";
 import ProfileScreen from "../profile/ProfileScreen";
 import AboutUsScreen from "../Index/AboutUsScreen";
 import ServicesScreen from "../Index/ServicesScreen";
+import ContactUsScreen from "../Index/ContactUsScreen";
 
 const Root = () => {
   return (
@@ -81,6 +83,7 @@ const Root = () => {
           <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
           <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
           <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
+          <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
 
           {/* Profile */}
           <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />
