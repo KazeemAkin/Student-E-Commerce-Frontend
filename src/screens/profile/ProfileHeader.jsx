@@ -13,11 +13,20 @@ import {
 } from "react-icons/fa";
 import { MdChat, MdMenu } from "react-icons/md";
 import colors from "../../config/colors";
-import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
-import { NavLink } from "react-router-dom";
-import { ROUTE_CHAT } from "../../config/constants";
+import { NavLink, useParams } from "react-router-dom";
+import {
+  ROUTE_CHAT,
+  ROUTE_PRODUCT_ADD,
+  ROUTE_PRODUCTS,
+} from "../../config/constants";
+import { useContext } from "react";
+import { AuthContext } from "../Root/ProtectedRoute";
+import { empty, isArray, isObject } from "../../Utilities/utils";
 
 function ProfileHeader() {
+  const { user } = useContext(AuthContext);
+  const { user_id } = useParams();
+
   return (
     <div className="profile-header">
       <div className="header-image-box">
@@ -31,52 +40,59 @@ function ProfileHeader() {
           </div>
           <div className="bio-data">
             <div className="name">
-              <span>John Doe</span>
+              <span>
+                {user?.first_name || ""} {user?.last_name || ""}
+              </span>
               <span className="username">(JD)</span>
             </div>
-            <span className="bio">I am a free shopper</span>
+            <span className="bio">{user?.bio || ""}</span>
             <div className="email">
               <FaEnvelope color={colors.primary} />
-              <span>john.doe@example.com</span>
+              <span>{user?.email || ""}</span>
             </div>
             <div className="phone_number">
               <FaPhoneAlt color={colors.primary} />
-              <span>+44 5849 4894</span>
+              <span>{user?.phone_number || ""}</span>
             </div>
           </div>
-          <div className="edit-pen">
-            <div className="pen-box">
-              <FaPen color={colors.black} size={12} />
-            </div>
-          </div>
+          {isObject(user) &&
+            isArray(user?.user_type) &&
+            user?.user_type.includes("Seller") &&
+            !user_id && (
+              <div className="edit-pen">
+                <div className="pen-box">
+                  <FaPen color={colors.black} size={12} />
+                </div>
+              </div>
+            )}
         </div>
       </div>
 
       {/* bottom header details */}
       <div className="header-bottom-details">
         <div className="product-buttons">
-          <ButtonIcon
-            buttonText="Add Product"
-            color={colors.white}
-            backgroundColor={colors.green}
-            borderColor={colors.green}
-            width={130}
-            height={26}
-            icon={<FaPlus size={12} />}
-            textMarginLeft={12}
-            fontSize={12}
-          />
-          <ButtonIcon
-            buttonText="List Products"
-            color={colors.white}
-            backgroundColor={colors.primary}
-            borderColor={colors.primary}
-            width={130}
-            height={26}
-            icon={<FaListAlt size={12} />}
-            textMarginLeft={12}
-            fontSize={12}
-          />
+          {isObject(user) &&
+            isArray(user?.user_type) &&
+            user?.user_type.includes("Seller") &&
+            !user_id && (
+              <>
+                <NavLink
+                  to={ROUTE_PRODUCT_ADD}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className="button bg-green text-white">
+                    <FaPlus size={12} />
+                    <span>Add Product</span>
+                  </div>
+                </NavLink>
+                <NavLink to={ROUTE_PRODUCTS} style={{ textDecoration: "none" }}>
+                  <div className="button bg-primary text-white">
+                    <FaListAlt size={12} />
+                    <span>List Products</span>
+                  </div>
+                </NavLink>
+              </>
+            )}
         </div>
 
         <div className="other-details">
@@ -96,18 +112,22 @@ function ProfileHeader() {
               </div>
             </div>
             <div className="action-buttons">
-              <NavLink
-                to={ROUTE_CHAT}
-                style={{ textDecoration: "none", color: colors.primary }}
-              >
-                <MdChat size={22} />
-              </NavLink>
-              <NavLink
-                onClick={(e) => e.preventDefault()}
-                style={{ textDecoration: "none", color: colors.primary }}
-              >
-                <MdMenu size={22} />
-              </NavLink>
+              {!empty(user) && (
+                <>
+                  <NavLink
+                    to={ROUTE_CHAT}
+                    style={{ textDecoration: "none", color: colors.primary }}
+                  >
+                    <MdChat size={22} />
+                  </NavLink>
+                  <NavLink
+                    onClick={(e) => e.preventDefault()}
+                    style={{ textDecoration: "none", color: colors.primary }}
+                  >
+                    <MdMenu size={22} />
+                  </NavLink>
+                </>
+              )}
             </div>
           </div>
         </div>

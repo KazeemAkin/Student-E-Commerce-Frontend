@@ -13,6 +13,7 @@ import {
   ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
+  ROUTE_PRODUCT_ADD,
   ROUTE_PROFILE,
   ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_RESET_PASSWORD,
@@ -38,6 +39,7 @@ import ProfileScreen from "../profile/ProfileScreen";
 import AboutUsScreen from "../Index/AboutUsScreen";
 import ServicesScreen from "../Index/ServicesScreen";
 import ContactUsScreen from "../Index/ContactUsScreen";
+import AddProductScreen from "../product/AddProductScreen";
 
 const Root = () => {
   return (
@@ -84,6 +86,9 @@ const Root = () => {
           <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
           <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
+
+          {/* products */}
+          <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
 
           {/* Profile */}
           <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />

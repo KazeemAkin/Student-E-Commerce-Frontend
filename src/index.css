@@ -24,6 +24,7 @@
   --light-pupple: #c4c6e0;
   --light-orange: #ebd4b3;
   --beige: #c9c994;
+  --green: #0a7832;
 }
 
 .ff-sansita {
@@ -568,9 +569,28 @@ main {
   width: auto;
 }
 
+/* backgroun colors */
+.bg-green {
+  background-color: var(--green);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
 /* table */
 .table-search {
   width: 100%;
+}
+
+.button {
+  padding: 3px 15px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
 }
 
 @media only screen and (min-width: 769px) {

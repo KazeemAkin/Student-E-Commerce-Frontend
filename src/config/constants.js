@@ -26,6 +26,8 @@ export const ROUTE_CART = "/cart";
 export const ROUTE_CHECKOUT = "/checkout";
 export const ROUTE_ORDERS = "/orders";
 export const ROUTE_CATEGORY_LISTINGS = "/categories";
+export const ROUTE_PRODUCT_ADD = "/product/add";
+export const ROUTE_PRODUCT_EDIT = "/product/edit";
 
 // user profile
 export const ROUTE_PROFILE = "/profile";
