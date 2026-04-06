@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
+  ROUTE_ABOUT_US,
   ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ITEMS_OF_INTEREST,
@@ -15,6 +16,7 @@ import {
   ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_RESET_PASSWORD,
   ROUTE_SEND_ACCESS_CODE,
+  ROUTE_SERVICES,
   ROUTE_SIGN_IN,
   ROUTE_USER_TYPE,
   ROUTE_VERIFY_ACCESS_CODE,
@@ -32,6 +34,8 @@ import ResetPasswordScreen from "../authentication/ResetPasswordScreen";
 import NotFound from "../error_pages/NotFound";
 import UnauthorizedPage from "../error_pages/UnauthorizedPage";
 import ProfileScreen from "../profile/ProfileScreen";
+import AboutUsScreen from "../Index/AboutUsScreen";
+import ServicesScreen from "../Index/ServicesScreen";
 
 const Root = () => {
   return (
@@ -75,6 +79,8 @@ const Root = () => {
             path={ROUTE_REGISTRATION_SUCCESSFUL}
           />
           <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
+          <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
+          <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
 
           {/* Profile */}
           <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />
