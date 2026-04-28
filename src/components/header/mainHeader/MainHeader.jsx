@@ -17,6 +17,7 @@ const MainHeader = ({
   titleColor = "#000000",
   multiButtons,
   buttonHeight = 30,
+  fontSize = 16,
   ...others
 }) => {
   return (
@@ -24,7 +25,7 @@ const MainHeader = ({
       <div className="left_header_title">
         {leftIcon && <span className="main_header_icon">{leftIcon}</span>}
         <span className="main_header_text">
-          <span style={{ color: titleColor, fontSize: 16 }}>{title}</span>{" "}
+          <span style={{ color: titleColor, fontSize }}>{title}</span>{" "}
           {rightIcon && <div>{rightIcon}</div>}
         </span>
       </div>
@@ -42,19 +43,20 @@ const MainHeader = ({
             />
           ) : (
             <>
-                { !multiButtons ?
-                    <NavLink to={link} style={{ textDecoration: "none" }}>
-                      <ButtonIcon
-                        backgroundColor="#633ccd"
-                        color="#ffffff"
-                        icon={icon}
-                        height={buttonHeight}
-                        buttonText={buttonText}
-                        {...others}
-                      />
-                    </NavLink> :
-                  multiButtons
-                }
+              {!multiButtons ? (
+                <NavLink to={link} style={{ textDecoration: "none" }}>
+                  <ButtonIcon
+                    backgroundColor="#633ccd"
+                    color="#ffffff"
+                    icon={icon}
+                    height={buttonHeight}
+                    buttonText={buttonText}
+                    {...others}
+                  />
+                </NavLink>
+              ) : (
+                multiButtons
+              )}
             </>
           )}
         </div>

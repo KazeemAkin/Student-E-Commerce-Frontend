@@ -86,13 +86,17 @@ const Root = () => {
           <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
           <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
-
           {/* products */}
           <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
 
           {/* Profile */}
           <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />
         </Route>
+
+        {/* user route */}
+
+        {/* <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
+        </Route> */}
 
         {/* authentication. Non protected */}
         <Route path="*" element={<NotFound />} />

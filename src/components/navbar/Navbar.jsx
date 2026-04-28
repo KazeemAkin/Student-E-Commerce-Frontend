@@ -293,7 +293,7 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
                 <li>
                   <a href={ROUTE_SIGN_IN}>Login</a>
                 </li>
-                <li>
+                <li className="sign-up-li">
                   <a href={ROUTE_ONBOARDING} className="sign-up-btn">
                     Sign up
                   </a>

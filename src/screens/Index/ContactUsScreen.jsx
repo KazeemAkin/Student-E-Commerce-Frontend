@@ -20,12 +20,14 @@ import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email format.").required(required),
-  password: Yup.string().required(required),
+  message: Yup.string().required(required),
+  full_name: Yup.string().required(required),
 });
 
 const initialValues = {
   email: "",
-  password: "",
+  message: "",
+  full_name: "",
 };
 
 function ContactUsScreen() {
@@ -66,7 +68,7 @@ function ContactUsScreen() {
                 >
                   <div className="field-container">
                     <InputField
-                      name="Full Name"
+                      name="full_name"
                       placeholder="Enter full name"
                       fontSize={14}
                       height={30}
@@ -74,6 +76,7 @@ function ContactUsScreen() {
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}
+                      required={true}
                       labelTitle="Full Name"
                     />
                   </div>
@@ -88,6 +91,7 @@ function ContactUsScreen() {
                       backgroundColor={colors.ash}
                       paddingLeft={25}
                       paddingRight={25}
+                      required={true}
                       labelTitle="Email"
                     />
                   </div>
@@ -99,6 +103,7 @@ function ContactUsScreen() {
                       height={150}
                       rows={8}
                       cols={8}
+                      required={true}
                       width="100%"
                       as="textarea"
                       backgroundColor={colors.ash}

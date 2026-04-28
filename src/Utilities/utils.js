@@ -1,53 +1,63 @@
 import _ from "lodash";
 
 const prepareResponseData = (response) => {
-  const accessToken = response.headers.get("AccessToken");
-  if (!empty(accessToken)) {
-    localStorage.setItem("studentAccessToken", accessToken);
-  }
+  try {
+    const accessToken = response.headers.get("AccessToken");
+    if (!empty(accessToken)) {
+      localStorage.setItem("studentAccessToken", accessToken);
+    }
 
-  if (
-    empty(response) ||
-    empty(response.data) ||
-    empty(response.data.success) ||
-    empty(response.statusText) ||
-    response.statusText !== "OK"
-  ) {
-    return !empty(response?.data?.message)
-      ? {
-          ...(isObject(response.data.message)
-            ? response.data.message
-            : { response: response.data.message }),
-          success: false,
-          logOut: !empty(response?.data?.message?.logOut)
-            ? response.data.message.logOut
-            : false,
-          statusCodeType: !empty(response?.data?.statusCodeType)
-            ? response.data.statusCodeType
-            : false,
-          others: isObject(response?.data?.message)
-            ? (({ logOut, statusCodeType, message, ...rest }) => rest)(
-                response.data.message,
-              )
-            : {},
-        }
-      : {
-          response: "",
-          success: true,
-          statusCodeType: !empty(response?.data?.statusCodeType)
-            ? response.data.statusCodeType
-            : false,
-        };
+    if (
+      empty(response) ||
+      empty(response.data) ||
+      empty(response.data.success) ||
+      empty(response.statusText) ||
+      response.statusText !== "OK"
+    ) {
+      return !empty(response?.data?.message)
+        ? {
+            ...(isObject(response.data.message)
+              ? response.data.message
+              : { response: response.data.message }),
+            success: false,
+            logOut: !empty(response?.data?.message?.logOut)
+              ? response.data.message.logOut
+              : false,
+            statusCodeType: !empty(response?.data?.statusCodeType)
+              ? response.data.statusCodeType
+              : false,
+            others: isObject(response?.data?.message)
+              ? (({ logOut, statusCodeType, message, ...rest }) => rest)(
+                  response.data.message,
+                )
+              : {},
+          }
+        : {
+            response: "",
+            success: true,
+            statusCodeType: !empty(response?.data?.statusCodeType)
+              ? response.data.statusCodeType
+              : false,
+          };
+    }
+    const response_data =
+      !empty(response?.data?.data) && !empty(response?.data?.success)
+        ? {
+            response: response.data.data,
+            success: response.data.success,
+            count: !empty(response?.data?.count) ? response.data.count : 0,
+          }
+        : { success: response?.data?.success || false };
+    return response_data;
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      response: "Something went wrong.",
+      // eslint-disable-next-line eqeqeq
+      logUserOut: response?.data?.message == "Invalid authentication token",
+    };
   }
-  const response_data =
-    !empty(response?.data?.data) && !empty(response?.data?.success)
-      ? {
-          response: response.data.data,
-          success: response.data.success,
-          count: !empty(response?.data?.count) ? response.data.count : 0,
-        }
-      : { success: response?.data?.success || false };
-  return response_data;
 };
 
 const isNumber = (value = null) => {

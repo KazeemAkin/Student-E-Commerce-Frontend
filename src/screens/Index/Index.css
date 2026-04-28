@@ -1,6 +1,7 @@
 .main-wrapper {
   font-family: "Poppins";
   box-sizing: border-box;
+  position: relative;
 
   .listings-wrapper {
     padding: 10px 25px;
