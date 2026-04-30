@@ -175,6 +175,20 @@
   }
 }
 
+
+@media only screen and (min-width: 860px) {
+  .login-page-wrapper {
+    .login-container {
+      padding: 300px 10%;
+
+      .form-wrapper {
+        padding: 0 30px;
+        width: 80%;
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .login-page-wrapper {
     .login-container {
@@ -182,7 +196,7 @@
 
       .form-wrapper {
         padding: 0 30px;
-        width: 50%;
+        width: 70%;
         margin-top: 60px;
         display: flex;
         justify-content: center;

@@ -24,8 +24,8 @@ import { AuthContext } from "../Root/ProtectedRoute";
 import { empty, isArray, isObject } from "../../Utilities/utils";
 
 function ProfileHeader() {
-  const { user } = useContext(AuthContext);
   const { user_id } = useParams();
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="profile-header">

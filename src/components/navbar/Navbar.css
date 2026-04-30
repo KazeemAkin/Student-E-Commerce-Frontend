@@ -281,6 +281,10 @@
 
   .not-logged-in-right-nav {
     ul {
+      .sign-up-li {
+        display: flex;
+      }
+
       li {
         .sign-up-btn {
           border-radius: 21px;

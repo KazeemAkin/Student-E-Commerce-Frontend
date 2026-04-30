@@ -20,13 +20,13 @@ export const ProtectedRoute = ({ is_user_route = false }) => {
       if (empty(storedToken)) {
         setIsLoggedIn(false);
       }
-      const getUserDatails = await getUserDetails();
+      const getUserData = await getUserDetails();
       if (
-        isObject(getUserDatails) &&
-        getUserDatails.success &&
-        getUserDatails.userDetails
+        isObject(getUserData) &&
+        getUserData.success &&
+        getUserData.userDetails
       ) {
-        setUser(getUserDatails.userDetails);
+        setUser(getUserData.userDetails);
         setIsLoggedIn(true);
       }
     };

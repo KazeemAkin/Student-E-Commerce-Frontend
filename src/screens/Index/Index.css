@@ -49,6 +49,7 @@
       img {
         width: 100%;
         height: auto;
+      cursor: pointer;
       }
     }
   }
@@ -572,6 +573,12 @@
           }
         }
       }
+    }
+  }
+
+  .profile-page {
+    .listings-wrapper {
+      padding: 0 18%;
     }
   }
 

@@ -238,7 +238,9 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
         )}
       </div>
       <div className="navbar_left">
-        <img className="logo-image" src={appLogo} alt="" />
+        <NavLink to={ROUTE_HOME}>
+          <img className="logo-image" src={appLogo} alt="" />
+        </NavLink>
 
         {include_search && (
           <div className="search-box">

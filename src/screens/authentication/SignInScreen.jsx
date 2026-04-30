@@ -76,6 +76,7 @@ function SignInScreen() {
         );
       }
 
+      console.log({ response_data });
       if (response_data?.response?.jwt?.accessToken) {
         localStorage.setItem(
           "studentAccessToken",

@@ -4,7 +4,7 @@
 /* scrollbar */
 /* colors */
 /* 
-  #633ccd
+  #fbae3e
 */
 :root {
   --primary: #fbae3e;
@@ -512,11 +512,11 @@ main {
 }
 
 .p-progress-spinner-circle {
-  stroke: #633ccd !important;
+  stroke: #fbae3e !important;
 }
 
 .button_spinner .p-progress-spinner-circle {
-  stroke: #633ccd !important;
+  stroke: #fbae3e !important;
 }
 
 .custom-toast .p-toast {
@@ -543,7 +543,7 @@ main {
 .form-section-title {
   margin-top: 20px;
   font-size: 16px;
-  color: #633ccd;
+  color: #fbae3e;
 }
 
 .form-button-container {

@@ -17,7 +17,7 @@ import { isArray } from "../../Utilities/utils";
 
 const product_items = [
   {
-    id: 1,
+    _id: 1,
     title: "Engineering textbook",
     image: product_image_1,
     avatar: avatar,
@@ -25,7 +25,7 @@ const product_items = [
     sellerUsername: "John Doe",
   },
   {
-    id: 2,
+    _id: 2,
     title: "Cooking utensils",
     image: product_image_2,
     avatar: avatar,
@@ -33,7 +33,7 @@ const product_items = [
     sellerUsername: "Tinka",
   },
   {
-    id: 3,
+    _id: 3,
     title: "Mattress",
     image: product_image_3,
     avatar: avatar,
@@ -41,7 +41,7 @@ const product_items = [
     sellerUsername: "Jane Smith",
   },
   {
-    id: 4,
+    _id: 4,
     title: "School Bag",
     image: product_image_4,
     avatar: avatar,
@@ -57,9 +57,9 @@ function Listings({ title = "Listings", ...other }) {
 
       <div className="listings-container">
         {isArray(product_items) &&
-          product_items.map((item) => {
+          product_items.map((item, _id) => {
             return (
-              <div className="listing-item">
+              <div className="listing-item" key={_id}>
                 <NavLink
                   to={ROUTE_PRODUCT_DETAILS}
                   style={{ textDecoration: "none", color: colors.black }}

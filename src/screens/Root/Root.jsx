@@ -63,7 +63,6 @@ const Root = () => {
         <Route element={<ResetPasswordScreen />} path={ROUTE_RESET_PASSWORD} />
 
         {/* protected route */}
-        <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
           <Route
             path={ROUTE_HOME}
             element={<IndexScreen />}
@@ -88,15 +87,11 @@ const Root = () => {
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
           {/* products */}
           <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
-
           {/* Profile */}
-          <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />
-        </Route>
+          <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  
+          {/* user route */}
+        {/* End of protected route */}
 
-        {/* user route */}
-
-        {/* <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
-        </Route> */}
 
         {/* authentication. Non protected */}
         <Route path="*" element={<NotFound />} />
