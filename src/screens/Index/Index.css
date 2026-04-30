@@ -448,6 +448,46 @@
   }
 }
 
+
+@media only screen and (min-width: 860px) {
+.main-wrapper {
+    /* listings */
+    .listings-container {
+      padding: 20px 0;
+      gap: 20px;
+
+      .listing-item {
+        flex: 0 0 22%;
+        min-width: 22%;
+
+        .header-image {
+          height: 130px;
+        }
+
+        .title,
+        .price {
+          font-size: 12px;
+          text-wrap: wrap;
+        }
+
+        .bottom-box {
+          .avatar-box {
+            width: 18px;
+            height: 18px;
+          }
+
+          .name-box {
+            font-size: 12px;
+            .cart-icon {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: 900px) {
   .main-wrapper {
     .home-header-wrapper {
