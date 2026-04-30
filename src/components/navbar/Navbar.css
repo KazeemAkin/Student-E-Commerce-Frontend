@@ -32,6 +32,11 @@
   align-items: center;
 }
 
+.navbar_left {
+  display: flex;
+  justify-content: center;
+}
+
 .navbar_left .search-box {
   display: none;
 }

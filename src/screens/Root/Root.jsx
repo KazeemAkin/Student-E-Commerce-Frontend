@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 
 // screens
 import ErrorBoundary from "../../components/error/AppErrorBoundary";
-import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
@@ -14,6 +13,7 @@ import {
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
   ROUTE_PRODUCT_ADD,
+  ROUTE_PRODUCTS,
   ROUTE_PROFILE,
   ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_RESET_PASSWORD,
@@ -40,6 +40,7 @@ import AboutUsScreen from "../Index/AboutUsScreen";
 import ServicesScreen from "../Index/ServicesScreen";
 import ContactUsScreen from "../Index/ContactUsScreen";
 import AddProductScreen from "../product/AddProductScreen";
+import ProductsScreen from "../product/ProductsScreen";
 
 const Root = () => {
   return (
@@ -85,10 +86,13 @@ const Root = () => {
           <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
           <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
+          
           {/* products */}
-          <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
+            <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
+            <Route element={<ProductsScreen />} path={ROUTE_PRODUCTS} />
+        
           {/* Profile */}
-          <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  
+            <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  
           {/* user route */}
         {/* End of protected route */}
 

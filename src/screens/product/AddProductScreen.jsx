@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Formik } from "formik";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 // css
-import "./AddProduct.css";
+import "./Product.css";
 
 // components
 import Footer from "../../components/footer/Footer";
@@ -23,14 +23,14 @@ import MainHeader from "../../components/header/mainHeader/MainHeader";
 import { categories } from "../../data/categories";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import { Toast } from "primereact/toast";
+import { ROUTE_PRODUCTS } from "../../config/constants";
+import { useUserGuard } from "../../hooks/UserGuard";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required(required),
   description: Yup.string().required(required),
   condition: Yup.string().required(required),
-  pickup_date: Yup.string().required(required),
-  pickup_time: Yup.string().required(required),
   status: Yup.string().required(required),
   category: Yup.string().required(required),
   price: Yup.string().required(required),
@@ -41,8 +41,6 @@ const initialValues = {
   name: "",
   description: "",
   condition: "",
-  pickup_date: "",
-  pickup_time: "",
   status: "",
   category: "",
   price: "",
@@ -50,9 +48,12 @@ const initialValues = {
 };
 
 function AddProductScreen() {
+  useUserGuard();
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
   const [listingImage, setListingImage] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [processed, setProcessed] = useState(false);
   const toastTR = useRef(null);
 
   // alert functions
@@ -65,13 +66,14 @@ function AddProductScreen() {
     });
   };
 
+
   /**
    * Add product form submit handler
    * @param {*} values
    */
   const handleSubmit = async (values) => {
     try {
-      if (!isLoading) setIsLoading(false);
+      if (!isLoading) setIsLoading(true);
 
       values.product_image = listingImage;
       const response = await productApi.addProduct(values);
@@ -86,13 +88,16 @@ function AddProductScreen() {
         );
       }
 
-      return responseDailog(
+      responseDailog(
         "success",
         "Success",
         "Product Uploaded Successfully.",
       );
+      setProcessed(true);
+      setTimeout(() => {
+        navigate(ROUTE_PRODUCTS);
+      }, 2000)
     } catch (error) {
-      console.log({ error }, "nnn");
       responseDailog("error", "Error Alert", "Something went wrong.");
     } finally {
       setIsLoading(false);
@@ -147,7 +152,7 @@ function AddProductScreen() {
                   placeholder="Enter product name"
                   fontSize={14}
                   required={true}
-                  height={30}
+                  height={40}
                   width="100%"
                   backgroundColor={colors.ash}
                   paddingLeft={25}
@@ -162,7 +167,7 @@ function AddProductScreen() {
                   placeholder="Select Category"
                   name="category"
                   options={isArray(categories) ? categories : []}
-                  height={50}
+                  height={40}
                   valueKey="value"
                   display="title"
                   containerWidth="100%"
@@ -176,7 +181,7 @@ function AddProductScreen() {
                   placeholder="Enter product price"
                   fontSize={14}
                   required={true}
-                  height={30}
+                  height={40}
                   width="100%"
                   type="number"
                   backgroundColor={colors.ash}
@@ -226,47 +231,13 @@ function AddProductScreen() {
                   placeholder="Select Condition"
                   name="condition"
                   options={isArray(conditions) ? conditions : []}
-                  height={50}
+                  height={40}
                   valueKey="value"
                   display="value"
                   containerWidth="100%"
                   selectedOption={values?.condition}
                   handleChangeFunc={handleChange}
                 />
-              </div>
-              <div className="date-time-container">
-                <div className="field-container">
-                  <InputField
-                    name="pickup_date"
-                    fontSize={14}
-                    height={30}
-                    rows={8}
-                    cols={8}
-                    required={true}
-                    width="50%"
-                    type="date"
-                    backgroundColor={colors.ash}
-                    paddingLeft={25}
-                    paddingRight={25}
-                    labelTitle="Pickup Date"
-                  />
-                </div>
-                <div className="field-container">
-                  <InputField
-                    name="pickup_time"
-                    fontSize={14}
-                    height={30}
-                    rows={8}
-                    cols={8}
-                    required={true}
-                    width="50%"
-                    type="time"
-                    backgroundColor={colors.ash}
-                    paddingLeft={25}
-                    paddingRight={25}
-                    labelTitle="Pickup Time"
-                  />
-                </div>
               </div>
 
               <div className="field-container">
@@ -295,8 +266,8 @@ function AddProductScreen() {
                 <span className="required">&nbsp;*</span>
               </div>
               <div
-                className=" flex"
-                style={{ justifyContent: "flex-start", width: "100%", gap: 25 }}
+                className="flex flex-start"
+                style={{ width: "100%", gap: 25, }}
               >
                 <InputField
                   name="status"
@@ -304,11 +275,12 @@ function AddProductScreen() {
                   height={25}
                   required={true}
                   width={25}
+                  containerWidth="auto"
                   type="radio"
                   sideLabelTitle="Listed"
                   defaultOutline="transparent"
                   value="Listed"
-                  labelMarginTop={5}
+                  labelMarginTop={4}
                   labelMarginLeft={8}
                   focusedOutline="transparent"
                 />
@@ -317,20 +289,21 @@ function AddProductScreen() {
                   fontSize={14}
                   height={25}
                   required={true}
+                  containerWidth="auto"
                   width={25}
                   type="radio"
                   sideLabelTitle="Unlisted"
                   defaultOutline="transparent"
                   value="Unlisted"
-                  labelMarginTop={5}
+                  labelMarginTop={4}
                   labelMarginLeft={8}
                   focusedOutline="transparent"
                 />
               </div>
 
               <div className="flex justify-center form-button-box w-100pc">
-                <ButtonIcon
-                  buttonText="Send Message"
+                { !processed && <ButtonIcon
+                  buttonText="Submit"
                   backgroundColor={colors.primary}
                   borderColor={colors.primary}
                   color={colors.white}
@@ -340,7 +313,7 @@ function AddProductScreen() {
                   fontSize={16}
                   className="form-button"
                   onClick={() => handleSubmit(values)}
-                />
+                />}
               </div>
             </Form>
           )}

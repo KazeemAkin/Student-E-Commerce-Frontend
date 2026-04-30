@@ -6,6 +6,13 @@ const addProduct = (payload) =>
     ...payload,
   });
 
+
+const getUserProducts = (payload) =>
+  client.get("/products", {
+    params: { ...payload },
+  });
+
 export default {
   addProduct,
+  getUserProducts
 };

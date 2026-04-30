@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, } from 'react';
 import { getUserDetails } from '../api/GetUserDetails';
 import { empty, isObject } from '../Utilities/utils';
 import { AuthContext } from '../screens/Root/ProtectedRoute';
+import apiClient from '../api/Client';
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -25,6 +26,10 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         return;
       }
+
+      apiClient.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
       
       const response = await getUserDetails();
       if (isObject(response) && response.success && response.userDetails) {
