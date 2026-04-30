@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ErrorMessage, Field } from "formik";
 import { empty } from "../../Utilities/utils";
 import colors from "../../config/colors";
@@ -8,7 +8,7 @@ export default function InputField({
   placeholder,
   icon,
   id,
-  type,
+  type = "",
   height = 40,
   width = "100%",
   labelTitle,
@@ -25,6 +25,13 @@ export default function InputField({
   padding = "10px",
   paddingLeft,
   paddingRight,
+  sideLabelTitle = "",
+  otherStyles,
+  defaultOutline = "1px solid #f1f1f1",
+  labelMarginTop,
+  labelMarginLeft,
+  focusedOutline = "1px solid" + colors.primary,
+  inputOtherStyles = {},
   ...others
 }) {
   const [focused, setFocused] = useState(false);
@@ -44,7 +51,14 @@ export default function InputField({
             {labelTitle} {required ? <span className="required">*</span> : ""}
           </label>
         )}
-        <div style={{ display: "flex", flexDirection: "row", marginTop: 5 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginTop: 5,
+            ...otherStyles,
+          }}
+        >
           {icon && (
             <span className="p-inputgroup-addon">
               <i className={"pi pi-" + icon}></i>
@@ -65,9 +79,7 @@ export default function InputField({
             style={{
               width,
               border: "1px solid #f1f1f1",
-              outline: focused
-                ? "1px solid" + colors.primary
-                : "1px solid #f1f1f1",
+              outline: focused ? focusedOutline : defaultOutline,
               padding,
               paddingLeft,
               paddingRight,
@@ -75,10 +87,19 @@ export default function InputField({
               fontSize,
               backgroundColor,
               cursor: isDisabled ? "not-allowed" : "text",
+              ...inputOtherStyles,
             }}
             className={addClassName}
             {...others}
           />
+          {!empty(sideLabelTitle) && (
+            <label
+              style={{ marginTop: labelMarginTop, marginLeft: labelMarginLeft }}
+              htmlFor={id}
+            >
+              {sideLabelTitle}
+            </label>
+          )}
         </div>
         <ErrorMessage
           name={name}

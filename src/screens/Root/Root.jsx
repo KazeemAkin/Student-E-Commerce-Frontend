@@ -6,14 +6,19 @@ import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
+  ROUTE_ABOUT_US,
+  ROUTE_CONTACT,
   ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
+  ROUTE_PRODUCT_ADD,
+  ROUTE_PROFILE,
   ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_RESET_PASSWORD,
   ROUTE_SEND_ACCESS_CODE,
+  ROUTE_SERVICES,
   ROUTE_SIGN_IN,
   ROUTE_USER_TYPE,
   ROUTE_VERIFY_ACCESS_CODE,
@@ -30,6 +35,11 @@ import ForgotPasswordScreen from "../authentication/ForgotPasswordScreen";
 import ResetPasswordScreen from "../authentication/ResetPasswordScreen";
 import NotFound from "../error_pages/NotFound";
 import UnauthorizedPage from "../error_pages/UnauthorizedPage";
+import ProfileScreen from "../profile/ProfileScreen";
+import AboutUsScreen from "../Index/AboutUsScreen";
+import ServicesScreen from "../Index/ServicesScreen";
+import ContactUsScreen from "../Index/ContactUsScreen";
+import AddProductScreen from "../product/AddProductScreen";
 
 const Root = () => {
   return (
@@ -73,7 +83,20 @@ const Root = () => {
             path={ROUTE_REGISTRATION_SUCCESSFUL}
           />
           <Route element={<SignInScreen />} path={ROUTE_SIGN_IN} />
+          <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
+          <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
+          <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
+          {/* products */}
+          <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
+
+          {/* Profile */}
+          <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />
         </Route>
+
+        {/* user route */}
+
+        {/* <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
+        </Route> */}
 
         {/* authentication. Non protected */}
         <Route path="*" element={<NotFound />} />

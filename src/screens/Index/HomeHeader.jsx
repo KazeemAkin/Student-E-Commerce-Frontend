@@ -9,16 +9,16 @@ function HomeHeader() {
     <section className="home-header-wrapper">
       <div className="text-area">
         <h1>
-          Student
-          <br />
-          Pocket-Friendly
+          Student Pocket-Friendly
           <br />
           E-commerce
         </h1>
-        <h6>
-          Sell what you no longer need, buy what you need at an affordable
-          price.
-        </h6>
+        <div className="sub-text">
+          <h6>
+            Sell what you no longer need, buy what you need at an affordable
+            price.
+          </h6>
+        </div>
         <div className="learn-more">
           <ButtonIcon
             borderRadius={0}

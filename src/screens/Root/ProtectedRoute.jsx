@@ -2,12 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { empty, isObject } from "../../Utilities/utils";
 import { getUserDetails } from "../../api/GetUserDetails";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 // css
 
 export const AuthContext = createContext();
 
-export const ProtectedRoute = () => {
+export const ProtectedRoute = ({ is_user_route = false }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -32,6 +33,27 @@ export const ProtectedRoute = () => {
     authenticateUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  if (is_user_route) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          backgroundColor: "rgba(255,255,255,0.7)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ProgressSpinner
+          style={{ width: 50, height: 50 }}
+          strokeWidth={9}
+          animationDuration={0.5}
+        />
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider

@@ -71,7 +71,7 @@ export default function SelectField({
               padding: "10px",
               height,
               borderRadius: 7,
-              backgroundColor: colors.white,
+              backgroundColor: colors.lightgray,
               cursor: isDisabled ? "not-allowed" : "text",
               outline: focused
                 ? "1px solid" + colors.primary
