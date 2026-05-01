@@ -19,13 +19,12 @@ import {
   ROUTE_EDIT_PROFILE,
   ROUTE_PRODUCT_ADD,
   ROUTE_PRODUCTS,
-  ROUTE_PROFILE_AVATAR_EDIT,
 } from "../../config/constants";
 import { useContext } from "react";
 import { empty, isArray, isObject } from "../../Utilities/utils";
 import { AuthContext } from "../../hooks/UseAuth";
 
-function ProfileHeader() {
+function ProfileHeader({ openAvatarModal }) {
   const { user_id } = useParams();
   const { user } = useContext(AuthContext);
 
@@ -37,18 +36,16 @@ function ProfileHeader() {
         <div className="profile-data">
           <div className="avatar-box">
             <div className="avatar-container">
-              { user?.avatar ? <img src={user.avatar} alt="profile avatar" /> : <img src={defaultAvatar} alt="default avatar" />}
+              { !empty(user?.avatar) ? <img src={user.avatar} alt="profile avatar" /> : <img src={defaultAvatar} alt="default avatar" />}
             {isObject(user) &&
               isArray(user?.user_type) &&
               user.user_type.includes("Seller") &&
               !user_id && (
                 <div className="edit-pen">
-                    <NavLink to={ROUTE_PROFILE_AVATAR_EDIT + `/${encodeURIComponent(user?.id)}`}>
-                      <div className="pen-box">
-                        <FaPen color={colors.black} size={12} />
-                      </div>
-                    </NavLink>
+                  <div className="pen-box" onClick={openAvatarModal}>
+                    <FaPen color={colors.black} size={12} />
                   </div>
+                </div>
               )}
             </div>
           </div>

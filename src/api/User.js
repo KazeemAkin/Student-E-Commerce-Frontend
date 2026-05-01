@@ -6,6 +6,13 @@ const updateProfile = (payload) =>
     ...payload,
   });
 
+
+const uploadAvatar = (payload) =>
+  client.patch("/profile/avatar/update", {
+    ...payload,
+  });
+
 export default {
-  updateProfile
+  updateProfile,
+  uploadAvatar
 };
