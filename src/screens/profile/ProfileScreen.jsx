@@ -20,7 +20,7 @@ function ProfileScreen() {
       <ProfileHeader />
 
       {/* listings */}
-      <Listings title="Listed Items" />
+      <Listings title="Listed Items" is_user_list={true} />
 
       {/* Ratings */}
       <Ratings />

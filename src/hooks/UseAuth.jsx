@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect, } from 'react';
+import React, { useContext, useState, useEffect, createContext, } from 'react';
 import { getUserDetails } from '../api/GetUserDetails';
 import { empty, isObject } from '../Utilities/utils';
-import { AuthContext } from '../screens/Root/ProtectedRoute';
 import apiClient from '../api/Client';
 
+export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -28,7 +28,7 @@ import { empty, isString, prepareResponseData } from "../../Utilities/utils";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
-import { AuthContext } from "../Root/ProtectedRoute";
+import { AuthContext } from "../../hooks/UseAuth";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({

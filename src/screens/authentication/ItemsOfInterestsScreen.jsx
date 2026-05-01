@@ -22,7 +22,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
 import { ItemsOfInterests } from "../../data/itemsOfInterests";
-import { AuthContext } from "../Root/ProtectedRoute";
+import { AuthContext } from "../../hooks/UseAuth";
 
 function ItemsOfInterestsScreen() {
   const navigation = useNavigate();

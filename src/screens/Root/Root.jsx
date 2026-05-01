@@ -7,12 +7,14 @@ import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_ABOUT_US,
   ROUTE_CONTACT,
+  ROUTE_EDIT_PROFILE,
   ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
   ROUTE_PRODUCT_ADD,
+  ROUTE_PRODUCT_EDIT,
   ROUTE_PRODUCTS,
   ROUTE_PROFILE,
   ROUTE_REGISTRATION_SUCCESSFUL,
@@ -39,8 +41,9 @@ import ProfileScreen from "../profile/ProfileScreen";
 import AboutUsScreen from "../Index/AboutUsScreen";
 import ServicesScreen from "../Index/ServicesScreen";
 import ContactUsScreen from "../Index/ContactUsScreen";
-import AddProductScreen from "../product/AddProductScreen";
+import AddUpdateProductScreen from "../product/AddUpdateProductScreen";
 import ProductsScreen from "../product/ProductsScreen";
+import UpdateProfileScreen from "../profile/UpdateProfileScreen";
 
 const Root = () => {
   return (
@@ -88,11 +91,13 @@ const Root = () => {
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
           
           {/* products */}
-            <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
+            <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_ADD} />
+            <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_EDIT + '/:product_id'} />
             <Route element={<ProductsScreen />} path={ROUTE_PRODUCTS} />
         
           {/* Profile */}
             <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  
+            <Route element={<UpdateProfileScreen />} path={ROUTE_EDIT_PROFILE + '/:user_id'} />  
           {/* user route */}
         {/* End of protected route */}
 

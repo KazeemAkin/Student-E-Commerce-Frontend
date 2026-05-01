@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  red: "#d23b3b",
+  red: "#FF0303",
   white: "#ffffff",
   secondary: "#1f1346",
   lightRed: "#f33c3c",

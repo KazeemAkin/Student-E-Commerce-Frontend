@@ -254,12 +254,12 @@
   }
 }
 
-@media only screen and (min-width: 890px) {
+@media only screen and (min-width: 768px) {
   .navbar {
     padding: 5px 3%;
     width: 100%;
     position: fixed;
-    margin-top: 0;
+    top: 0;
 
     .logo-image {
       width: 150px;
@@ -269,7 +269,27 @@
 
   .navbar_left,
   .navbar_left .search-box {
-    display: block;
+    display: flex;
+  }
+
+  .navbar_left {
+    width: 70%;
+    gap: 8%;
+
+    .search-box {
+      width: 60%;
+      background-color: var(--light-gray);
+      padding: 8px 15px;
+      border-radius: 21px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 14px;
+      column-gap: 12px;
+      cursor: pointer;
+      color: var(--dark-gray);
+      font-weight: normal;
+    }
   }
 
   .nav_icon {
@@ -277,7 +297,7 @@
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1200px) {
   .navbar {
     padding: 5px 2%;
     width: 100%;
@@ -341,17 +361,6 @@
 
     .search-box {
       width: 40%;
-      background-color: var(--light-gray);
-      padding: 8px 15px;
-      border-radius: 21px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      font-size: 14px;
-      column-gap: 12px;
-      cursor: pointer;
-      color: var(--dark-gray);
-      font-weight: normal;
     }
   }
 

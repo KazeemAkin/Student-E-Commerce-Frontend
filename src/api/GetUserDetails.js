@@ -34,7 +34,6 @@ export const getUserDetails = async () => {
 
     return { success: false, response: "Something went wrong." };
   } catch (error) {
-    console.log(error);
     return { success: false, response: "Something went wrong." };
   }
 };

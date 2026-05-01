@@ -69,6 +69,7 @@
       flex: 0 0 45%;
       min-width: 45%;
       box-sizing: border-box;
+      padding-bottom: 10px;
 
       .header-image {
         width: 100%;
@@ -77,24 +78,41 @@
         justify-content: center;
         align-items: center;
         box-sizing: border-box;
-        padding: 8px;
+        margin-bottom: 10px;
+        overflow: hidden;
 
         img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          object-fit: cover;
         }
+      }
+
+      .top {
+        display: flex;
+        justify-content: row;
+        justify-content: space-between;
       }
 
       .title,
       .price {
         font-size: 10px;
-        margin-top: 5px;
+        margin-top: 8px;
         padding: 0 8px;
+        font-weight: bold;
       }
 
       .title {
-        margin-top: 10px;
+        margin-top: 8px;
+        text-overflow: ellipsis;
+        white-space: nowrap; 
+        overflow: hidden;
+        width: 70%;
+      }
+
+      .price {
+        width: 30%;
+        text-align: right;
       }
 
       .bottom-box {
@@ -105,6 +123,7 @@
         align-items: center;
         font-size: 10px;
         padding: 10px 8px;
+        margin-top: 8px;
         gap: 8px;
 
         .avatar-box {
@@ -450,16 +469,20 @@
 }
 
 
-@media only screen and (min-width: 860px) {
-.main-wrapper {
+@media only screen and (min-width: 768px) {
+  .main-wrapper {
+    .listings-wrapper {
+      padding: 10px 8%;
+      height: auto;
+    }
     /* listings */
     .listings-container {
       padding: 20px 0;
       gap: 20px;
 
       .listing-item {
-        flex: 0 0 22%;
-        min-width: 22%;
+        flex: 0 0 30%;
+        min-width: 30%;
 
         .header-image {
           height: 130px;
@@ -489,8 +512,13 @@
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1200px) {
   .main-wrapper {
+
+    .listings-wrapper {
+      padding: 0;
+    }
+
     .home-header-wrapper {
       padding: 40px 8%;
       display: flex;
@@ -537,7 +565,7 @@
       }
     }
     .listings-wrapper {
-      padding: 0 8%;
+      padding: 0;
     }
 
     /* listings */
@@ -546,8 +574,8 @@
       gap: 20px;
 
       .listing-item {
-        flex: 0 0 18%;
-        min-width: 18%;
+        flex: 0 0 22%;
+        min-width: 22%;
 
         .header-image {
           height: 130px;
@@ -578,7 +606,7 @@
 
   .profile-page {
     .listings-wrapper {
-      padding: 0 18%;
+      padding: 0 15%;
     }
   }
 

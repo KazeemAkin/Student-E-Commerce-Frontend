@@ -24,8 +24,8 @@ import {
   ROUTE_SIGN_IN,
 } from "../../config/constants";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../screens/Root/ProtectedRoute";
 import { empty } from "../../Utilities/utils";
+import { AuthContext } from "../../hooks/UseAuth";
 
 const Navbar = ({ active_screen = "home", include_search = true }) => {
   const { user } = useContext(AuthContext) || {};

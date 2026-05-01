@@ -12,7 +12,22 @@ const getUserProducts = (payload) =>
     params: { ...payload },
   });
 
+
+const getProductDetails = (product_id) =>
+  client.get(`/product/${product_id}`);
+
+const updateProduct = (payload) =>
+  client.patch("/product/update", {
+    ...payload
+  });
+  
+const deleteProduct = (product_id) =>
+  client.delete(`/product/delete/${product_id}`);
+
 export default {
   addProduct,
-  getUserProducts
+  getUserProducts,
+  getProductDetails,
+  updateProduct,
+  deleteProduct
 };

@@ -18,10 +18,12 @@ const MainHeader = ({
   multiButtons,
   buttonHeight = 30,
   fontSize = 16,
+  borderBottom,
+  marginBottom,
   ...others
 }) => {
   return (
-    <div className="main_header">
+    <div className="main_header" style={{ borderBottom, marginBottom }}>
       <div className="left_header_title">
         {leftIcon && <span className="main_header_icon">{leftIcon}</span>}
         <span className="main_header_text">

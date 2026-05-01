@@ -22,7 +22,7 @@ import Footer from "../../components/footer/Footer";
 import { FaCheck } from "react-icons/fa";
 import CustomCheckbox from "../../components/form/CustomCheckbox";
 import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
-import { AuthContext } from "../Root/ProtectedRoute";
+import { AuthContext } from "../../hooks/UseAuth";
 
 function UserTypeScreen() {
   const navigation = useNavigate();

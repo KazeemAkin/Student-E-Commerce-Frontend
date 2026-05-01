@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Formik } from "formik";
 import { Form } from "react-router-dom";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
 import * as Yup from "yup";
 
 // css
@@ -18,8 +20,9 @@ import MainHeader from "../../components/header/mainHeader/MainHeader";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import { Toast } from "primereact/toast";
 import { useUserGuard } from "../../hooks/UserGuard";
-import { AuthContext } from "../Root/ProtectedRoute";
 import UserProducts from "./UserProducts";
+import colors from "../../config/colors";
+import { AuthContext } from "../../hooks/UseAuth";
 
 const listingTypes = [
   {
@@ -42,10 +45,13 @@ function ProductsScreen() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);
+  const [activeProduct, setActiveProduct] = useState({});
+  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
 
   useEffect(() => {
-    if (!user) return;   
-    getUserProducts();
+    if (user) {
+      getUserProducts();
+    };   
   }, [user]);
 
   // alert functions
@@ -58,14 +64,13 @@ function ProductsScreen() {
     });
   };
 
+  const validationSchema = Yup.object().shape({
+    filter: Yup.string().required("This field is required!"),
+  });
 
-const validationSchema = Yup.object().shape({
-  filter: Yup.string().required("This field is required!"),
-});
-
-const initialValues = {
-  filter: "",
-};
+  const initialValues = {
+    filter: "",
+  };
 
 
   /**
@@ -89,7 +94,6 @@ const initialValues = {
 
       return setProducts(isArray(response_data?.response?.products) ? response_data.response.products : []);
     } catch (error) {
-      console.log({ error });
       responseDialog("error", "Error Alert", "Something went wrong while fetching products.");
     } finally {
       setIsLoading(false);
@@ -102,6 +106,80 @@ const initialValues = {
 
     await getUserProducts(value);
   }
+
+  const openDeleteModal = (product) => {
+    setActiveProduct(product);
+    setDisplayDeleteModal(true);
+  }
+
+  const deleteProduct = async () => {
+    try {
+      if (!isLoading) setIsLoading(true);
+      const response = await productApi.deleteProduct(activeProduct?._id);
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return responseDialog(
+          "error",
+          "Error Alert",
+          !empty(response_data) && !empty(response_data.response)
+            ? response_data.response
+            : "Failed to delete products!",
+        );
+      }
+
+      responseDialog(
+        'success',
+        'Successful',
+        `Product ${activeProduct?.name || ''} deleted successfully`
+      )
+
+      return getUserProducts();
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong while delete the product.");
+    } finally {
+      setIsLoading(false);
+      setDisplayDeleteModal(false);
+    }
+  }
+
+
+  const deleteSessionDialogFooter = (
+    <div>
+      <Button
+        label="Cancel"
+        style={{
+          backgroundColor: colors.red,
+          color: colors.white,
+          borderColor: colors.red,
+          borderWidth: 1,
+          height: 33,
+          borderRadius: 25,
+          width: 110,
+          fontSize: 14,
+          fontWeight: 200
+        }}
+        onClick={() => {
+          setDisplayDeleteModal(false)
+        }}
+      />
+      <Button
+        label="Continue"
+        style={{
+          backgroundColor: colors.primary,
+          color: colors.white,
+          borderColor: colors.primary,
+          borderWidth: 1,
+          height: 33,
+          borderRadius: 25,
+          width: 110,
+          fontSize: 14,
+          fontWeight: 200
+        }}
+        onClick={() => deleteProduct()}
+      />
+    </div>
+  );
+
 
   return (
     <section className="main-wrapper">
@@ -146,13 +224,34 @@ const initialValues = {
               <UserProducts
                 product_data={product}
                 key={product?._id}
+                deleteProduct={() => openDeleteModal(product)}
               />
             ))
           }
         </div>
       </div>
-      
 
+      <Dialog
+        visible={displayDeleteModal}
+        style={{ width: "32rem", zIndex: 999999 }}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        header="Confirm"
+        headerStyle={{ fontSize: 14, borderBottom: `1px solid ${colors.ash}`, padding: '10px 15px' }}
+        modal
+        footer={deleteSessionDialogFooter}
+        onHide={() => setDisplayDeleteModal(false)}
+      >
+        <div
+          className="confirmation-content mt-10"
+        >
+          {
+            <span>
+              You are about to delete this listed product, <strong>{ activeProduct?.name || "" }</strong>, are you sure you want to continue?
+            </span>
+          }
+        </div>
+      </Dialog>
+      
       <Footer />
       {isLoading && <FullPageLoader visible={isLoading} />}
       <Toast ref={toastTR} position="bottom-left" />

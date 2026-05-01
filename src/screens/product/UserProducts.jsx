@@ -5,9 +5,10 @@ import colors from '../../config/colors';
 // image 
 import broken_image from "../../assets/broken-image.png";
 import { NavLink } from 'react-router-dom';
-import { ROUTE_PRODUCT_DELETE, ROUTE_PRODUCT_EDIT } from '../../config/constants';
+import { ROUTE_PRODUCT_EDIT } from '../../config/constants';
 
-function UserProducts({ product_data }) {
+function UserProducts({ product_data, deleteProduct }) {
+
   return (
     <section className="user-product-listing-item" >
       <div className="left">
@@ -25,9 +26,7 @@ function UserProducts({ product_data }) {
         <NavLink to={ROUTE_PRODUCT_EDIT + '/' + product_data?._id} >
           <div className="action-box"><FaPen color={colors.green} /></div>
         </NavLink>
-        <NavLink to={ROUTE_PRODUCT_DELETE + '/' + product_data?._id} >
-          <div className="action-box"><FaTrash color={colors.red} /></div>
-        </NavLink>
+        <div className="action-box" onClick={deleteProduct}><FaTrash color={colors.red} /></div>
       </div>
     </section>
   )

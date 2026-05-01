@@ -53,7 +53,7 @@ function Ratings() {
                         style={{ color: colors.primary }}
                       />
                     </span>
-                    <span className="rating-text">{item?.rating || 0}</span>
+                    <span className="rating-text">({item?.rating || 0})</span>
                   </div>
                 </div>
                 <div className="message">{item?.message || "---"}</div>

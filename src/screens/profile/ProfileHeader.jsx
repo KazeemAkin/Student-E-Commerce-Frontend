@@ -16,12 +16,13 @@ import colors from "../../config/colors";
 import { NavLink, useParams } from "react-router-dom";
 import {
   ROUTE_CHAT,
+  ROUTE_EDIT_PROFILE,
   ROUTE_PRODUCT_ADD,
   ROUTE_PRODUCTS,
 } from "../../config/constants";
 import { useContext } from "react";
-import { AuthContext } from "../Root/ProtectedRoute";
 import { empty, isArray, isObject } from "../../Utilities/utils";
+import { AuthContext } from "../../hooks/UseAuth";
 
 function ProfileHeader() {
   const { user_id } = useParams();
@@ -57,13 +58,15 @@ function ProfileHeader() {
           </div>
           {isObject(user) &&
             isArray(user?.user_type) &&
-            user?.user_type.includes("Seller") &&
+            user.user_type.includes("Seller") &&
             !user_id && (
               <div className="edit-pen">
-                <div className="pen-box">
-                  <FaPen color={colors.black} size={12} />
+                  <NavLink to={ROUTE_EDIT_PROFILE + `/${encodeURIComponent(user?.id)}`}>
+                    <div className="pen-box">
+                      <FaPen color={colors.black} size={12} />
+                    </div>
+                  </NavLink>
                 </div>
-              </div>
             )}
         </div>
       </div>

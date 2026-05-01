@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Formik } from "formik";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
 // css
@@ -15,8 +15,8 @@ import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
 import { FaRegImage } from "react-icons/fa";
 import SelectField from "../../components/form/SelectField";
 import { conditions } from "../../data/conditions";
-import { useRef, useState } from "react";
-import { empty, isArray, prepareResponseData } from "../../Utilities/utils";
+import { useContext, useEffect, useRef, useState } from "react";
+import { empty, isArray, isObject, prepareResponseData } from "../../Utilities/utils";
 
 import productApi from "../../api/Products";
 import MainHeader from "../../components/header/mainHeader/MainHeader";
@@ -25,6 +25,7 @@ import FullPageLoader from "../../components/loader/FullPageLoader";
 import { Toast } from "primereact/toast";
 import { ROUTE_PRODUCTS } from "../../config/constants";
 import { useUserGuard } from "../../hooks/UserGuard";
+import { AuthContext } from "../../hooks/UseAuth";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
@@ -37,33 +38,81 @@ const validationSchema = Yup.object().shape({
   location: Yup.string().required(required),
 });
 
-const initialValues = {
-  name: "",
-  description: "",
-  condition: "",
-  status: "",
-  category: "",
-  price: "",
-  location: "",
-};
-
-function AddProductScreen() {
+function AddUpdateProductScreen() {
   useUserGuard();
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const [listingImage, setListingImage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [processed, setProcessed] = useState(false);
+  const [ newImage, setNewImage] = useState(false);
   const toastTR = useRef(null);
+  const { user } = useContext(AuthContext);
+  const { product_id } = useParams() || {};
+  const [ initialValues, setInitialValues ] = useState({
+    name: "",
+    description: "",
+    condition: "",
+    status: "",
+    category: "",
+    price: "",
+    location: "",
+  });
+
+  useEffect(() => {
+    if (!empty(product_id)) {
+      if (!user) {
+        return;
+      }
+      getProductDetails();
+    }
+  }, [user]);
 
   // alert functions
-  const responseDailog = (severity = null, summary = null, detail = null) => {
+  const responseDialog = (severity = null, summary = null, detail = null) => {
     toastTR?.current?.show({
       severity,
       summary,
       detail,
       life: 8000,
     });
+  };
+
+  /**
+   * Get product details
+   */
+  const getProductDetails = async () => {
+    try {
+      if (!isLoading) setIsLoading(true);
+
+      const response = await productApi.getProductDetails(product_id);
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return responseDialog(
+          "error",
+          "Error Alert",
+          !empty(response_data) && !empty(response_data.response)
+            ? response_data.response
+            : "Failed to fetch product details!",
+        );
+      }
+      
+      const details = isObject(response_data?.response?.product_details) ? response_data.response.product_details : {};
+      setListingImage(details?.product_image || '');
+      setInitialValues({
+        name: details?.name || '',
+        description: details?.description || '',
+        condition: details?.condition || '',
+        status: details?.status || '',
+        category: details?.category || '',
+        price: details?.price || '',
+        location: details?.location || '',
+      });
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
 
@@ -76,29 +125,36 @@ function AddProductScreen() {
       if (!isLoading) setIsLoading(true);
 
       values.product_image = listingImage;
-      const response = await productApi.addProduct(values);
+      let response = null;
+      if (!empty(product_id)) {
+        values.product_id = product_id;
+        values.new_image = newImage;
+        response = await productApi.updateProduct(values);
+      } else {
+        response = await productApi.addProduct(values);
+      }
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Error Alert",
           !empty(response_data) && !empty(response_data.response)
             ? response_data.response
-            : "Failed to upload product!",
+            : `Failed to ${product_id ? "Update" : "Upload"} product!`,
         );
       }
 
-      responseDailog(
+      responseDialog(
         "success",
         "Success",
-        "Product Uploaded Successfully.",
+        `Product ${product_id ? "Updated" : "Uploaded" } Successfully.`,
       );
       setProcessed(true);
       setTimeout(() => {
         navigate(ROUTE_PRODUCTS);
       }, 2000)
     } catch (error) {
-      responseDailog("error", "Error Alert", "Something went wrong.");
+      responseDialog("error", "Error Alert", "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -122,6 +178,10 @@ function AddProductScreen() {
           setListingImage(base64String);
         };
         reader.readAsDataURL(file);
+
+        if (product_id) {
+          setNewImage(true);
+        }
       }
     } catch (error) {}
   };
@@ -157,6 +217,7 @@ function AddProductScreen() {
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.name || ''}
                   labelTitle="Product Name"
                 />
               </div>
@@ -187,6 +248,7 @@ function AddProductScreen() {
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.price || ''}
                   labelTitle="Product Price"
                 />
               </div>
@@ -204,6 +266,7 @@ function AddProductScreen() {
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.description || ''}
                   labelTitle="Product Description"
                 />
               </div>
@@ -221,6 +284,7 @@ function AddProductScreen() {
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.location || ''}
                   labelTitle="Product pickup location"
                 />
               </div>
@@ -303,7 +367,7 @@ function AddProductScreen() {
 
               <div className="flex justify-center form-button-box w-100pc">
                 { !processed && <ButtonIcon
-                  buttonText="Submit"
+                  buttonText={ !empty(product_id) ? "Update" : "Submit"}
                   backgroundColor={colors.primary}
                   borderColor={colors.primary}
                   color={colors.white}
@@ -322,9 +386,9 @@ function AddProductScreen() {
 
       <Footer />
       {isLoading && <FullPageLoader visible={isLoading} />}
-      <Toast ref={toastTR} position="bottom-left" />
+      <Toast ref={toastTR} position="top-right" />
     </section>
   );
 }
 
-export default AddProductScreen;
+export default AddUpdateProductScreen;
