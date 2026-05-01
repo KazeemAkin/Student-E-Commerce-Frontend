@@ -19,6 +19,7 @@ import {
   ROUTE_EDIT_PROFILE,
   ROUTE_PRODUCT_ADD,
   ROUTE_PRODUCTS,
+  ROUTE_PROFILE_AVATAR_EDIT,
 } from "../../config/constants";
 import { useContext } from "react";
 import { empty, isArray, isObject } from "../../Utilities/utils";
@@ -36,7 +37,19 @@ function ProfileHeader() {
         <div className="profile-data">
           <div className="avatar-box">
             <div className="avatar-container">
-              <img src={defaultAvatar} alt="profile avatar" />
+              { user?.avatar ? <img src={user.avatar} alt="profile avatar" /> : <img src={defaultAvatar} alt="default avatar" />}
+            {isObject(user) &&
+              isArray(user?.user_type) &&
+              user.user_type.includes("Seller") &&
+              !user_id && (
+                <div className="edit-pen">
+                    <NavLink to={ROUTE_PROFILE_AVATAR_EDIT + `/${encodeURIComponent(user?.id)}`}>
+                      <div className="pen-box">
+                        <FaPen color={colors.black} size={12} />
+                      </div>
+                    </NavLink>
+                  </div>
+              )}
             </div>
           </div>
           <div className="bio-data">
@@ -102,7 +115,7 @@ function ProfileHeader() {
           <div className="left-contents">
             <div className="college">
               <FaGraduationCap color={colors.primary} size={16} />
-              <span>College of Finance</span>
+              <span>{ user?.school || "N/A" }</span>
             </div>
             <div className="purchase-stats">
               <div className="item-bought">

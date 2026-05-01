@@ -29,7 +29,7 @@ import { AuthContext } from "../../hooks/UseAuth";
 
 const Navbar = ({ active_screen = "home", include_search = true }) => {
   const { user } = useContext(AuthContext) || {};
-  const [isMobileMenuVisibile, setIsMobileMenuVisible] = useState(false);
+  const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const navigate = useNavigate();
 
   // close search modal
@@ -57,7 +57,7 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
           className="menu_bar"
           onClick={openMobileModal}
         />
-        {isMobileMenuVisibile && (
+        {isMobileMenuVisible && (
           <div className="mobile-menu-modal">
             <div className="mobile-menu-container">
               <div className="top-wrapper">

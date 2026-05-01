@@ -32,6 +32,7 @@ export const ROUTE_PRODUCT_DELETE = "/product/delete";
 
 // user profile
 export const ROUTE_PROFILE = "/profile";
+export const ROUTE_PROFILE_AVATAR_EDIT = "/profile/avatar/update";
 export const ROUTE_EDIT_PROFILE = "/profile/edit";
 export const ROUTE_MY_LISTINGS = "/profile/my-listings";
 export const ROUTE_FAVORITES = "/profile/favorites";
