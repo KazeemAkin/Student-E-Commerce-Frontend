@@ -42,7 +42,7 @@ function SendAccessCodeScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   // alert functions
-  const responseDailog = (severity = null, summary = null, detail = null) => {
+  const responseDialog = (severity = null, summary = null, detail = null) => {
     toastTR?.current?.show({
       severity,
       summary,
@@ -61,7 +61,7 @@ function SendAccessCodeScreen() {
       const response = await authApi.sendAccessCode({ ...values });
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Access code request failed!",
           !empty(response_data?.message) && isString(response_data?.message)
@@ -74,13 +74,7 @@ function SendAccessCodeScreen() {
         `${ROUTE_VERIFY_ACCESS_CODE}/${encodeURIComponent(values.email || "")}`,
       );
     } catch (error) {
-      return responseDailog(
-        "error",
-        "Access code request failed!",
-        !empty(error?.message) && isString(error?.message)
-          ? error.message
-          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
-      );
+      responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -116,7 +110,7 @@ function SendAccessCodeScreen() {
                       name="email"
                       placeholder="Enter school email"
                       fontSize={14}
-                      height={30}
+                      height={45}
                       width="100%"
                       type="email"
                       backgroundColor={colors.ash}

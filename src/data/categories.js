@@ -6,12 +6,12 @@ export const categories = [
   },
   {
     id: 1,
-    value: "furnitures",
-    title: "Furnitures",
+    value: "furniture",
+    title: "Furniture",
   },
   {
     id: 2,
-    value: "tech-wares",
+    value: "tech_wares",
     title: "Tech-wares",
   },
   {
@@ -21,17 +21,17 @@ export const categories = [
   },
   {
     id: 4,
-    value: "sportwear",
+    value: "sport_wear",
     title: "Sport Wear",
   },
   {
     id: 5,
-    value: "dinnerwares",
-    title: "Dinnerwares",
+    value: "dinner_wares",
+    title: "Dinner wares",
   },
   {
     id: 6,
-    value: "miscellaneuos",
-    title: "Miscellaneuos",
+    value: "Miscellaneous",
+    title: "Miscellaneous",
   },
 ];

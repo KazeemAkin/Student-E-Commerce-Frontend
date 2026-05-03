@@ -39,7 +39,6 @@ function ProfileHeader({ openAvatarModal }) {
               { !empty(user?.avatar) ? <img src={user.avatar} alt="profile avatar" /> : <img src={defaultAvatar} alt="default avatar" />}
             {isObject(user) &&
               isArray(user?.user_type) &&
-              user.user_type.includes("Seller") &&
               !user_id && (
                 <div className="edit-pen">
                   <div className="pen-box" onClick={openAvatarModal}>
@@ -54,7 +53,7 @@ function ProfileHeader({ openAvatarModal }) {
               <span>
                 {user?.first_name || ""} {user?.last_name || ""}
               </span>
-              <span className="username">(JD)</span>
+              <span className="username">({user?.username})</span>
             </div>
             <span className="bio">{user?.bio || ""}</span>
             <div className="email">
@@ -68,7 +67,6 @@ function ProfileHeader({ openAvatarModal }) {
           </div>
           {isObject(user) &&
             isArray(user?.user_type) &&
-            user.user_type.includes("Seller") &&
             !user_id && (
               <div className="edit-pen">
                   <NavLink to={ROUTE_EDIT_PROFILE + `/${encodeURIComponent(user?.id)}`}>
@@ -86,7 +84,6 @@ function ProfileHeader({ openAvatarModal }) {
         <div className="product-buttons">
           {isObject(user) &&
             isArray(user?.user_type) &&
-            user?.user_type.includes("Seller") &&
             !user_id && (
               <>
                 <NavLink
@@ -112,7 +109,7 @@ function ProfileHeader({ openAvatarModal }) {
           <div className="left-contents">
             <div className="college">
               <FaGraduationCap color={colors.primary} size={16} />
-              <span>{ user?.school || "N/A" }</span>
+              <span>{ user?.school || "N/A" } ({ user?.year })</span>
             </div>
             <div className="purchase-stats">
               <div className="item-bought">

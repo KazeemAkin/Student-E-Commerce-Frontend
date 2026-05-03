@@ -64,4 +64,14 @@
   .ratings-wrapper {
     padding: 20px 15%;
   }
+
+  .product-details-page {
+    .ratings-wrapper {
+      padding: 0 10%;
+    }
+    
+    .rating-container {
+      padding-bottom: 40px;
+    }
+  }
 }

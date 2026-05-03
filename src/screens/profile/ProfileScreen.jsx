@@ -15,17 +15,29 @@ import { Dialog } from "primereact/dialog";
 import colors from "../../config/colors";
 import { FaImage } from "react-icons/fa";
 import { Button } from "primereact/button";
-import { useRef, useState } from "react";
-import { empty, prepareResponseData } from "../../Utilities/utils";
+import { useContext, useEffect, useRef, useState } from "react";
+import { empty, isArray, prepareResponseData } from "../../Utilities/utils";
 import { ROUTE_PROFILE } from "../../config/constants";
+
+// api 
+import productApi from '../../api/Products';
+import { AuthContext } from "../../hooks/UseAuth";
 
 function ProfileScreen() {
   useUserGuard();
+  const { user } = useContext(AuthContext);
   const fileInputRef = useRef(null);
   const [displayImageModal, setDisplayImageModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [avatar, setAvatar] = useState('');
   const toastTR = useRef(null);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      getUserProducts();
+    }
+  })
 
   // alert functions
   const responseDialog = (severity = null, summary = null, detail = null) => {
@@ -35,6 +47,34 @@ function ProfileScreen() {
       detail,
       life: 8000,
     });
+  };
+
+
+
+  /**
+   * List products handler
+   */
+  const getUserProducts = async (filter = null) => {
+    try {
+      if (!isLoading) setIsLoading(true);
+      const response = await productApi.getUserProducts({ filter });
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return responseDialog(
+          "error",
+          "Error Alert",
+          !empty(response_data) && !empty(response_data.response)
+            ? response_data.response
+            : "Failed to fetch products!",
+        );
+      }
+
+      return setProducts(isArray(response_data?.response?.products) ? response_data.response.products : []);
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong while fetching products.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   /**
@@ -127,7 +167,7 @@ function ProfileScreen() {
       <ProfileHeader openAvatarModal={openUserAvatarModal} />
 
       {/* listings */}
-      <Listings title="Listed Items" is_user_list={true} />
+      <Listings data={products} title="Listed Items" is_user_list={true} />
 
       {/* Ratings */}
       <Ratings />

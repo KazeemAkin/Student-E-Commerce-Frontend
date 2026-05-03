@@ -64,7 +64,7 @@ function PersonalInformationScreen() {
   }, []);
 
   // alert functions
-  const responseDailog = (severity = null, summary = null, detail = null) => {
+  const responseDialog = (severity = null, summary = null, detail = null) => {
     toastTR?.current?.show({
       severity,
       summary,
@@ -82,7 +82,7 @@ function PersonalInformationScreen() {
     try {
       if (!isLoading) setIsLoading(true);
       if (values?.password !== values?.confirm_password) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Password mismatch!",
           "Password and confirm password fields must match. Please correct the error and try again.",
@@ -94,12 +94,12 @@ function PersonalInformationScreen() {
       });
       const response_data = prepareResponseData(response);
       if (!response_data?.success) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Sign up failed!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
-            : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+            : "Unfortunately something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
@@ -116,13 +116,7 @@ function PersonalInformationScreen() {
 
       return navigate(ROUTE_USER_TYPE);
     } catch (error) {
-      return responseDailog(
-        "error",
-        "Sign up failed!",
-        !empty(error?.message) && isString(error?.message)
-          ? error.message
-          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
-      );
+      responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -170,7 +164,7 @@ function PersonalInformationScreen() {
                           name="first_name"
                           placeholder="Enter first name"
                           fontSize={14}
-                          height={30}
+                          height={40}
                           width="100%"
                           backgroundColor={colors.ash}
                           paddingLeft={25}
@@ -183,7 +177,7 @@ function PersonalInformationScreen() {
                           name="last_name"
                           placeholder="Enter last name"
                           fontSize={14}
-                          height={30}
+                          height={40}
                           width="100%"
                           backgroundColor={colors.ash}
                           paddingLeft={25}
@@ -196,7 +190,7 @@ function PersonalInformationScreen() {
                           name="phone_number"
                           placeholder="Enter phone number"
                           fontSize={14}
-                          height={30}
+                          height={40}
                           width="100%"
                           backgroundColor={colors.ash}
                           paddingLeft={25}
@@ -214,7 +208,7 @@ function PersonalInformationScreen() {
                           name="username"
                           placeholder="Enter username"
                           fontSize={14}
-                          height={30}
+                          height={40}
                           width="100%"
                           backgroundColor={colors.ash}
                           paddingLeft={25}
@@ -227,7 +221,7 @@ function PersonalInformationScreen() {
                           name="password"
                           placeholder="Enter password"
                           fontSize={14}
-                          height={30}
+                          height={40}
                           width="100%"
                           backgroundColor={colors.ash}
                           paddingLeft={25}
@@ -241,7 +235,7 @@ function PersonalInformationScreen() {
                           name="confirm_password"
                           placeholder="Confirm password"
                           fontSize={14}
-                          height={30}
+                          height={40}
                           width="100%"
                           backgroundColor={colors.ash}
                           paddingLeft={25}

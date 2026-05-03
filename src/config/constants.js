@@ -22,13 +22,15 @@ export const ROUTE_LOGOUT = "/logout";
 // products
 export const ROUTE_PRODUCTS = "/products";
 export const ROUTE_PRODUCT_DETAILS = "/products";
-export const ROUTE_CART = "/cart";
-export const ROUTE_CHECKOUT = "/checkout";
 export const ROUTE_ORDERS = "/orders";
 export const ROUTE_CATEGORY_LISTINGS = "/categories";
 export const ROUTE_PRODUCT_ADD = "/product/add";
 export const ROUTE_PRODUCT_EDIT = "/product/edit";
 export const ROUTE_PRODUCT_DELETE = "/product/delete";
+
+// cart and checkout
+export const ROUTE_CART = "/cart";
+export const ROUTE_CHECKOUT = "/checkout";
 
 // user profile
 export const ROUTE_PROFILE = "/profile";

@@ -130,14 +130,15 @@
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          object-fit: cover;
           display: flex;
           justify-content: center;
           align-items: center;
           background-color: var(--white);
-
+          overflow: hidden;
+          
           img {
             width: 100%;
+            object-fit: cover;
             height: auto;
           }
         }
@@ -468,7 +469,6 @@
   }
 }
 
-
 @media only screen and (min-width: 768px) {
   .main-wrapper {
     .listings-wrapper {
@@ -514,11 +514,6 @@
 
 @media only screen and (min-width: 1200px) {
   .main-wrapper {
-
-    .listings-wrapper {
-      padding: 0;
-    }
-
     .home-header-wrapper {
       padding: 40px 8%;
       display: flex;
@@ -574,11 +569,11 @@
       gap: 20px;
 
       .listing-item {
-        flex: 0 0 22%;
-        min-width: 22%;
+        flex: 0 0 20%;
+        min-width: 20%;
 
         .header-image {
-          height: 130px;
+          height: 180px;
         }
 
         .title,
@@ -789,5 +784,9 @@
         }
       }
     }
+  }
+
+  .home-container {
+    padding: 0 8%;
   }
 }
