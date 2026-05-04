@@ -27,7 +27,7 @@ import { empty, isString, prepareResponseData } from "../../Utilities/utils";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
-import { AuthContext } from "../Root/ProtectedRoute";
+import { AuthContext } from "../../hooks/UseAuth";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
@@ -47,7 +47,7 @@ function SignInScreen() {
   const { setUser } = useContext(AuthContext);
 
   // alert functions
-  const responseDailog = (severity = null, summary = null, detail = null) => {
+  const responseDialog = (severity = null, summary = null, detail = null) => {
     toastTR?.current?.show({
       severity,
       summary,
@@ -67,12 +67,12 @@ function SignInScreen() {
       const response_data = prepareResponseData(response);
 
       if (!response_data.success) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Failed to sign in!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
-            : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+            : "Unfortunately something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
@@ -89,12 +89,12 @@ function SignInScreen() {
 
       return navigate(ROUTE_HOME);
     } catch (error) {
-      return responseDailog(
+      return responseDialog(
         "error",
         "Failed to sign in!",
         !empty(error?.message) && isString(error?.message)
           ? error.message
-          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+          : "Unfortunately something went wrong and we were unable to sign you up. Refresh the page or try again later!",
       );
     } finally {
       setIsLoading(false);
@@ -131,7 +131,7 @@ function SignInScreen() {
                       name="email"
                       placeholder="Enter school email"
                       fontSize={14}
-                      height={30}
+                      height={40}
                       width="100%"
                       type="email"
                       backgroundColor={colors.ash}
@@ -145,7 +145,7 @@ function SignInScreen() {
                       name="password"
                       placeholder="Enter password"
                       fontSize={14}
-                      height={30}
+                      height={40}
                       width="100%"
                       type="password"
                       backgroundColor={colors.ash}

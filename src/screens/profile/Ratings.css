@@ -54,8 +54,24 @@
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 768px) {
   .ratings-wrapper {
     padding: 20px 8%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .ratings-wrapper {
+    padding: 20px 15%;
+  }
+
+  .product-details-page {
+    .ratings-wrapper {
+      padding: 0 10%;
+    }
+    
+    .rating-container {
+      padding-bottom: 40px;
+    }
   }
 }

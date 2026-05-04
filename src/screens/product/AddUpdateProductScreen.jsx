@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Formik } from "formik";
-import { Form } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
 // css
-import "./AddProduct.css";
+import "./Product.css";
 
 // components
 import Footer from "../../components/footer/Footer";
@@ -15,48 +15,61 @@ import ButtonIcon from "../../components/buttons/buttonIcon/ButtonIcon";
 import { FaRegImage } from "react-icons/fa";
 import SelectField from "../../components/form/SelectField";
 import { conditions } from "../../data/conditions";
-import { useRef, useState } from "react";
-import { empty, isArray, prepareResponseData } from "../../Utilities/utils";
+import { useContext, useEffect, useRef, useState } from "react";
+import { empty, isArray, isObject, prepareResponseData } from "../../Utilities/utils";
 
 import productApi from "../../api/Products";
 import MainHeader from "../../components/header/mainHeader/MainHeader";
 import { categories } from "../../data/categories";
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import { Toast } from "primereact/toast";
+import { ROUTE_PRODUCTS } from "../../config/constants";
+import { useUserGuard } from "../../hooks/UserGuard";
+import { AuthContext } from "../../hooks/UseAuth";
 
 const required = "This field is required!";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required(required),
   description: Yup.string().required(required),
   condition: Yup.string().required(required),
-  pickup_date: Yup.string().required(required),
-  pickup_time: Yup.string().required(required),
   status: Yup.string().required(required),
   category: Yup.string().required(required),
   price: Yup.string().required(required),
   location: Yup.string().required(required),
 });
 
-const initialValues = {
-  name: "",
-  description: "",
-  condition: "",
-  pickup_date: "",
-  pickup_time: "",
-  status: "",
-  category: "",
-  price: "",
-  location: "",
-};
-
-function AddProductScreen() {
+function AddUpdateProductScreen() {
+  useUserGuard();
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
   const [listingImage, setListingImage] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [processed, setProcessed] = useState(false);
+  const [ newImage, setNewImage] = useState(false);
   const toastTR = useRef(null);
+  const { user } = useContext(AuthContext);
+  const { product_id } = useParams() || {};
+  const [ initialValues, setInitialValues ] = useState({
+    name: "",
+    description: "",
+    condition: "",
+    status: "",
+    category: "",
+    price: "",
+    location: "",
+  });
+
+  useEffect(() => {
+    if (!empty(product_id)) {
+      if (!user) {
+        return;
+      }
+      getProductDetails();
+    }
+  }, [user]);
 
   // alert functions
-  const responseDailog = (severity = null, summary = null, detail = null) => {
+  const responseDialog = (severity = null, summary = null, detail = null) => {
     toastTR?.current?.show({
       severity,
       summary,
@@ -66,34 +79,82 @@ function AddProductScreen() {
   };
 
   /**
+   * Get product details
+   */
+  const getProductDetails = async () => {
+    try {
+      if (!isLoading) setIsLoading(true);
+
+      const response = await productApi.getProductDetails(product_id);
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return responseDialog(
+          "error",
+          "Error Alert",
+          !empty(response_data) && !empty(response_data.response)
+            ? response_data.response
+            : "Failed to fetch product details!",
+        );
+      }
+      
+      const details = isObject(response_data?.response?.product_details) ? response_data.response.product_details : {};
+      setListingImage(details?.product_image || '');
+      setInitialValues({
+        name: details?.name || '',
+        description: details?.description || '',
+        condition: details?.condition || '',
+        status: details?.status || '',
+        category: details?.category || '',
+        price: details?.price || '',
+        location: details?.location || '',
+      });
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  /**
    * Add product form submit handler
    * @param {*} values
    */
   const handleSubmit = async (values) => {
     try {
-      if (!isLoading) setIsLoading(false);
+      if (!isLoading) setIsLoading(true);
 
       values.product_image = listingImage;
-      const response = await productApi.addProduct(values);
+      let response = null;
+      if (!empty(product_id)) {
+        values.product_id = product_id;
+        values.new_image = newImage;
+        response = await productApi.updateProduct(values);
+      } else {
+        response = await productApi.addProduct(values);
+      }
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Error Alert",
           !empty(response_data) && !empty(response_data.response)
             ? response_data.response
-            : "Failed to upload product!",
+            : `Failed to ${product_id ? "Update" : "Upload"} product!`,
         );
       }
 
-      return responseDailog(
+      responseDialog(
         "success",
         "Success",
-        "Product Uploaded Successfully.",
+        `Product ${product_id ? "Updated" : "Uploaded" } Successfully.`,
       );
+      setProcessed(true);
+      setTimeout(() => {
+        navigate(ROUTE_PRODUCTS);
+      }, 2000)
     } catch (error) {
-      console.log({ error }, "nnn");
-      responseDailog("error", "Error Alert", "Something went wrong.");
+      responseDialog("error", "Error Alert", "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -117,6 +178,10 @@ function AddProductScreen() {
           setListingImage(base64String);
         };
         reader.readAsDataURL(file);
+
+        if (product_id) {
+          setNewImage(true);
+        }
       }
     } catch (error) {}
   };
@@ -147,11 +212,12 @@ function AddProductScreen() {
                   placeholder="Enter product name"
                   fontSize={14}
                   required={true}
-                  height={30}
+                  height={40}
                   width="100%"
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.name || ''}
                   labelTitle="Product Name"
                 />
               </div>
@@ -162,7 +228,7 @@ function AddProductScreen() {
                   placeholder="Select Category"
                   name="category"
                   options={isArray(categories) ? categories : []}
-                  height={50}
+                  height={40}
                   valueKey="value"
                   display="title"
                   containerWidth="100%"
@@ -176,12 +242,13 @@ function AddProductScreen() {
                   placeholder="Enter product price"
                   fontSize={14}
                   required={true}
-                  height={30}
+                  height={40}
                   width="100%"
                   type="number"
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.price || ''}
                   labelTitle="Product Price"
                 />
               </div>
@@ -199,6 +266,7 @@ function AddProductScreen() {
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.description || ''}
                   labelTitle="Product Description"
                 />
               </div>
@@ -216,6 +284,7 @@ function AddProductScreen() {
                   backgroundColor={colors.ash}
                   paddingLeft={25}
                   paddingRight={25}
+                  value={values?.location || ''}
                   labelTitle="Product pickup location"
                 />
               </div>
@@ -226,47 +295,13 @@ function AddProductScreen() {
                   placeholder="Select Condition"
                   name="condition"
                   options={isArray(conditions) ? conditions : []}
-                  height={50}
+                  height={40}
                   valueKey="value"
                   display="value"
                   containerWidth="100%"
                   selectedOption={values?.condition}
                   handleChangeFunc={handleChange}
                 />
-              </div>
-              <div className="date-time-container">
-                <div className="field-container">
-                  <InputField
-                    name="pickup_date"
-                    fontSize={14}
-                    height={30}
-                    rows={8}
-                    cols={8}
-                    required={true}
-                    width="50%"
-                    type="date"
-                    backgroundColor={colors.ash}
-                    paddingLeft={25}
-                    paddingRight={25}
-                    labelTitle="Pickup Date"
-                  />
-                </div>
-                <div className="field-container">
-                  <InputField
-                    name="pickup_time"
-                    fontSize={14}
-                    height={30}
-                    rows={8}
-                    cols={8}
-                    required={true}
-                    width="50%"
-                    type="time"
-                    backgroundColor={colors.ash}
-                    paddingLeft={25}
-                    paddingRight={25}
-                    labelTitle="Pickup Time"
-                  />
-                </div>
               </div>
 
               <div className="field-container">
@@ -295,8 +330,8 @@ function AddProductScreen() {
                 <span className="required">&nbsp;*</span>
               </div>
               <div
-                className=" flex"
-                style={{ justifyContent: "flex-start", width: "100%", gap: 25 }}
+                className="flex flex-start"
+                style={{ width: "100%", gap: 25, }}
               >
                 <InputField
                   name="status"
@@ -304,11 +339,12 @@ function AddProductScreen() {
                   height={25}
                   required={true}
                   width={25}
+                  containerWidth="auto"
                   type="radio"
                   sideLabelTitle="Listed"
                   defaultOutline="transparent"
                   value="Listed"
-                  labelMarginTop={5}
+                  labelMarginTop={4}
                   labelMarginLeft={8}
                   focusedOutline="transparent"
                 />
@@ -317,20 +353,21 @@ function AddProductScreen() {
                   fontSize={14}
                   height={25}
                   required={true}
+                  containerWidth="auto"
                   width={25}
                   type="radio"
                   sideLabelTitle="Unlisted"
                   defaultOutline="transparent"
                   value="Unlisted"
-                  labelMarginTop={5}
+                  labelMarginTop={4}
                   labelMarginLeft={8}
                   focusedOutline="transparent"
                 />
               </div>
 
               <div className="flex justify-center form-button-box w-100pc">
-                <ButtonIcon
-                  buttonText="Send Message"
+                { !processed && <ButtonIcon
+                  buttonText={ !empty(product_id) ? "Update" : "Submit"}
                   backgroundColor={colors.primary}
                   borderColor={colors.primary}
                   color={colors.white}
@@ -340,7 +377,7 @@ function AddProductScreen() {
                   fontSize={16}
                   className="form-button"
                   onClick={() => handleSubmit(values)}
-                />
+                />}
               </div>
             </Form>
           )}
@@ -349,9 +386,9 @@ function AddProductScreen() {
 
       <Footer />
       {isLoading && <FullPageLoader visible={isLoading} />}
-      <Toast ref={toastTR} position="bottom-left" />
+      <Toast ref={toastTR} position="top-right" />
     </section>
   );
 }
 
-export default AddProductScreen;
+export default AddUpdateProductScreen;

@@ -50,7 +50,7 @@ function VerifyAccessCodeScreen() {
   }, []);
 
   // alert functions
-  const responseDailog = (severity = null, summary = null, detail = null) => {
+  const responseDialog = (severity = null, summary = null, detail = null) => {
     toastTR?.current?.show({
       severity,
       summary,
@@ -69,24 +69,18 @@ function VerifyAccessCodeScreen() {
       const response = await authApi.verifyAccessCode({ ...values, email });
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
-        return responseDailog(
+        return responseDialog(
           "error",
           "Access code verification failed!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
-            : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+            : "Unfortunately something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
       navigate(`${ROUTE_PERSONAL_INFORMATION}/${encodeURIComponent(email)}`);
     } catch (error) {
-      return responseDailog(
-        "error",
-        "Access code verification failed!",
-        !empty(error?.message) && isString(error?.message)
-          ? error.message
-          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
-      );
+      responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -122,7 +116,7 @@ function VerifyAccessCodeScreen() {
                       name="access_code"
                       placeholder="Enter access code"
                       fontSize={14}
-                      height={30}
+                      height={40}
                       width="100%"
                       backgroundColor={colors.ash}
                       paddingLeft={25}

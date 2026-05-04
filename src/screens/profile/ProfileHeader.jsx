@@ -16,16 +16,17 @@ import colors from "../../config/colors";
 import { NavLink, useParams } from "react-router-dom";
 import {
   ROUTE_CHAT,
+  ROUTE_EDIT_PROFILE,
   ROUTE_PRODUCT_ADD,
   ROUTE_PRODUCTS,
 } from "../../config/constants";
 import { useContext } from "react";
-import { AuthContext } from "../Root/ProtectedRoute";
 import { empty, isArray, isObject } from "../../Utilities/utils";
+import { AuthContext } from "../../hooks/UseAuth";
 
-function ProfileHeader() {
-  const { user } = useContext(AuthContext);
+function ProfileHeader({ openAvatarModal }) {
   const { user_id } = useParams();
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="profile-header">
@@ -35,7 +36,16 @@ function ProfileHeader() {
         <div className="profile-data">
           <div className="avatar-box">
             <div className="avatar-container">
-              <img src={defaultAvatar} alt="profile avatar" />
+              { !empty(user?.avatar) ? <img src={user.avatar} alt="profile avatar" /> : <img src={defaultAvatar} alt="default avatar" />}
+            {isObject(user) &&
+              isArray(user?.user_type) &&
+              !user_id && (
+                <div className="edit-pen">
+                  <div className="pen-box" onClick={openAvatarModal}>
+                    <FaPen color={colors.black} size={12} />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="bio-data">
@@ -43,7 +53,7 @@ function ProfileHeader() {
               <span>
                 {user?.first_name || ""} {user?.last_name || ""}
               </span>
-              <span className="username">(JD)</span>
+              <span className="username">({user?.username})</span>
             </div>
             <span className="bio">{user?.bio || ""}</span>
             <div className="email">
@@ -57,13 +67,14 @@ function ProfileHeader() {
           </div>
           {isObject(user) &&
             isArray(user?.user_type) &&
-            user?.user_type.includes("Seller") &&
             !user_id && (
               <div className="edit-pen">
-                <div className="pen-box">
-                  <FaPen color={colors.black} size={12} />
+                  <NavLink to={ROUTE_EDIT_PROFILE + `/${encodeURIComponent(user?.id)}`}>
+                    <div className="pen-box">
+                      <FaPen color={colors.black} size={12} />
+                    </div>
+                  </NavLink>
                 </div>
-              </div>
             )}
         </div>
       </div>
@@ -73,7 +84,6 @@ function ProfileHeader() {
         <div className="product-buttons">
           {isObject(user) &&
             isArray(user?.user_type) &&
-            user?.user_type.includes("Seller") &&
             !user_id && (
               <>
                 <NavLink
@@ -99,7 +109,7 @@ function ProfileHeader() {
           <div className="left-contents">
             <div className="college">
               <FaGraduationCap color={colors.primary} size={16} />
-              <span>College of Finance</span>
+              <span>{ user?.school || "N/A" } ({ user?.year })</span>
             </div>
             <div className="purchase-stats">
               <div className="item-bought">

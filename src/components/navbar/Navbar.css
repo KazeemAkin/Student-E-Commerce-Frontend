@@ -9,6 +9,7 @@
   width: 100%;
   z-index: 99;
   box-sizing: border-box;
+  position: fixed;
 
   .logo-image {
     width: 110px;
@@ -30,6 +31,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.navbar_left {
+  display: flex;
+  justify-content: center;
 }
 
 .navbar_left .search-box {
@@ -249,12 +255,31 @@
   }
 }
 
-@media only screen and (min-width: 890px) {
+.cart-icon-box {
+  position: relative;
+
+  .cart-badge {
+    position: absolute;
+    bottom: 0;
+    right: -5px;
+    background-color: var(--danger);
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+    border-radius: 50%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media only screen and (min-width: 768px) {
   .navbar {
     padding: 5px 3%;
     width: 100%;
     position: fixed;
-    margin-top: 0;
+    top: 0;
 
     .logo-image {
       width: 150px;
@@ -264,7 +289,27 @@
 
   .navbar_left,
   .navbar_left .search-box {
-    display: block;
+    display: flex;
+  }
+
+  .navbar_left {
+    width: 70%;
+    gap: 8%;
+
+    .search-box {
+      width: 60%;
+      background-color: var(--light-gray);
+      padding: 8px 15px;
+      border-radius: 21px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 14px;
+      column-gap: 12px;
+      cursor: pointer;
+      color: var(--dark-gray);
+      font-weight: normal;
+    }
   }
 
   .nav_icon {
@@ -272,7 +317,7 @@
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1200px) {
   .navbar {
     padding: 5px 2%;
     width: 100%;
@@ -281,6 +326,10 @@
 
   .not-logged-in-right-nav {
     ul {
+      .sign-up-li {
+        display: flex;
+      }
+
       li {
         .sign-up-btn {
           border-radius: 21px;
@@ -332,17 +381,6 @@
 
     .search-box {
       width: 40%;
-      background-color: var(--light-gray);
-      padding: 8px 15px;
-      border-radius: 21px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      font-size: 14px;
-      column-gap: 12px;
-      cursor: pointer;
-      color: var(--dark-gray);
-      font-weight: normal;
     }
   }
 

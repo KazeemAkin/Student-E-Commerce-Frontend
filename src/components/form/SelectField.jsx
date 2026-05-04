@@ -22,6 +22,7 @@ export default function SelectField({
   customValue = "",
   width = "100%",
   display1,
+  borderRadius = 7,
   index = 1,
   isDisabled = false,
   containerWidth,
@@ -70,7 +71,7 @@ export default function SelectField({
               border: "1px solid #f1f1f1",
               padding: "10px",
               height,
-              borderRadius: 7,
+              borderRadius,
               backgroundColor: colors.lightgray,
               cursor: isDisabled ? "not-allowed" : "text",
               outline: focused

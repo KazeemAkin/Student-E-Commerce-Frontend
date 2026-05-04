@@ -31,7 +31,7 @@
         border-radius: 50%;
         object-fit: cover;
         border: 3px solid var(--white);
-        overflow: hidden;
+        /* overflow: hidden; */
         margin-top: -140px;
         margin-left: 20px;
         display: flex;
@@ -39,6 +39,15 @@
         align-items: center;
         background-color: var(--light-ash);
         position: absolute;
+
+        .edit-pen {
+          position: absolute;
+          right: 10px;
+
+          .pen-box {
+            border: 3px solid var(--white)
+          }
+        }
 
         img {
           width: 70px;
@@ -170,10 +179,47 @@
   }
 }
 
-@media only screen and (min-width: 769px) {
+.update-profile-form {
+  width: 100%;
+  padding: 20px 5%;
+
+  .form-button {
+    width: 40% !important;
+  }
+
+  .field-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.confirmation-content {
+  .preview-image {
+    display: flex;
+    justify-content: center;
+    
+    .image-preview-box {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background-color: var(--light-ash);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
   .profile-header {
     margin-top: 60px;
-    padding: 40px 8%;
 
     .header-image-box {
       padding-bottom: 30px;
@@ -193,6 +239,15 @@
           width: 150px;
           height: 150px;
           border: 5px solid var(--white);
+
+          .edit-pen {
+            right: 5px;
+            bottom: 20px;
+
+            .pen-box {
+              border: 3px solid var(--white)
+            }
+          }
 
           img {
             width: 140px;
@@ -228,9 +283,10 @@
         cursor: pointer;
 
         .pen-box {
-          width: 40px;
-          height: 40px;
+          width: 50px;
+          height: 50px;
           top: -25px;
+          right: 8%;
         }
       }
     }
@@ -240,9 +296,11 @@
       justify-content: space-between;
       width: 100%;
       margin-top: 30px;
+      padding: 0;
     }
+
     .header-bottom-details {
-      padding: 10px 0;
+      padding: 10px 8%;
 
       .other-details {
         justify-content: flex-start;
@@ -286,4 +344,80 @@
       }
     }
   }
+
+  .update-profile-form {
+    width: 100%;
+    padding: 0 10%;
+
+    .form-button {
+      width: 20% !important;
+    }
+
+    .field-container {
+      width: 70%;
+      margin-bottom: 20px;
+    }
+  }
+
+
+.confirmation-content {
+  .preview-image {
+    display: flex;
+    justify-content: center;
+    
+    .image-preview-box {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background-color: var(--light-ash);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
+}
+
+@media only screen and (min-width: 1200px) {
+  .profile-header {
+    padding: 0 15%;
+
+    .header-bottom-details {
+      padding: 10px 0;
+    }
+    
+    .left-contents {
+      padding: 0;
+    }
+  }
+  .update-profile-form {
+    padding: 0 18%;
+
+    .form-button {
+      width: 20% !important;
+    }
+
+    .field-container {
+      width: 50%;
+    }
+  }
+
+
+.confirmation-content {
+  .preview-image {
+    display: flex;
+    justify-content: center;
+    
+    .image-preview-box {
+      width: 250px !important;
+      height: 250px !important;
+      border-radius: 50%;
+      background-color: var(--light-ash);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+}
+

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import SectionHeader from "../../components/header/sectionHeader/SectionHeader";
 
 // image
@@ -6,87 +7,56 @@ import { NavLink } from "react-router-dom";
 import colors from "../../config/colors";
 import { FaShoppingCart } from "react-icons/fa";
 
+// api
+
 // images
 import avatar from "../../assets/avatars/avatar.png";
-import borkenImage from "../../assets/demo-images/broken-image.png";
-import product_image_1 from "../../assets/demo-images/book.png";
-import product_image_2 from "../../assets/demo-images/cookingware.png";
-import product_image_3 from "../../assets/demo-images/mattress.jpg";
-import product_image_4 from "../../assets/demo-images/bag.png";
-import { isArray } from "../../Utilities/utils";
+import brokenImage from "../../assets/demo-images/broken-image.png";
+import { isArray, toNormalCase } from "../../Utilities/utils";
+import { useContext } from "react";
+import { AuthContext } from "../../hooks/UseAuth";
 
-const product_items = [
-  {
-    id: 1,
-    title: "Engineering textbook",
-    image: product_image_1,
-    avatar: avatar,
-    cost: 2.3,
-    sellerUsername: "John Doe",
-  },
-  {
-    id: 2,
-    title: "Cooking utensils",
-    image: product_image_2,
-    avatar: avatar,
-    cost: 5.99,
-    sellerUsername: "Tinka",
-  },
-  {
-    id: 3,
-    title: "Mattress",
-    image: product_image_3,
-    avatar: avatar,
-    cost: 19.99,
-    sellerUsername: "Jane Smith",
-  },
-  {
-    id: 4,
-    title: "School Bag",
-    image: product_image_4,
-    avatar: avatar,
-    cost: 12.5,
-    sellerUsername: "Alice Johnson",
-  },
-];
+function Listings({ data, title = "Listings", is_user_list = false, ...other }) {
+  const { user } = useContext(AuthContext);
 
-function Listings({ title = "Listings", ...other }) {
   return (
     <section className="listings-wrapper">
       <SectionHeader title={title} {...other} />
 
       <div className="listings-container">
-        {isArray(product_items) &&
-          product_items.map((item) => {
+        {isArray(data) &&
+          data.map((item) => {
             return (
-              <div className="listing-item">
+              <div className="listing-item" key={item?._id} onClick={() => ROUTE_PRODUCT_DETAILS + `/${item?._id}`}>
                 <NavLink
-                  to={ROUTE_PRODUCT_DETAILS}
+                  to={ROUTE_PRODUCT_DETAILS + `/${item?._id}`}
                   style={{ textDecoration: "none", color: colors.black }}
                 >
                   <div className="header-image">
-                    {item?.image ? (
-                      <img src={item.image} alt="Product" />
+                    {item?.product_image ? (
+                      <img src={item.product_image} alt="Product" />
                     ) : (
-                      <img src={borkenImage} alt="broken" />
+                      <img src={brokenImage} alt="broken" />
                     )}
                   </div>
-                  <div className="title">{item?.title || "N/A"}</div>
-                  <div className="price">
-                    &pound;{item?.cost?.toFixed(2) || "0.00"}
+                  <div className="top">
+                    <div className="title">{item?.name || "N/A"}</div>
+                    <div className="price">
+                      &pound;{item?.price?.toFixed(2) || "0.00"}
+                    </div>
                   </div>
                 </NavLink>
                 <div className="bottom-box">
                   <div className="avatar-box">
-                    {item?.avatar ? (
-                      <img src={item.avatar} alt="Avatar" />
+                    {user?.avatar ? (
+                      <img src={user.avatar} alt="Avatar" />
                     ) : (
                       <img src={avatar} alt="Avatar" />
                     )}
                   </div>
                   <div className="name-box">
                     <span className="name">
-                      {item?.sellerUsername || "N/A"}
+                      {`${toNormalCase(user?.username) || "N/A"}`}
                     </span>
                     <span className="cart">
                       <NavLink

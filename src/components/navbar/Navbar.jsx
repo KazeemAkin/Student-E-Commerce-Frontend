@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   FaBars,
   FaSearch,
@@ -7,6 +8,9 @@ import {
 } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 
+// api
+import productApi from "../../api/Products";
+
 // css
 import "./Navbar.css";
 
@@ -15,6 +19,7 @@ import appLogo from "../../assets/logo/studentmart-logo-white.png";
 import colors from "../../config/colors";
 import {
   ROUTE_ABOUT_US,
+  ROUTE_CART,
   ROUTE_CATEGORY_LISTINGS,
   ROUTE_CONTACT,
   ROUTE_HOME,
@@ -23,14 +28,56 @@ import {
   ROUTE_SERVICES,
   ROUTE_SIGN_IN,
 } from "../../config/constants";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../screens/Root/ProtectedRoute";
-import { empty } from "../../Utilities/utils";
+import { useContext, useEffect, useRef, useState } from "react";
+import { empty, prepareResponseData } from "../../Utilities/utils";
+import { AuthContext } from "../../hooks/UseAuth";
 
-const Navbar = ({ active_screen = "home", include_search = true }) => {
+const Navbar = ({ active_screen = "home", include_search = true, reload_cart_count = 0 }) => {
   const { user } = useContext(AuthContext) || {};
-  const [isMobileMenuVisibile, setIsMobileMenuVisible] = useState(false);
+  const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [ numberOfItemsInCart, setNumberOfItemsInCart ] = useState(reload_cart_count);
   const navigate = useNavigate();
+  const toastTR = useRef(null);
+
+  useEffect(() => {
+    if (user) {
+      noOfItemsInCart();
+    }
+  }, [ user, reload_cart_count ]);
+
+  // alert functions
+  const responseDialog = (severity = null, summary = null, detail = null) => {
+    toastTR?.current?.show({
+      severity,
+      summary,
+      detail,
+      life: 8000,
+    });
+  };
+
+  /**
+   * Get number of items in cart
+   * @returns 
+   */
+  const noOfItemsInCart = async () => {
+    try {
+      if (!isLoading) setIsLoading(true);
+
+      const response = await productApi.getNoOfProductsInCart();
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return setNumberOfItemsInCart(0);
+      }
+      
+      const count = response_data?.response?.count ? response_data.response.count : 0;
+      setNumberOfItemsInCart(count);
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   // close search modal
   const closeMobileModal = (event) => {
@@ -57,7 +104,7 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
           className="menu_bar"
           onClick={openMobileModal}
         />
-        {isMobileMenuVisibile && (
+        {isMobileMenuVisible && (
           <div className="mobile-menu-modal">
             <div className="mobile-menu-container">
               <div className="top-wrapper">
@@ -238,7 +285,9 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
         )}
       </div>
       <div className="navbar_left">
-        <img className="logo-image" src={appLogo} alt="" />
+        <NavLink to={ROUTE_HOME}>
+          <img className="logo-image" src={appLogo} alt="" />
+        </NavLink>
 
         {include_search && (
           <div className="search-box">
@@ -302,18 +351,21 @@ const Navbar = ({ active_screen = "home", include_search = true }) => {
             </div>
           ) : (
             <div className="navbar_avatar_box">
-              <NavLink
-                to={ROUTE_PROFILE}
-                style={{ textDecoration: "none", color: colors.white }}
-              >
-                <FaCartPlus size={23} style={{ cursor: "pointer" }} />
-              </NavLink>
+              <div className="cart-icon-box">
+                <NavLink
+                  to={ROUTE_CART}
+                  style={{ textDecoration: "none", color: colors.white }}
+                >
+                    <FaCartPlus size={23} style={{ cursor: "pointer" }} />
+                    { numberOfItemsInCart > 0 && <div className="cart-badge">{numberOfItemsInCart}</div> }
+                </NavLink>
+              </div>
               <NavLink
                 to={ROUTE_PROFILE}
                 style={{ textDecoration: "none", color: colors.white }}
               >
                 <FaUserAlt size={23} style={{ cursor: "pointer" }} />
-              </NavLink>
+            </NavLink>
             </div>
           )}
         </div>

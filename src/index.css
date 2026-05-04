@@ -4,7 +4,7 @@
 /* scrollbar */
 /* colors */
 /* 
-  #633ccd
+  #fbae3e
 */
 :root {
   --primary: #fbae3e;
@@ -13,7 +13,7 @@
   --light-gray: #f2f2f2;
   --dark-gray: #615757;
   --ash: #a5aaad;
-  --danger: #ce1616;
+  --danger: #FF0303;
   --black: #000000;
   --mute-text: #615757;
   --light-primary: #633ccd33;
@@ -512,11 +512,11 @@ main {
 }
 
 .p-progress-spinner-circle {
-  stroke: #633ccd !important;
+  stroke: #fbae3e !important;
 }
 
 .button_spinner .p-progress-spinner-circle {
-  stroke: #633ccd !important;
+  stroke: #fbae3e !important;
 }
 
 .custom-toast .p-toast {
@@ -543,7 +543,7 @@ main {
 .form-section-title {
   margin-top: 20px;
   font-size: 16px;
-  color: #633ccd;
+  color: #fbae3e;
 }
 
 .form-button-container {
@@ -609,6 +609,18 @@ main {
 
 .form-button-box {
   margin-top: 30px;
+}
+
+.confirmation-content {
+  font-size: 14px;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+  color: var(--danger) !important;
+}
+
+.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
+  color: var(--primary) !important;
 }
 
 @media only screen and (min-width: 769px) {

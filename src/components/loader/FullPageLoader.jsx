@@ -13,6 +13,7 @@ export default function FullPageLoader({ visible = false }) {
         display: visible ? "flex" : "none",
         justifyContent: "center",
         alignItems: "center",
+        top: 0
       }}
     >
       <ProgressSpinner

@@ -2,18 +2,22 @@ import { Routes, Route } from "react-router-dom";
 
 // screens
 import ErrorBoundary from "../../components/error/AppErrorBoundary";
-import ProtectedRoute from "./ProtectedRoute";
 import IndexScreen from "../Index/IndexScreen";
 import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_ABOUT_US,
+  ROUTE_CART,
   ROUTE_CONTACT,
+  ROUTE_EDIT_PROFILE,
   ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
   ROUTE_PRODUCT_ADD,
+  ROUTE_PRODUCT_DETAILS,
+  ROUTE_PRODUCT_EDIT,
+  ROUTE_PRODUCTS,
   ROUTE_PROFILE,
   ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_RESET_PASSWORD,
@@ -39,7 +43,11 @@ import ProfileScreen from "../profile/ProfileScreen";
 import AboutUsScreen from "../Index/AboutUsScreen";
 import ServicesScreen from "../Index/ServicesScreen";
 import ContactUsScreen from "../Index/ContactUsScreen";
-import AddProductScreen from "../product/AddProductScreen";
+import AddUpdateProductScreen from "../product/AddUpdateProductScreen";
+import ProductsScreen from "../product/ProductsScreen";
+import UpdateProfileScreen from "../profile/UpdateProfileScreen";
+import ProductDetailsScreen from "../product/ProductDetailsScreen";
+import CartScreen from "../checkout/CartScreen";
 
 const Root = () => {
   return (
@@ -63,7 +71,6 @@ const Root = () => {
         <Route element={<ResetPasswordScreen />} path={ROUTE_RESET_PASSWORD} />
 
         {/* protected route */}
-        <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
           <Route
             path={ROUTE_HOME}
             element={<IndexScreen />}
@@ -86,17 +93,22 @@ const Root = () => {
           <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
           <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
+          
           {/* products */}
-          <Route element={<AddProductScreen />} path={ROUTE_PRODUCT_ADD} />
-
+            <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_ADD} />
+            <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_EDIT + '/:product_id'} />
+            <Route element={<ProductsScreen />} path={ROUTE_PRODUCTS} />
+        <Route element={<ProductDetailsScreen />} path={ROUTE_PRODUCT_DETAILS + '/:product_id'} />
+        
+        {/* cart and checkout */}
+        <Route element={<CartScreen />} path={ROUTE_CART} />
+        
           {/* Profile */}
-          <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />
-        </Route>
+            <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  
+            <Route element={<UpdateProfileScreen />} path={ROUTE_EDIT_PROFILE + '/:user_id'} />  
+          {/* user route */}
+        {/* End of protected route */}
 
-        {/* user route */}
-
-        {/* <Route element={<ProtectedRoute />} errorElement={<ErrorBoundary />}>
-        </Route> */}
 
         {/* authentication. Non protected */}
         <Route path="*" element={<NotFound />} />
