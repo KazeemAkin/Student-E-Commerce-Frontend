@@ -41,7 +41,7 @@ const listingTypes = [
 
 function ProductsScreen() {
   useUserGuard();
-  const { user } = useContext(AuthContext);
+  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);
@@ -94,7 +94,7 @@ function ProductsScreen() {
 
       return setProducts(isArray(response_data?.response?.products) ? response_data.response.products : []);
     } catch (error) {
-      responseDialog("error", "Error Alert", "Something went wrong while fetching products.");
+      responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
@@ -135,7 +135,7 @@ function ProductsScreen() {
 
       return getUserProducts();
     } catch (error) {
-      responseDialog("error", "Error Alert", "Something went wrong while delete the product.");
+      responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
       setDisplayDeleteModal(false);

@@ -33,7 +33,7 @@ import { empty, prepareResponseData } from "../../Utilities/utils";
 import { AuthContext } from "../../hooks/UseAuth";
 
 const Navbar = ({ active_screen = "home", include_search = true, reload_cart_count = 0 }) => {
-  const { user } = useContext(AuthContext) || {};
+  const { user, setUser, setIsLoggedIn } = useContext(AuthContext) || {};
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [ numberOfItemsInCart, setNumberOfItemsInCart ] = useState(reload_cart_count);
@@ -65,6 +65,7 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
       if (!isLoading) setIsLoading(true);
 
       const response = await productApi.getNoOfProductsInCart();
+      console.log({ response });
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
         return setNumberOfItemsInCart(0);
@@ -73,7 +74,6 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
       const count = response_data?.response?.count ? response_data.response.count : 0;
       setNumberOfItemsInCart(count);
     } catch (error) {
-      responseDialog("error", "Error Alert", "Something went wrong.");
     } finally {
       setIsLoading(false);
     }

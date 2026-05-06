@@ -6,6 +6,7 @@ import "./Checkout.css";
 
 // api
 import productApi from "../../api/Products";
+import paymentApi from "../../api/Payment";
 
 // image 
 import default_image from "../../assets/broken-image.png";
@@ -18,15 +19,18 @@ import { empty, isObject, prepareResponseData } from "../../Utilities/utils";
 
 import FullPageLoader from "../../components/loader/FullPageLoader";
 import { Toast } from "primereact/toast";
-import { useUserGuard } from "../../hooks/UserGuard";
+// import { useUserGuard } from "../../hooks/UserGuard";
 import colors from "../../config/colors";
 import { AuthContext } from "../../hooks/UseAuth";
-import { FaCartPlus, FaMapMarkerAlt, FaStar } from "react-icons/fa";
-import { MdChat } from "react-icons/md";
-import Ratings from "../profile/Ratings";
+import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
+import { Elements } from "@stripe/react-stripe-js";
+import StripeForm from "./StripeForm";
+import { loadStripe } from '@stripe/stripe-js';
+import { ROUTE_TRANSACTION_HISTORY } from "../../config/constants";
 
-function ProductDetailsScreen() {
-  useUserGuard();
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+function CheckoutScreen() {
+  // useUserGuard();
   const { user } = useContext(AuthContext);
   const { product_id } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
@@ -69,8 +73,41 @@ function ProductDetailsScreen() {
       }
       
       const details = isObject(response_data?.response?.product_details) ? response_data.response.product_details : {};
+      return responseDialog(
+        'success',
+        'Operation Successful',
+        `Payment successful.`
+      )
+
+      // navigate(ROUTE_TRANSACTION_HISTORY);
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  const payForProduct = async (stripe_token) => {
+    try {
+      if (!isLoading) setIsLoading(true);
+
+      const response = await paymentApi.payForProduct({ product_id, stripe_token });
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return responseDialog(
+          "error",
+          "Error Alert",
+          !empty(response_data) && !empty(response_data.response)
+            ? response_data.response
+            : "Failed to pay for product!",
+        );
+      }
+      
+      const details = isObject(response_data?.response) ? response_data.response : {};
       setProductDetails(details);
     } catch (error) {
+      console.log({error});
       responseDialog("error", "Error Alert", "Something went wrong.");
     } finally {
       setIsLoading(false);
@@ -114,32 +151,25 @@ function ProductDetailsScreen() {
                 </div>
               </div>
             </div>
-            <div className="payment-method">
-              <div className="title">Payment Method</div>
-              <div className="types">
-                <div className="tags">Pay on Delivery</div>
-                <div className="tags">In-app Payment</div>
-              </div>
-            </div>
-            <div className="buttons">
-              <div className="btn">
-                <FaCartPlus />
-                <span className="text">Add to Cart</span>
-              </div>
-              <div className="btn">
-                <MdChat />
-                <span className="text">Chat</span>
-              </div>
-            </div>
+            <Elements stripe={stripePromise}>
+              <StripeForm
+                onSuccess={(data) => {
+                  setIsLoading(false);
+                  payForProduct(data?.id);
+                }}
+                onError={(msg) => {
+                  setIsLoading(false);
+                  responseDialog("error", "Payment Error", "Failed to make payment.");
+                }}
+                isStripeLoading={() => setIsLoading(true)}
+              />
+            </Elements>
           </div>
         </div>
 
-
-          <div className="rating-container">
-            {/* Ratings */}
-            <Ratings />
-          </div>
-      </div>
+        {/* <div className="rating-container">
+        </div> */}
+      </div> 
       
       <Footer />
       {isLoading && <FullPageLoader visible={isLoading} />}
@@ -148,4 +178,4 @@ function ProductDetailsScreen() {
   );
 }
 
-export default ProductDetailsScreen;
+export default CheckoutScreen;

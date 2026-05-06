@@ -21,6 +21,8 @@ import colors from "../../config/colors";
 import { AuthContext } from "../../hooks/UseAuth";
 import { FaTrash, FaWallet } from "react-icons/fa";
 import { MdChat } from "react-icons/md";
+import { NavLink } from "react-router-dom";
+import { ROUTE_CHECKOUT } from "../../config/constants";
 
 function CartScreen() {
   useUserGuard();
@@ -104,10 +106,12 @@ function CartScreen() {
                   <div className="bottom">
                     <FaTrash color={colors.red} />&nbsp;<span className="label">Remove</span>
                     <div className="action">
-                      <div className="checkout">
-                        <FaWallet />
-                        <span className="label">Checkout</span>
-                      </div>
+                      <NavLink to={`${ROUTE_CHECKOUT}/${product?._id}`} style={{ textDecoration: 'none' }}>
+                        <div className="checkout">
+                          <FaWallet />
+                          <span className="label">Checkout</span>
+                        </div>
+                      </NavLink>
                       <div className="chat">
                         <MdChat />
                         <span className="label">Chat</span>

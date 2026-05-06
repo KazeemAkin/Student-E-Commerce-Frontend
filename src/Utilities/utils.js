@@ -6,7 +6,7 @@ const prepareResponseData = (response) => {
     if (!empty(accessToken)) {
       localStorage.setItem("studentAccessToken", accessToken);
     }
-
+    
     if (
       empty(response) ||
       empty(response.data) ||
@@ -161,6 +161,7 @@ const validPayload = (obj) => {
 };
 
 const toNormalCase = (str) => {
+  if (typeof str !== 'string') return;
   return str
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

@@ -167,6 +167,28 @@
   }
 }
 
+.stripe-form-wrapper {
+  margin-top: 90px;
+  padding: 10px 0;
+}
+
+.stripe-input {
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.stripe-input-focused {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.stripe-input-invalid {
+  border-color: #ef4444;
+}
+
 @media only screen and (min-width: 768px) {
   .cart-page {
     padding: 0 8%;

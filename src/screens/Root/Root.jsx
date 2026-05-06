@@ -7,6 +7,7 @@ import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_ABOUT_US,
   ROUTE_CART,
+  ROUTE_CHECKOUT,
   ROUTE_CONTACT,
   ROUTE_EDIT_PROFILE,
   ROUTE_FORGOT_PASSWORD,
@@ -48,6 +49,7 @@ import ProductsScreen from "../product/ProductsScreen";
 import UpdateProfileScreen from "../profile/UpdateProfileScreen";
 import ProductDetailsScreen from "../product/ProductDetailsScreen";
 import CartScreen from "../checkout/CartScreen";
+import CheckoutScreen from "../checkout/CheckoutScreen";
 
 const Root = () => {
   return (
@@ -95,10 +97,11 @@ const Root = () => {
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
           
           {/* products */}
-            <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_ADD} />
-            <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_EDIT + '/:product_id'} />
-            <Route element={<ProductsScreen />} path={ROUTE_PRODUCTS} />
-        <Route element={<ProductDetailsScreen />} path={ROUTE_PRODUCT_DETAILS + '/:product_id'} />
+          <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_ADD} />
+          <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_EDIT + '/:product_id'} />
+          <Route element={<ProductsScreen />} path={ROUTE_PRODUCTS} />
+          <Route element={<ProductDetailsScreen />} path={ROUTE_PRODUCT_DETAILS + '/:product_id'} />
+          <Route element={<CheckoutScreen />} path={ROUTE_CHECKOUT + '/:product_id'} />
         
         {/* cart and checkout */}
         <Route element={<CartScreen />} path={ROUTE_CART} />

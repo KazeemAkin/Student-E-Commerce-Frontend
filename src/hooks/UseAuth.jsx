@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect, createContext, } from 'react';
 import { getUserDetails } from '../api/GetUserDetails';
 import { empty, isObject } from '../Utilities/utils';
@@ -12,7 +13,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ get_user = true, children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
@@ -31,13 +32,15 @@ export const AuthProvider = ({ children }) => {
         "Authorization"
       ] = `Bearer ${token}`;
       
-      const response = await getUserDetails();
-      if (isObject(response) && response.success && response.userDetails) {
-        setUser(response.userDetails);
-        setIsLoggedIn(true);
-      } else {
-        setUser(null);
-        setIsLoggedIn(false);
+      if (get_user) {
+        const response = await getUserDetails();
+        if (isObject(response) && response.success && response.userDetails) {
+          setUser(response.userDetails);
+          setIsLoggedIn(true);
+        } else {
+          setUser(null);
+          setIsLoggedIn(false);
+        }
       }
     } catch (error) {
       console.error("Failed to fetch user details:", error);

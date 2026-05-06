@@ -28,7 +28,7 @@ import { ROUTE_SIGN_IN } from "../../config/constants";
 
 function ProductDetailsScreen() {
   useUserGuard(false);
-  const { user } = useContext(AuthContext);
+  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
   const { product_id } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);
@@ -139,7 +139,6 @@ function ProductDetailsScreen() {
       
       return setProductInCart(response_data?.response?.is_product_in_cart || false );
     } catch (error) {
-      responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
     }
