@@ -183,7 +183,6 @@ function PurchaseHistory() {
           }
         </div>
       </div>
-
       
       <Dialog
         visible={openRatingModal}

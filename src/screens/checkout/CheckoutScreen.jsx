@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // css
 import "./Checkout.css";
@@ -32,7 +32,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function CheckoutScreen() {
   // useUserGuard();
   const { user } = useContext(AuthContext);
-  const navigate = Navigate();
+  const navigate = useNavigate();
   const { product_id } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);

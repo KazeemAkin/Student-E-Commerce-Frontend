@@ -41,7 +41,7 @@ function ResetPasswordScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const reset_hash = searchParams.get("reset_hash");
+  const reset_hash = searchParams.get("reset-token");
 
   useEffect(() => {
     if (!isString(reset_hash) || reset_hash.length !== 36) {
@@ -82,7 +82,7 @@ function ResetPasswordScreen() {
           "Failed to Reset Password!",
           !empty(response_data?.message) && isString(response_data?.message)
             ? response_data.message
-            : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+            : "Unfortunately something went wrong and we were unable to sign you up. Refresh the page or try again later!",
         );
       }
 
@@ -93,7 +93,7 @@ function ResetPasswordScreen() {
         "Failed to Reset Password!",
         !empty(error?.message) && isString(error?.message)
           ? error.message
-          : "Unfortunatly something went wrong and we were unable to sign you up. Refresh the page or try again later!",
+          : "Unfortunately something went wrong and we were unable to sign you up. Refresh the page or try again later!",
       );
     } finally {
       setIsLoading(false);
@@ -130,7 +130,7 @@ function ResetPasswordScreen() {
                       name="password"
                       placeholder="Enter password"
                       fontSize={14}
-                      height={30}
+                      height={45}
                       width="100%"
                       type="password"
                       backgroundColor={colors.ash}
@@ -144,7 +144,7 @@ function ResetPasswordScreen() {
                       name="confirm_password"
                       placeholder="Confirm password"
                       fontSize={14}
-                      height={30}
+                      height={45}
                       width="100%"
                       type="password"
                       backgroundColor={colors.ash}

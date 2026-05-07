@@ -37,6 +37,9 @@ const addToCart = (payload) =>
 const deleteProduct = (product_id) =>
   client.delete(`/product/delete/${product_id}`);
 
+const deleteProductFromCart = (cart_id) =>
+  client.delete(`/cart/delete/${cart_id}`);
+
 const isProductInCart = (product_id) =>
   client.get(`/product/${product_id}/in-cart`);
 
@@ -47,6 +50,7 @@ const getProductsInCart = () =>
   client.get(`/cart/products`);
 
 export default {
+  deleteProductFromCart,
   getProductsInCart,
   isProductInCart,
   addProduct,

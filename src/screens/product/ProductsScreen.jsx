@@ -41,7 +41,7 @@ const listingTypes = [
 
 function ProductsScreen() {
   useUserGuard();
-  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);

@@ -23,6 +23,9 @@ import { FaTrash, FaWallet } from "react-icons/fa";
 import { MdChat } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { ROUTE_CHECKOUT } from "../../config/constants";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
+import EmptyDiv from "../../components/emptyDiv/EmptyDiv";
 
 function CartScreen() {
   useUserGuard();
@@ -31,6 +34,8 @@ function CartScreen() {
   const toastTR = useRef(null);
   const [products, setProducts] = useState([]);
   const [total_amount, setTotalAmount] = useState(0);
+  const [openDeleteCartModal, setOpenDeleteCartModal] = useState(false);
+  const [activeCartItem, setActiveCartItem] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -77,15 +82,89 @@ function CartScreen() {
     }
   };
 
+
+  const deleteCartItem = async (value) => {
+    try {
+      if (!isLoading) setIsLoading(true);
+
+      const response = await productApi.deleteProductFromCart(activeCartItem?._id || '');
+      const response_data = prepareResponseData(response);
+      if (!response_data.success) {
+        return responseDialog(
+          "error",
+          "Error Alert",
+          !empty(response_data) && !empty(response_data.response)
+            ? response_data.response
+            : "Failed to delete item from cart!",
+        );
+      }
+      
+      setOpenDeleteCartModal(false);
+      responseDialog(
+        "success",
+        "Success",
+        `Cart item deleted successfully.`,
+      );
+      getProductsCart();
+    } catch (error) {
+      responseDialog("error", "Error Alert", "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const showModal = (cartItem) => {
+    setOpenDeleteCartModal(true);
+    setActiveCartItem(cartItem);
+  }
+
+  const deleteCartDialogFooter = (
+    <div>
+      <Button
+        label="Cancel"
+        style={{
+          backgroundColor: colors.primary,
+          color: colors.white,
+          borderColor: colors.primary,
+          borderWidth: 1,
+          height: 33,
+          borderRadius: 25,
+          width: 110,
+          fontSize: 14,
+          fontWeight: 200
+        }}
+        onClick={() => {
+          setOpenDeleteCartModal(false)
+        }}
+      />
+      <Button
+        label="Delete"
+        style={{
+          backgroundColor: colors.red,
+          color: colors.white,
+          borderColor: colors.red,
+          borderWidth: 1,
+          height: 33,
+          borderRadius: 25,
+          width: 110,
+          fontSize: 14,
+          fontWeight: 200
+        }}
+        onClick={() => deleteCartItem()}
+      />
+    </div>
+  );
+
+
   return (
     <section className="main-wrapper">
       <Navbar active_screen="" />
       <div className="page-containers cart-page">
         <div className="cart-items-box">
-          <div className="header">Cart(1)</div>
+          <div className="header">Cart</div>
           <div className="cart-items">
             {
-              isArray(products) && products.map(product => 
+              isArray(products) && !empty(products) ? products.map(product => 
                 <div className="cart-item" key={product?._id}>
                   <div className="top">
                     <div className="left">
@@ -104,8 +183,10 @@ function CartScreen() {
                   </div>
 
                   <div className="bottom">
-                    <FaTrash color={colors.red} />&nbsp;<span className="label">Remove</span>
-                    <div className="action">
+                    <div className="trash" onClick={() => showModal(product)}>
+                      <FaTrash color={colors.red} />&nbsp;<span className="label">Remove</span>
+                    </div>
+                    { product?.status?.toLowerCase() === 'listed' && <div className="action">
                       <NavLink to={`${ROUTE_CHECKOUT}/${product?._id}`} style={{ textDecoration: 'none' }}>
                         <div className="checkout">
                           <FaWallet />
@@ -116,10 +197,10 @@ function CartScreen() {
                         <MdChat />
                         <span className="label">Chat</span>
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </div>
-            )}
+            ) : <EmptyDiv />}
           </div>
         </div>
 
@@ -130,17 +211,36 @@ function CartScreen() {
             <span className="cost">&pound;{ parseFloat(total_amount)?.toFixed(2) || total_amount || 0 }</span>
           </div>
 
-          <div className="bottom">
+          {/* <div className="bottom">
             <div className="checkout-button">
               <span className="title">Checkout</span>
               <span className="cost">&pound;{ parseFloat(total_amount)?.toFixed(2) || total_amount || 0 }</span>
             </div>
-          </div>
+          </div> */}
         </div>
-
-
       </div>
       
+
+      <Dialog
+        visible={openDeleteCartModal}
+        style={{ width: "32rem", zIndex: 999999 }}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        header="Confirm"
+        headerStyle={{ fontSize: 14, borderBottom: `1px solid ${colors.ash}`, padding: '10px 15px' }}
+        modal
+        footer={deleteCartDialogFooter}
+        onHide={() => setOpenDeleteCartModal(false)}
+      >
+        <div
+          className="confirmation-content mt-10"
+        >
+          {
+            <span>
+              You are about to delete this listed cart item, <strong>{ activeCartItem?.name || "" }</strong>, are you sure you want to continue?
+            </span>
+          }
+        </div>
+      </Dialog>
       <Footer />
       {isLoading && <FullPageLoader visible={isLoading} />}
       <Toast ref={toastTR} position="bottom-left" />
