@@ -394,7 +394,7 @@
 
     ul {
       list-style: none;
-      display: flex;
+      display: flex !important;
       flex-direction: row;
       color: var(--white);
       padding: 15px 5%;
