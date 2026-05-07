@@ -111,7 +111,7 @@ function ForgotPasswordScreen() {
                   <div className="field-container">
                     <InputField
                       name="email"
-                      placeholder="Enter school email"
+                      placeholder="Enter University Email"
                       fontSize={14}
                       height={45}
                       width="100%"

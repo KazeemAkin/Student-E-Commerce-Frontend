@@ -65,7 +65,7 @@ function ServicesScreen() {
               <h3>Safety and Verification Services</h3>
               <p>
                 At Student E-Commerce Marketplace, your safety is our top
-                priority. We use school email verification to ensure only
+                priority. We use University Email verification to ensure only
                 genuine students join the platform, creating a trusted
                 campus-only community.
               </p>

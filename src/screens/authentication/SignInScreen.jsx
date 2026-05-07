@@ -129,7 +129,7 @@ function SignInScreen() {
                   <div className="field-container">
                     <InputField
                       name="email"
-                      placeholder="Enter school email"
+                      placeholder="Enter University Email"
                       fontSize={14}
                       height={40}
                       width="100%"
