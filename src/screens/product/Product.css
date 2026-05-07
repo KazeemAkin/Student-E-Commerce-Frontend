@@ -245,6 +245,7 @@
           background-color: var(--primary);
           padding: 4px 10px;
           color: var(--white);
+          cursor: pointer;
         }
       }
     }

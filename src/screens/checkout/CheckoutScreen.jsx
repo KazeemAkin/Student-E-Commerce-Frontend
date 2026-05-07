@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 // css
 import "./Checkout.css";
@@ -32,6 +32,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function CheckoutScreen() {
   // useUserGuard();
   const { user } = useContext(AuthContext);
+  const navigate = Navigate();
   const { product_id } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);
@@ -72,14 +73,13 @@ function CheckoutScreen() {
         );
       }
       
-      const details = isObject(response_data?.response?.product_details) ? response_data.response.product_details : {};
-      return responseDialog(
+      responseDialog(
         'success',
         'Operation Successful',
         `Payment successful.`
       )
 
-      // navigate(ROUTE_TRANSACTION_HISTORY);
+      navigate(ROUTE_TRANSACTION_HISTORY);
     } catch (error) {
       responseDialog("error", "Error Alert", "Something went wrong.");
     } finally {

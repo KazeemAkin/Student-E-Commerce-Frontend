@@ -28,6 +28,7 @@ export const ROUTE_PRODUCT_ADD = "/product/add";
 export const ROUTE_PRODUCT_EDIT = "/product/edit";
 export const ROUTE_PRODUCT_DELETE = "/product/delete";
 export const ROUTE_TRANSACTION_HISTORY = '/transaction/history';
+export const ROUTE_PURCHASE_HISTORY = '/purchase/history';
 
 // cart and checkout
 export const ROUTE_CART = "/cart";

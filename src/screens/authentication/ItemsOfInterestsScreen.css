@@ -97,6 +97,7 @@
     }
 
     .item-of-interest-btn {
+      padding: 25px 8%;
       justify-content: flex-end;
       align-items: flex-end;
     }

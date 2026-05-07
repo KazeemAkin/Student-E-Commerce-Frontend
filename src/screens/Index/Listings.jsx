@@ -1,20 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import SectionHeader from "../../components/header/sectionHeader/SectionHeader";
-
-// image
-import { ROUTE_CART, ROUTE_PRODUCT_DETAILS } from "../../config/constants";
+import { empty, isArray, toNormalCase } from "../../Utilities/utils";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import colors from "../../config/colors";
 import { FaShoppingCart } from "react-icons/fa";
-
-// api
+import { AuthContext } from "../../hooks/UseAuth";
 
 // images
 import avatar from "../../assets/avatars/avatar.png";
 import brokenImage from "../../assets/demo-images/broken-image.png";
-import { isArray, toNormalCase } from "../../Utilities/utils";
-import { useContext } from "react";
-import { AuthContext } from "../../hooks/UseAuth";
+
+// components
+import { ROUTE_CART, ROUTE_PRODUCT_DETAILS } from "../../config/constants";
+import SectionHeader from "../../components/header/sectionHeader/SectionHeader";
+import EmptyDiv from "../../components/emptyDiv/EmptyDiv";
 
 function Listings({ data, title = "Listings", is_user_list = false, ...other }) {
   const { user } = useContext(AuthContext);
@@ -24,7 +23,7 @@ function Listings({ data, title = "Listings", is_user_list = false, ...other }) 
       <SectionHeader title={title} {...other} />
 
       <div className="listings-container">
-        {isArray(data) &&
+        {isArray(data) && !empty(data) ?
           data.map((item) => {
             return (
               <div className="listing-item" key={item?._id} onClick={() => ROUTE_PRODUCT_DETAILS + `/${item?._id}`}>
@@ -74,7 +73,9 @@ function Listings({ data, title = "Listings", is_user_list = false, ...other }) 
                 </div>
               </div>
             );
-          })}
+          }) :
+          <EmptyDiv />
+        }
       </div>
     </section>
   );

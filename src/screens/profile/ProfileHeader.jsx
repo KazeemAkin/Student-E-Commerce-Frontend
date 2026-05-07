@@ -24,7 +24,7 @@ import { useContext } from "react";
 import { empty, isArray, isObject } from "../../Utilities/utils";
 import { AuthContext } from "../../hooks/UseAuth";
 
-function ProfileHeader({ openAvatarModal }) {
+function ProfileHeader({ openAvatarModal, setOpenMenu }) {
   const { user_id } = useParams();
   const { user } = useContext(AuthContext);
 
@@ -131,7 +131,7 @@ function ProfileHeader({ openAvatarModal }) {
                     <MdChat size={22} />
                   </NavLink>
                   <NavLink
-                    onClick={(e) => e.preventDefault()}
+                    onClick={setOpenMenu}
                     style={{ textDecoration: "none", color: colors.primary }}
                   >
                     <MdMenu size={22} />

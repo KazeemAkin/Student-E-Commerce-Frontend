@@ -179,7 +179,7 @@
 @media only screen and (min-width: 860px) {
   .login-page-wrapper {
     .login-container {
-      padding: 300px 10%;
+      padding: 120px 10%;
 
       .form-wrapper {
         padding: 0 30px;
@@ -192,12 +192,12 @@
 @media only screen and (min-width: 1200px) {
   .login-page-wrapper {
     .login-container {
-      padding: 300px 15%;
+      padding: 130px 15%;
 
       .form-wrapper {
         padding: 0 30px;
         width: 70%;
-        margin-top: 60px;
+        margin-top: 30px;
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -256,7 +256,7 @@
 
       .element-wrapper {
         img {
-          width: 220px;
+          width: 150px;
         }
       }
 

@@ -113,7 +113,7 @@ function ForgotPasswordScreen() {
                       name="email"
                       placeholder="Enter school email"
                       fontSize={14}
-                      height={30}
+                      height={45}
                       width="100%"
                       type="email"
                       backgroundColor={colors.ash}

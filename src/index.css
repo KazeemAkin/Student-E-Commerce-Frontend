@@ -623,6 +623,26 @@ main {
   color: var(--primary) !important;
 }
 
+.empty-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  img {
+    width: 100px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  span {
+    font-size: 14px;
+  }
+}
+
 @media only screen and (min-width: 769px) {
   main {
     margin-left: 20%;

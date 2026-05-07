@@ -28,33 +28,22 @@ import {
   ROUTE_SERVICES,
   ROUTE_SIGN_IN,
 } from "../../config/constants";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { empty, prepareResponseData } from "../../Utilities/utils";
 import { AuthContext } from "../../hooks/UseAuth";
 
 const Navbar = ({ active_screen = "home", include_search = true, reload_cart_count = 0 }) => {
-  const { user, setUser, setIsLoggedIn } = useContext(AuthContext) || {};
+  const { user } = useContext(AuthContext) || {};
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [ numberOfItemsInCart, setNumberOfItemsInCart ] = useState(reload_cart_count);
   const navigate = useNavigate();
-  const toastTR = useRef(null);
 
   useEffect(() => {
     if (user) {
       noOfItemsInCart();
     }
   }, [ user, reload_cart_count ]);
-
-  // alert functions
-  const responseDialog = (severity = null, summary = null, detail = null) => {
-    toastTR?.current?.show({
-      severity,
-      summary,
-      detail,
-      life: 8000,
-    });
-  };
 
   /**
    * Get number of items in cart
@@ -65,7 +54,6 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
       if (!isLoading) setIsLoading(true);
 
       const response = await productApi.getNoOfProductsInCart();
-      console.log({ response });
       const response_data = prepareResponseData(response);
       if (!response_data.success) {
         return setNumberOfItemsInCart(0);

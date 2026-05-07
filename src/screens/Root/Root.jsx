@@ -20,6 +20,7 @@ import {
   ROUTE_PRODUCT_EDIT,
   ROUTE_PRODUCTS,
   ROUTE_PROFILE,
+  ROUTE_PURCHASE_HISTORY,
   ROUTE_REGISTRATION_SUCCESSFUL,
   ROUTE_RESET_PASSWORD,
   ROUTE_SEND_ACCESS_CODE,
@@ -50,6 +51,7 @@ import UpdateProfileScreen from "../profile/UpdateProfileScreen";
 import ProductDetailsScreen from "../product/ProductDetailsScreen";
 import CartScreen from "../checkout/CartScreen";
 import CheckoutScreen from "../checkout/CheckoutScreen";
+import PurchaseHistory from "../transaction/PurchaseHistory";
 
 const Root = () => {
   return (
@@ -105,6 +107,9 @@ const Root = () => {
         
         {/* cart and checkout */}
         <Route element={<CartScreen />} path={ROUTE_CART} />
+
+        {/* Transaction */}
+        <Route element={<PurchaseHistory />} path={ROUTE_PURCHASE_HISTORY} />
         
           {/* Profile */}
             <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  

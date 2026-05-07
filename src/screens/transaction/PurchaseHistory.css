@@ -1,0 +1,125 @@
+.purchase-history-page {
+  .purchase-history {
+    padding: 100px 15%;
+    min-height: 50vh;
+
+    .purchase-history-wrapper {
+      margin-top: 30px;
+
+      .history-item {
+        .seller-details {
+          margin-bottom: 10px;
+          
+          .name-box {
+            .name {
+              font-size: 12px;
+            }
+          }
+        }
+
+        .cart-item {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 20px;
+          border-bottom: 1px solid var(--light-gray);
+          padding-bottom: 10px;
+  
+          .top {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+  
+            .left {
+              display: flex;
+              flex-direction: row;
+              width: 80%;
+              column-gap: 10px;
+              padding-bottom: 20px;
+              
+              .img-container {
+                width: 120px;
+                height: 80px;
+                background-color: var(--light-gray);
+                overflow: hidden;
+                
+                img {
+                  width: 100%;
+                  object-fit: cover;
+                }
+              }
+  
+              .name-box {
+                .name {
+                  font-size: 14px;
+                }
+
+                .sub {
+                  font-size: 12px;
+                }
+                
+                .status {
+                  font-size: 12px;
+                }
+              }
+            }
+  
+            .right {
+              width: 20%;
+              text-align: right;
+  
+              .price {
+                font-weight: 500;
+              }
+            }
+          }
+  
+          .bottom {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+  
+            .label {
+              font-size: 12px;
+            }
+  
+            .action {
+              display: flex;
+              flex-direction: row;
+              gap: 10px;
+              cursor: pointer;
+  
+              .checkout, .chat {
+                padding: 5px 10px;
+                background-color: var(--primary);
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                border-radius: 25px;
+                font-size: 18px;
+                color: var(--white);
+  
+                .label {
+                  font-size: 12px;
+                }
+              }
+  
+              .chat {
+  
+                svg {
+                  font-size: 23px;
+                }
+  
+                .label {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

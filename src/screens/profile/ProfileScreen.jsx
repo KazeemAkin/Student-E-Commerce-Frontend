@@ -22,6 +22,7 @@ import { ROUTE_PROFILE } from "../../config/constants";
 // api 
 import productApi from '../../api/Products';
 import { AuthContext } from "../../hooks/UseAuth";
+import ProfileMenu from "./ProfileMenu";
 
 function ProfileScreen() {
   useUserGuard();
@@ -32,6 +33,7 @@ function ProfileScreen() {
   const [avatar, setAvatar] = useState('');
   const toastTR = useRef(null);
   const [products, setProducts] = useState([]);
+  const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -164,10 +166,16 @@ function ProfileScreen() {
       <Navbar active_screen="" />
 
       {/* profile header section */}
-      <ProfileHeader openAvatarModal={openUserAvatarModal} />
+      <ProfileHeader setOpenMenu={() => setOpenMenu(!openMenu)} openAvatarModal={openUserAvatarModal} />
 
+      <div className="menu-section">
+        {
+          openMenu && <ProfileMenu />
+        }
+      </div>
       {/* listings */}
       <Listings data={products} title="Listed Items" is_user_list={true} />
+
 
       {/* Ratings */}
       <Ratings />

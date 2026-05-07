@@ -217,6 +217,45 @@
   }
 }
 
+.menu-section {
+  padding: 10px 15%;
+  width: 100%;
+
+  .profile-menu-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    .menu-list-item {
+      margin-bottom: 20px;
+      cursor: pointer;
+      
+      .menu-list-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        .tab-title {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 20px;
+          color: var(--primary);
+
+          .title {
+            color: var(--black);
+          }
+        }
+      }
+
+      .sub-menu {
+        display: none;
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .profile-header {
     margin-top: 60px;

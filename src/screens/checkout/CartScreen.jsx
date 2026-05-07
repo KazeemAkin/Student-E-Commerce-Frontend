@@ -118,7 +118,7 @@ function CartScreen() {
                       </div>
                     </div>
                   </div>
-              </div>
+                </div>
             )}
           </div>
         </div>
