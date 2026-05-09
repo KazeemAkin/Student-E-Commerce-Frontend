@@ -30,18 +30,16 @@ function IndexScreen() {
   const toastTR = useRef(null);
 
   useEffect(() => {
-    if (user) {
-      getProducts();
-      getProducts('books');
-      getProducts('furniture');
-      getProducts('tech_wares');
-      getProducts('kitchenware');
-      getProducts('sport_wear');
-      getProducts('sport_wear');
-      getProducts('dinner_wares');
-      getProducts('miscellaneous');
-    }
-  }, [ user ])
+    getProducts();
+    getProducts('books');
+    getProducts('furniture');
+    getProducts('tech_wares');
+    getProducts('kitchenware');
+    getProducts('sport_wear');
+    getProducts('sport_wear');
+    getProducts('dinner_wares');
+    getProducts('miscellaneous');
+  }, [])
 
   // alert functions
   const responseDialog = (severity = null, summary = null, detail = null) => {
