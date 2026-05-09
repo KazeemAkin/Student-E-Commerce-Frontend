@@ -187,7 +187,7 @@ function CartScreen() {
                       <FaTrash color={colors.red} />&nbsp;<span className="label">Remove</span>
                     </div>
                     { product?.status?.toLowerCase() === 'listed' && <div className="action">
-                      <NavLink to={`${ROUTE_CHECKOUT}/${product?._id}`} style={{ textDecoration: 'none' }}>
+                      <NavLink to={`${ROUTE_CHECKOUT}/${product?.product_id}`} style={{ textDecoration: 'none' }}>
                         <div className="checkout">
                           <FaWallet />
                           <span className="label">Checkout</span>
