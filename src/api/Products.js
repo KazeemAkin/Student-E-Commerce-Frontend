@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import client from "./Client";
-  const token = localStorage.getItem("studentAccessToken");
+const token = localStorage.getItem("studentAccessToken");
+  console.log({ token });
   client.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${token}`;

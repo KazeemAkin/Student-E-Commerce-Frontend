@@ -22,11 +22,16 @@ import {
   ROUTE_CART,
   ROUTE_CATEGORY_LISTINGS,
   ROUTE_CONTACT,
+  ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
   ROUTE_ONBOARDING,
+  ROUTE_PERSONAL_INFORMATION,
   ROUTE_PROFILE,
+  ROUTE_RESET_PASSWORD,
+  ROUTE_SEND_ACCESS_CODE,
   ROUTE_SERVICES,
   ROUTE_SIGN_IN,
+  ROUTE_VERIFY_ACCESS_CODE,
 } from "../../config/constants";
 import { useContext, useEffect, useState } from "react";
 import { empty, prepareResponseData } from "../../Utilities/utils";
@@ -39,8 +44,17 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
   const [ numberOfItemsInCart, setNumberOfItemsInCart ] = useState(reload_cart_count);
   const navigate = useNavigate();
 
+  const reject_nav_calls = [
+    ROUTE_SIGN_IN,
+    ROUTE_SEND_ACCESS_CODE,
+    ROUTE_VERIFY_ACCESS_CODE,
+    ROUTE_PERSONAL_INFORMATION,
+    ROUTE_FORGOT_PASSWORD,
+    ROUTE_RESET_PASSWORD
+  ]
+
   useEffect(() => {
-    if (user) {
+    if (user && !reject_nav_calls.includes('/' + active_screen)) {
       noOfItemsInCart();
     }
   }, [ user, reload_cart_count ]);
@@ -180,7 +194,7 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
                         textDecoration: "none",
                       }}
                     >
-                      Furnitures
+                      Furniture
                     </NavLink>
                   </li>
                   <li>
@@ -196,7 +210,7 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
                         textDecoration: "none",
                       }}
                     >
-                      Techwares
+                      Tech-wares
                     </NavLink>
                   </li>
                   <li>
@@ -338,22 +352,24 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
               </ul>
             </div>
           ) : (
-            <div className="navbar_avatar_box">
-              <div className="cart-icon-box">
-                <NavLink
-                  to={ROUTE_CART}
-                  style={{ textDecoration: "none", color: colors.white }}
-                >
-                    <FaCartPlus size={23} style={{ cursor: "pointer" }} />
-                    { numberOfItemsInCart > 0 && <div className="cart-badge">{numberOfItemsInCart}</div> }
-                </NavLink>
-              </div>
-              <NavLink
-                to={ROUTE_PROFILE}
-                style={{ textDecoration: "none", color: colors.white }}
-              >
-                <FaUserAlt size={23} style={{ cursor: "pointer" }} />
-            </NavLink>
+              <div className="navbar_avatar_box">
+                {!reject_nav_calls.includes('/' + active_screen) && <>  
+                  <div className="cart-icon-box">
+                    <NavLink
+                      to={ROUTE_CART}
+                      style={{ textDecoration: "none", color: colors.white }}
+                    >
+                        <FaCartPlus size={23} style={{ cursor: "pointer" }} />
+                        { numberOfItemsInCart > 0 && <div className="cart-badge">{numberOfItemsInCart}</div> }
+                    </NavLink>
+                  </div>
+                  <NavLink
+                    to={ROUTE_PROFILE}
+                    style={{ textDecoration: "none", color: colors.white }}
+                  >
+                    <FaUserAlt size={23} style={{ cursor: "pointer" }} />
+                  </NavLink>
+                </>}
             </div>
           )}
         </div>

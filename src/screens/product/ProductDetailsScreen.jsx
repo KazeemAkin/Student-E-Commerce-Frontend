@@ -28,7 +28,7 @@ import { ROUTE_SIGN_IN } from "../../config/constants";
 
 function ProductDetailsScreen() {
   useUserGuard(false);
-  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { product_id } = useParams() || {};
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);
