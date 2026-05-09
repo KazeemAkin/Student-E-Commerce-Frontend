@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 // css
 import "./Product.css";
@@ -24,7 +24,7 @@ import { AuthContext } from "../../hooks/UseAuth";
 import { FaCartPlus, FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { MdChat } from "react-icons/md";
 import Ratings from "../profile/Ratings";
-import { ROUTE_SIGN_IN } from "../../config/constants";
+import { ROUTE_CHAT, ROUTE_SIGN_IN } from "../../config/constants";
 
 function ProductDetailsScreen() {
   useUserGuard(false);
@@ -193,10 +193,12 @@ function ProductDetailsScreen() {
                 <FaCartPlus />
                 <span className="text">{productInCart ? 'Remove from Cart' : 'Add to Cart'}</span>
               </div>
-              <div className="btn">
-                <MdChat />
-                <span className="text">Chat</span>
-              </div>
+              <NavLink to={ROUTE_CHAT} style={{ textDecoration: 'none' }}>
+                <div className="btn">
+                  <MdChat />
+                  <span className="text">Chat</span>
+                </div>
+              </NavLink>
             </div>
           </div>
         </div>

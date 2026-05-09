@@ -7,6 +7,7 @@ import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_ABOUT_US,
   ROUTE_CART,
+  ROUTE_CHAT,
   ROUTE_CHECKOUT,
   ROUTE_CONTACT,
   ROUTE_EDIT_PROFILE,
@@ -52,6 +53,7 @@ import ProductDetailsScreen from "../product/ProductDetailsScreen";
 import CartScreen from "../checkout/CartScreen";
 import CheckoutScreen from "../checkout/CheckoutScreen";
 import PurchaseHistory from "../transaction/PurchaseHistory";
+import ChatScreen from "../chat/ChatScreen";
 
 const Root = () => {
   return (
@@ -110,6 +112,9 @@ const Root = () => {
 
         {/* Transaction */}
         <Route element={<PurchaseHistory />} path={ROUTE_PURCHASE_HISTORY} />
+
+        {/* chat */}
+        <Route element={<ChatScreen />} path={ROUTE_CHAT} />
         
           {/* Profile */}
             <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  

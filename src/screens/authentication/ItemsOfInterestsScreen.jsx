@@ -98,7 +98,7 @@ function ItemsOfInterestsScreen() {
   return (
     <>
       <section className="items-of-interest-page-wrapper">
-        <Navbar active_screen="" include_search={false} />
+        <Navbar active_screen="registration/items-of-interest" include_search={false} />
 
         <div className="items-of-interest-container">
           <div className="page-title-box">

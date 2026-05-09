@@ -18,7 +18,7 @@ function WelcomeScreen() {
   return (
     <>
       <section className="welcome-page-wrapper">
-        <Navbar active_screen="" include_search={false} />
+        <Navbar active_screen="registration/welcome" include_search={false} />
 
         <div className="welcome-page-container">
           <div className="welcome-image-container">

@@ -97,7 +97,7 @@ function UserTypeScreen() {
   return (
     <>
       <section className="user-type-page-wrapper">
-        <Navbar active_screen="" include_search={false} />
+        <Navbar active_screen="registration/user-type" include_search={false} />
         <div className="page-title">User Type</div>
 
         <div className="user-type-container">

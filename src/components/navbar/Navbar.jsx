@@ -24,6 +24,7 @@ import {
   ROUTE_CONTACT,
   ROUTE_FORGOT_PASSWORD,
   ROUTE_HOME,
+  ROUTE_ITEMS_OF_INTEREST,
   ROUTE_ONBOARDING,
   ROUTE_PERSONAL_INFORMATION,
   ROUTE_PROFILE,
@@ -31,7 +32,9 @@ import {
   ROUTE_SEND_ACCESS_CODE,
   ROUTE_SERVICES,
   ROUTE_SIGN_IN,
+  ROUTE_USER_TYPE,
   ROUTE_VERIFY_ACCESS_CODE,
+  ROUTE_WELCOME,
 } from "../../config/constants";
 import { useContext, useEffect, useState } from "react";
 import { empty, prepareResponseData } from "../../Utilities/utils";
@@ -50,7 +53,11 @@ const Navbar = ({ active_screen = "home", include_search = true, reload_cart_cou
     ROUTE_VERIFY_ACCESS_CODE,
     ROUTE_PERSONAL_INFORMATION,
     ROUTE_FORGOT_PASSWORD,
-    ROUTE_RESET_PASSWORD
+    ROUTE_RESET_PASSWORD,
+    ROUTE_USER_TYPE,
+    ROUTE_WELCOME,
+    ROUTE_ONBOARDING,
+    ROUTE_ITEMS_OF_INTEREST
   ]
 
   useEffect(() => {

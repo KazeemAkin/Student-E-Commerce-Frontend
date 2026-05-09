@@ -47,7 +47,7 @@ function AddUpdateProductScreen() {
   const [processed, setProcessed] = useState(false);
   const [ newImage, setNewImage] = useState(false);
   const toastTR = useRef(null);
-  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { product_id } = useParams() || {};
   const [ initialValues, setInitialValues ] = useState({
     name: "",

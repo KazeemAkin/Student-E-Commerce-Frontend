@@ -86,7 +86,7 @@ function ForgotPasswordScreen() {
   return (
     <>
       <section className="login-page-wrapper">
-        <Navbar active_screen="" include_search={false} />
+        <Navbar active_screen="forgot-password" include_search={false} />
         <div className="login-container">
           <div className="element-wrapper">
             <img src={forgotPasswordImage} alt="forgot password" />

@@ -34,6 +34,9 @@ export const ROUTE_PURCHASE_HISTORY = '/purchase/history';
 export const ROUTE_CART = "/cart";
 export const ROUTE_CHECKOUT = "/checkout";
 
+// chat 
+export const ROUTE_CHAT = "/chat";
+
 // user profile
 export const ROUTE_PROFILE = "/profile";
 export const ROUTE_PROFILE_AVATAR_EDIT = "/profile/avatar/update";
@@ -41,4 +44,3 @@ export const ROUTE_EDIT_PROFILE = "/profile/edit";
 export const ROUTE_MY_LISTINGS = "/profile/my-listings";
 export const ROUTE_FAVORITES = "/profile/favorites";
 export const ROUTE_SETTINGS = "/profile/settings";
-export const ROUTE_CHAT = "/profile/chat";

@@ -83,7 +83,7 @@ function SendAccessCodeScreen() {
   return (
     <>
       <section className="login-page-wrapper">
-        <Navbar active_screen="" include_search={false} />
+        <Navbar active_screen="send-access-code" include_search={false} />
         <div className="login-container">
           <div className="element-wrapper">
             <img src={signupImage} alt="sign up" />
