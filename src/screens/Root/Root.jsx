@@ -7,6 +7,7 @@ import OnboardingScreen from "../authentication/OnboardingScreen";
 import {
   ROUTE_ABOUT_US,
   ROUTE_CART,
+  ROUTE_CATEGORY,
   ROUTE_CHAT,
   ROUTE_CHECKOUT,
   ROUTE_CONTACT,
@@ -54,6 +55,7 @@ import CartScreen from "../checkout/CartScreen";
 import CheckoutScreen from "../checkout/CheckoutScreen";
 import PurchaseHistory from "../transaction/PurchaseHistory";
 import ChatScreen from "../chat/ChatScreen";
+import CategoryScreen from "../Index/CategoryScreen";
 
 const Root = () => {
   return (
@@ -99,6 +101,7 @@ const Root = () => {
           <Route element={<AboutUsScreen />} path={ROUTE_ABOUT_US} />
           <Route element={<ServicesScreen />} path={ROUTE_SERVICES} />
           <Route element={<ContactUsScreen />} path={ROUTE_CONTACT} />
+          <Route element={<CategoryScreen />} path={ROUTE_CATEGORY + '/:category_slug/:category'} />
           
           {/* products */}
           <Route element={<AddUpdateProductScreen />} path={ROUTE_PRODUCT_ADD} />

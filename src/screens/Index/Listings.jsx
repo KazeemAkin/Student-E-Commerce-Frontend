@@ -14,13 +14,19 @@ import brokenImage from "../../assets/demo-images/broken-image.png";
 import { ROUTE_CART, ROUTE_PRODUCT_DETAILS } from "../../config/constants";
 import SectionHeader from "../../components/header/sectionHeader/SectionHeader";
 import EmptyDiv from "../../components/emptyDiv/EmptyDiv";
+import MainHeader from "../../components/header/mainHeader/MainHeader";
 
-function Listings({ data, title = "Listings", is_user_list = false, ...other }) {
+function Listings({ data, title = "Listings", is_user_list = false, is_category_page = false, ...other}) {
   const { user } = useContext(AuthContext);
 
   return (
     <section className="listings-wrapper">
-      <SectionHeader title={title} {...other} />
+      {
+        !is_category_page ? <SectionHeader title={title} {...other} /> :
+        <div className="mt-30">
+          <MainHeader title={title} />
+        </div>
+      }
 
       <div className="listings-container">
         {isArray(data) && !empty(data) ?

@@ -11,20 +11,18 @@ import Footer from "../../components/footer/Footer";
 import BottomNavbar from "../../components/navbar/BottomNavbar";
 import Listings from "./Listings";
 import { useUserGuard } from "../../hooks/UserGuard";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { empty, isArray, prepareResponseData } from "../../Utilities/utils";
-import { AuthContext } from "../../hooks/UseAuth";
 
 function IndexScreen() {
   useUserGuard(false);
-  const { user } = useContext(AuthContext);
   const [books, setBooks] = useState([]);
   const [furniture, setFurniture] = useState([]);
   const [kitchenware, setKitchenware] = useState([]);
-  const [sport_wear, setSport_wear] = useState([]);
-  const [dinner_wares, setDinner_wares] = useState([]);
+  const [sport_wear, setSportWear] = useState([]);
+  const [dinner_wares, setDinnerWares] = useState([]);
   const [miscellaneous, setMiscellaneous] = useState([]);
-  const [tech_wares, setTech_wares] = useState([]);
+  const [tech_wares, setTechWares] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toastTR = useRef(null);
@@ -73,15 +71,15 @@ function IndexScreen() {
       } else if (category === 'furniture') {
         return setFurniture(isArray(response_data?.response?.products) ? response_data.response.products : []);
       } else if (category === 'tech_wares') {
-        return setKitchenware(isArray(response_data?.response?.products) ? response_data.response.products : []);
+        return setTechWares(isArray(response_data?.response?.products) ? response_data.response.products : []);
       } else if (category === 'kitchenware') {
-        return setSport_wear(isArray(response_data?.response?.products) ? response_data.response.products : []);
+        return setKitchenware(isArray(response_data?.response?.products) ? response_data.response.products : []);
       } else if (category === 'sport_wear') {
-        return setDinner_wares(isArray(response_data?.response?.products) ? response_data.response.products : []);
+        return setSportWear(isArray(response_data?.response?.products) ? response_data.response.products : []);
       } else if (category === 'dinner_wares') {
-        return setMiscellaneous(isArray(response_data?.response?.products) ? response_data.response.products : []);
+        return setDinnerWares(isArray(response_data?.response?.products) ? response_data.response.products : []);
       } else if (category === 'miscellaneous') {
-        return setTech_wares(isArray(response_data?.response?.products) ? response_data.response.products : []);
+        return setMiscellaneous(isArray(response_data?.response?.products) ? response_data.response.products : []);
       }
       
       return setProducts(isArray(response_data?.response?.products) ? response_data.response.products : []);

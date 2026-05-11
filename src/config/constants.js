@@ -1,4 +1,5 @@
 export const ROUTE_HOME = "/";
+export const ROUTE_CATEGORY = "/products/category";
 export const ROUTE_ABOUT_US = "/about-us";
 export const ROUTE_SERVICES = "/services";
 export const ROUTE_CONTACT = "/contact";
