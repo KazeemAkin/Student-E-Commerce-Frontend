@@ -2,7 +2,6 @@
 import React, { useContext, useState, useEffect, createContext, } from 'react';
 import { getUserDetails } from '../api/GetUserDetails';
 import { empty, isObject } from '../Utilities/utils';
-import apiClient from '../api/Client';
 
 export const AuthContext = createContext();
 export const useAuth = () => {
@@ -27,10 +26,6 @@ export const AuthProvider = ({ get_user = true, children }) => {
         setUser(null);
         return;
       }
-
-      apiClient.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${token}`;
       
       if (get_user) {
         const response = await getUserDetails();

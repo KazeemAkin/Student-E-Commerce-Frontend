@@ -166,7 +166,7 @@ function PurchaseHistory() {
                     </div>
                     <div className="bottom">
                       <div className="action">
-                        { purchase_item?.rated === false ? 
+                        { !purchase_item?.rated ? 
                           <div className="checkout" onClick={() => showRatingModal(purchase_item)}>
                             <FaStar />
                             <span className="label">Rate</span>

@@ -1,10 +1,16 @@
 import _ from "lodash";
+import apiClient from "../api/Client";
 
 const prepareResponseData = (response) => {
   try {
     const accessToken = response.headers.get("AccessToken");
     if (!empty(accessToken)) {
+      localStorage.clear();
+      localStorage.setItem("studentAccessToken", null);
       localStorage.setItem("studentAccessToken", accessToken);
+      apiClient.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${accessToken}`;
     }
     
     if (

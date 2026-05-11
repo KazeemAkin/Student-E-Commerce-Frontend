@@ -12,7 +12,6 @@ import {
 } from 'firebase/firestore';
 import { AuthContext } from '../../hooks/UseAuth';
 import firebaseDb from '../../config/firebase';
-// import { db } from '../../config/firebase';
 
 const ChatComponent = ({ chatId, otherUser }) => {
   const [messages, setMessages] = useState([]);

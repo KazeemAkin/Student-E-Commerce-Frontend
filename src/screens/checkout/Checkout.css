@@ -340,6 +340,7 @@
 
           .bottom {
             font-size: 18px;
+            justify-content: space-between;
 
             .action {
               .checkout, .chat {

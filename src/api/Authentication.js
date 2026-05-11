@@ -2,7 +2,6 @@ import { isObject } from "lodash";
 import client from "./Client";
 import { token } from "./ReturnToken";
 import { empty } from "../Utilities/utils";
-// import { SECRET_PASS_KEY, BASE_URL } from "@env";
 
 const signIn = (payload) =>
   client.post("/sign-in", {

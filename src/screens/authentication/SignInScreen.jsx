@@ -1,6 +1,6 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import {
   ROUTE_FORGOT_PASSWORD,
@@ -41,7 +41,6 @@ const initialValues = {
 };
 
 function SignInScreen() {
-  const navigate = useNavigate();
   const toastTR = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useContext(AuthContext);
@@ -55,6 +54,10 @@ function SignInScreen() {
       life: 8000,
     });
   };
+
+  useEffect(() => {
+    localStorage.setItem("studentAccessToken", null);
+  }, []);
 
   /**
    * Submit signup form
@@ -76,6 +79,7 @@ function SignInScreen() {
         );
       }
 
+      console.log({ response_data }, 'signIn');
       if (response_data?.response?.jwt?.accessToken) {
         localStorage.setItem(
           "studentAccessToken",
@@ -87,7 +91,7 @@ function SignInScreen() {
         setUser(response_data.response.user);
       }
 
-      return navigate(ROUTE_HOME);
+      return window.location.href = ROUTE_HOME;
     } catch (error) {
       return responseDialog(
         "error",

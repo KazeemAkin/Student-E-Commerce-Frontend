@@ -26,11 +26,12 @@ import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeForm from "./StripeForm";
 import { loadStripe } from '@stripe/stripe-js';
-import { ROUTE_TRANSACTION_HISTORY } from "../../config/constants";
+import { ROUTE_PURCHASE_HISTORY } from "../../config/constants";
+import { useUserGuard } from "../../hooks/UserGuard";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function CheckoutScreen() {
-  // useUserGuard();
+  useUserGuard();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { product_id } = useParams() || {};
@@ -73,13 +74,8 @@ function CheckoutScreen() {
         );
       }
       
-      responseDialog(
-        'success',
-        'Operation Successful',
-        `Payment successful.`
-      )
-
-      navigate(ROUTE_TRANSACTION_HISTORY);
+      const details = isObject(response_data?.response?.product_details) ? response_data.response.product_details : {};
+      setProductDetails(details);
     } catch (error) {
       responseDialog("error", "Error Alert", "Something went wrong.");
     } finally {
@@ -104,8 +100,13 @@ function CheckoutScreen() {
         );
       }
       
-      const details = isObject(response_data?.response) ? response_data.response : {};
-      setProductDetails(details);
+      responseDialog(
+        'success',
+        'Operation Successful',
+        `Payment successful.`
+      )
+
+      navigate(ROUTE_PURCHASE_HISTORY);
     } catch (error) {
       console.log({error});
       responseDialog("error", "Error Alert", "Something went wrong.");

@@ -75,7 +75,10 @@ function CartScreen() {
       const products = isObject(response_data?.response) ? response_data.response : [];
       setProducts(products?.cart_products || []);
       setTotalAmount(products?.total_amount || 0)
+      setIsLoading(false);
     } catch (error) {
+      console.log(error);
+      setIsLoading(false);
       responseDialog("error", "Error Alert", error?.response?.data?.message || "Something went wrong.");
     } finally {
       setIsLoading(false);
@@ -186,17 +189,18 @@ function CartScreen() {
                     <div className="trash" onClick={() => showModal(product)}>
                       <FaTrash color={colors.red} />&nbsp;<span className="label">Remove</span>
                     </div>
-                    { product?.status?.toLowerCase() === 'listed' && <div className="action">
-                      <NavLink to={`${ROUTE_CHECKOUT}/${product?.product_id}`} style={{ textDecoration: 'none' }}>
-                        <div className="checkout">
-                          <FaWallet />
-                          <span className="label">Checkout</span>
+                    {product?.status?.toLowerCase() === 'listed' &&
+                      <div className="action">
+                        <NavLink to={`${ROUTE_CHECKOUT}/${product?.product_id}`} style={{ textDecoration: 'none' }}>
+                          <div className="checkout">
+                            <FaWallet />
+                            <span className="label">Checkout</span>
+                          </div>
+                        </NavLink>
+                        <div className="chat">
+                          <MdChat />
+                          <span className="label">Chat</span>
                         </div>
-                      </NavLink>
-                      <div className="chat">
-                        <MdChat />
-                        <span className="label">Chat</span>
-                      </div>
                     </div>}
                   </div>
                 </div>
@@ -243,7 +247,7 @@ function CartScreen() {
       </Dialog>
       <Footer />
       {isLoading && <FullPageLoader visible={isLoading} />}
-      <Toast ref={toastTR} position="bottom-left" />
+      <Toast ref={toastTR} position="top-right" />
     </section>
   );
 }
