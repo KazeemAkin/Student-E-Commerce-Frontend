@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { 
-  User, Wallet, History, ShoppingBag, Heart, Star, Lock, ChevronDown 
+  User, Wallet, History, ShoppingBag, Heart, Star, Lock, ChevronDown, LogOut 
 } from 'lucide-react';
-import { ROUTE_PURCHASE_HISTORY } from '../../config/constants';
+import { ROUTE_PURCHASE_HISTORY, ROUTE_SIGN_IN } from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
 import { empty, isArray } from '../../Utilities/utils';
-// import { FaUser } from 'react-icons/fa';
 
 const menuData = [
   {
@@ -38,15 +37,15 @@ const menuData = [
     link: '#'
   },
   {
-    id: 'favourite-sellers',
-    title: 'Favourite Sellers',
+    id: 'favorite-sellers',
+    title: 'Favorite Sellers',
     icon: <Heart className="w-5 h-5" />,
     items: [],
     link: '#'
   },
   {
-    id: 'favourite-items',
-    title: 'Favourite Items',
+    id: 'favorite-items',
+    title: 'Favorite Items',
     icon: <Star className="w-5 h-5" />,
     items: [],
     link: '#'
@@ -65,6 +64,15 @@ const menuData = [
     items: ['Change Password', 'PIN Settings', 'Delete Account'],
     defaultOpen: false,
     link: '#'
+  },
+  {
+    id: 'logout',
+    title: 'Log Out',
+    icon: <LogOut className="w-5 h-5" />,
+    items: ['Change Password', 'PIN Settings', 'Delete Account'],
+    defaultOpen: false,
+    color: "#e65061",
+    link: ROUTE_SIGN_IN
   },
 ];
 
@@ -99,9 +107,9 @@ export default function ProfileMenu() {
           <div onClick={() => handleMenuClick(section?.link)}
             className="menu-list-wrapper"
           >
-            <div className="tab-title">
+            <div className="tab-title" style={{ color: section?.color || "#fbae3e" }}>
               <div className="icon">{section.icon}</div>
-              <span className="title">{section.title}</span>
+              <span className="title" style={{ color: section.color }}>{section.title}</span>
             </div>
             
             { (section.id === 'profile' || section.id === "security") && <ChevronDown
