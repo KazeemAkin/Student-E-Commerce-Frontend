@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useContext } from 'react';
 import {
   collection,
@@ -6,9 +7,8 @@ import {
   orderBy,
   onSnapshot,
 } from 'firebase/firestore';
-import firebaseDb from '../../config/firebase';
-// import './chat.css'; // Import your CSS
 import { AuthContext } from '../../hooks/UseAuth';
+import { firebaseDb } from '../../config/firebase';
 
 const ChatList = ({ onSelectChat }) => {
   const [chats, setChats] = useState([]);
@@ -16,26 +16,31 @@ const ChatList = ({ onSelectChat }) => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!user?._id) return;
+    if (!user?.id) return;
 
     const chatsRef = collection(firebaseDb, 'chats');
     const q = query(
       chatsRef,
-      where('participants', 'array-contains', user._id),
+      where('participantIds', 'array-contains', user.id),
       orderBy('lastMessageTime', 'desc')
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const userChats = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setChats(userChats);
-      setLoading(false);
+      try {
+        const userChats = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setChats(userChats);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     });
 
     return () => unsubscribe();
-  }, [user?._id]);
+  }, [user?.id]);
 
   const formatTime = (timestamp) => {
     if (!timestamp) return '';
@@ -64,11 +69,11 @@ const ChatList = ({ onSelectChat }) => {
           <small>Start a new chat from users list</small>
         </div>
       ) : (
-        chats.map((chat) => {
-          const otherUserId = chat.participants.find(
-            (id) => id !== user._id
-          );
-
+          chats.map((chat) => {
+            const otherUserId = chat.participantIds.find(
+              (id) => id !== user.id
+              );
+              const other_user_data = chat?.participants[otherUserId] || {};
           return (
             <div
               key={chat.id}
@@ -76,37 +81,37 @@ const ChatList = ({ onSelectChat }) => {
               onClick={() =>
                 onSelectChat(chat.id, {
                   uid: otherUserId,
-                  name: chat.otherUserName || otherUserId?.slice(0, 8),
-                  photoURL: chat.otherUserPhoto || null,
+                  username: other_user_data.username || '',
+                  avatar: other_user_data.avatar || null,
                 })
               }
             >
               <div className="chat-item-avatar">
-                {chat.otherUserPhoto ? (
-                  <img src={chat.otherUserPhoto} alt="avatar" />
+                {other_user_data.avatar ? (
+                  <img src={other_user_data.avatar} alt="avatar" />
                 ) : (
                   <div className="avatar-placeholder">
-                    {(chat.otherUserName || otherUserId || '?').charAt(0).toUpperCase()}
+                    {(other_user_data.username || 'N/A' || '?').charAt(0).toUpperCase()}
                   </div>
                 )}
               </div>
 
               <div className="chat-item-info">
                 <div className="chat-item-header">
-                  <h4>{chat.otherUserName || otherUserId}</h4>
+                  <span className='chat-name'>{other_user_data.username || 'N/A'}</span>
                   <span className="chat-time">
                     {formatTime(chat.lastMessageTime)}
                   </span>
                 </div>
 
-                <p className="last-message">
+                <div className="last-message">
                   {chat.lastMessageSenderId === user._id && 'You: '}
                   {chat.lastMessage
                     ? chat.lastMessage.length > 60
                       ? chat.lastMessage.substring(0, 57) + '...'
                       : chat.lastMessage
-                    : 'Start a conversation'}
-                </p>
+                    : '...'}
+                </div>
               </div>
             </div>
           );

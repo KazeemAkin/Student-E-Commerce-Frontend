@@ -117,7 +117,7 @@ const Root = () => {
         <Route element={<PurchaseHistory />} path={ROUTE_PURCHASE_HISTORY} />
 
         {/* chat */}
-        <Route element={<ChatScreen />} path={ROUTE_CHAT} />
+        <Route element={<ChatScreen />} path={ROUTE_CHAT + '/:chatId?/:sellerId?'} />
         
           {/* Profile */}
             <Route element={<ProfileScreen />} path={ROUTE_PROFILE} />  

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { NavLink, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // css
 import "./Product.css";
@@ -35,6 +35,7 @@ function ProductDetailsScreen() {
   const [productDetails, setProductDetails] = useState({});
   const [productInCart, setProductInCart] = useState(false);
   const [cartUpdated, setCartUpdated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProductDetails();
@@ -54,6 +55,29 @@ function ProductDetailsScreen() {
       detail,
       life: 8000,
     });
+  };
+
+  const goToChatScreen = async (seller_details) => {
+    try {
+      if (!isLoading) setIsLoading(true);
+      // create/get chat id from firebase
+      const chatId = [user.id, seller_details.id].sort().join('_');
+  
+      const seller_id = seller_details?.id || '';
+      if (!chatId || empty(seller_id)) {
+        return responseDialog(
+          "error",
+          "Chat Error",
+          "Unable to open chat.",
+        );
+      }
+      navigate(ROUTE_CHAT + `/${chatId}/${seller_id}`);
+    } catch (error) {
+      setIsLoading(false);
+      responseDialog("error", "Error Alert", "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   /**
@@ -168,7 +192,7 @@ function ProductDetailsScreen() {
               <div className="location">
                 <span className="location">
                   <FaMapMarkerAlt size={20} color={colors.primary} />
-                  <span>{productDetails?.user_details?.dorm || 'N/A'}</span>
+                  <span>{productDetails?.seller_details?.dorm || 'N/A'}</span>
                 </span>
               </div>
               <div className="rating">
@@ -193,12 +217,10 @@ function ProductDetailsScreen() {
                 <FaCartPlus />
                 <span className="text">{productInCart ? 'Remove from Cart' : 'Add to Cart'}</span>
               </div>
-              <NavLink to={ROUTE_CHAT} style={{ textDecoration: 'none' }}>
-                <div className="btn">
-                  <MdChat />
-                  <span className="text">Chat</span>
-                </div>
-              </NavLink>
+              <div className="btn" onClick={() => goToChatScreen(productDetails?.seller_details || {})}>
+                <MdChat />
+                <span className="text">Chat</span>
+              </div>
             </div>
           </div>
         </div>

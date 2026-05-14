@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { empty, isArray, toNormalCase } from "../../Utilities/utils";
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import colors from "../../config/colors";
 import { FaShoppingCart } from "react-icons/fa";
-import { AuthContext } from "../../hooks/UseAuth";
 
 // images
 import avatar from "../../assets/avatars/avatar.png";
@@ -17,8 +15,6 @@ import EmptyDiv from "../../components/emptyDiv/EmptyDiv";
 import MainHeader from "../../components/header/mainHeader/MainHeader";
 
 function Listings({ data, title = "Listings", is_user_list = false, is_category_page = false, ...other}) {
-  const { user } = useContext(AuthContext);
-
   return (
     <section className="listings-wrapper">
       {
@@ -53,15 +49,15 @@ function Listings({ data, title = "Listings", is_user_list = false, is_category_
                 </NavLink>
                 <div className="bottom-box">
                   <div className="avatar-box">
-                    {user?.avatar ? (
-                      <img src={user.avatar} alt="Avatar" />
+                    {item?.seller_details?.avatar ? (
+                      <img src={item?.seller_details?.avatar} alt="Avatar" />
                     ) : (
                       <img src={avatar} alt="Avatar" />
                     )}
                   </div>
                   <div className="name-box">
                     <span className="name">
-                      {`${toNormalCase(user?.username) || "N/A"}`}
+                      {`${toNormalCase(item?.seller_details?.username) || "N/A"}`}
                     </span>
                     <span className="cart">
                       <NavLink
