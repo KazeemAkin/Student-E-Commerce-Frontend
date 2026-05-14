@@ -217,10 +217,10 @@ function ProductDetailsScreen() {
                 <FaCartPlus />
                 <span className="text">{productInCart ? 'Remove from Cart' : 'Add to Cart'}</span>
               </div>
-              <div className="btn" onClick={() => goToChatScreen(productDetails?.seller_details || {})}>
+              { productDetails?.seller_id !== user.id && <div className="btn" onClick={() => goToChatScreen(productDetails?.seller_details || {})}>
                 <MdChat />
                 <span className="text">Chat</span>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

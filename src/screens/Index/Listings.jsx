@@ -13,8 +13,11 @@ import { ROUTE_CART, ROUTE_PRODUCT_DETAILS } from "../../config/constants";
 import SectionHeader from "../../components/header/sectionHeader/SectionHeader";
 import EmptyDiv from "../../components/emptyDiv/EmptyDiv";
 import MainHeader from "../../components/header/mainHeader/MainHeader";
+import { useContext } from "react";
+import { AuthContext } from "../../hooks/UseAuth";
 
-function Listings({ data, title = "Listings", is_user_list = false, is_category_page = false, ...other}) {
+function Listings({ data, title = "Listings", is_user_list = false, is_category_page = false, ...other }) {
+  const { user } = useContext(AuthContext);
   return (
     <section className="listings-wrapper">
       {
@@ -49,15 +52,15 @@ function Listings({ data, title = "Listings", is_user_list = false, is_category_
                 </NavLink>
                 <div className="bottom-box">
                   <div className="avatar-box">
-                    {item?.seller_details?.avatar ? (
-                      <img src={item?.seller_details?.avatar} alt="Avatar" />
+                    {item?.seller_details?.avatar || user?.avatar ? (
+                      <img src={item.seller_details?.avatar || user.avatar} alt="Avatar" />
                     ) : (
                       <img src={avatar} alt="Avatar" />
                     )}
                   </div>
                   <div className="name-box">
                     <span className="name">
-                      {`${toNormalCase(item?.seller_details?.username) || "N/A"}`}
+                      {`${toNormalCase(item?.seller_details?.first_name) || toNormalCase(user?.username) || "N/A"}`}
                     </span>
                     <span className="cart">
                       <NavLink
